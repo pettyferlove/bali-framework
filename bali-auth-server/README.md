@@ -3,3 +3,20 @@
 ```shell
 $ keytool -genkeypair -alias oauth2-bali-key -keyalg RSA -keypass bali-auth -keystore bali-auth-server.keystore -storepass bali-auth
 ```
+
+## 导出公钥
+```shell
+$ keytool -export -alias oauth2-bali-key -keystore bali-auth-server.keystore -rfc -file bali-auth-public-key.cer -storepass bali-auth
+```
+
+## 导出私钥
+
+* 得到PKCS12格式的证书
+```shell
+$ keytool -importkeystore -srckeystore bali-auth-server.keystore -destkeystore bali-auth-private-key.p12 -deststoretype pkcs12 -storepass bali-auth
+```
+
+* 转化成PEM格式的文件
+```shell
+$ openssl pkcs12 -in bali-auth-private-key.p12 -out bali-auth-private-key.pem
+```
