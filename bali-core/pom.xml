@@ -8,15 +8,9 @@
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>bali-example</artifactId>
+    <artifactId>bali-core</artifactId>
     <version>${revision}</version>
-    <name>bali-example</name>
-    <description>示例</description>
+    <name>bali-core</name>
     <packaging>pom</packaging>
-
-    <modules>
-        <module>bali-auth-client-app</module>
-        <module>bali-resource-server</module>
-    </modules>
 
 </project>

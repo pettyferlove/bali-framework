@@ -18,10 +18,12 @@
     <modules>
         <module>bali-auth-server</module>
         <module>bali-example</module>
+        <module>bali-core</module>
+        <module>bali-extension</module>
     </modules>
 
     <properties>
-        <revision>1.0.0.SNAPSHOT</revision>
+        <revision>0.0.1.SNAPSHOT</revision>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.compile.source.version>1.8</jdk.compile.source.version>
