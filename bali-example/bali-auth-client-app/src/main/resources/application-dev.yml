@@ -1,0 +1,47 @@
+logging:
+  config: classpath:conf/logback-dev.xml
+  level:
+    org.springframework.security: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+    shutdown:
+      enabled: true
+server:
+  port: 9001
+  http2:
+    enabled: true
+  undertow:
+    buffer-size: 1024
+    direct-buffers: true
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB # 最大附件大小
+      max-request-size: 10MB
+  main:
+    allow-bean-definition-overriding: true
+  mvc:
+    static-path-pattern: /static/**
+  cache:
+    redis:
+      use-key-prefix: true
+      time-to-live: 1d
+  redis:
+    host: 127.0.0.1
+    password:
+    port: 6379
+    lettuce:
+      shutdown-timeout: 100
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: 30
+        min-idle: 0
+    # 选择数据库
+    database: 0

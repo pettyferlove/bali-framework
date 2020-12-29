@@ -15,4 +15,9 @@
     <description>示例</description>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>bali-auth-client-app</module>
+        <module>bali-resource-server</module>
+    </modules>
+
 </project>

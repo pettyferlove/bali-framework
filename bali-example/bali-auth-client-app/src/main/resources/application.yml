@@ -1,0 +1,6 @@
+spring:
+  application:
+    group: bali-framework
+    name: bali-auth-client-app
+  profiles:
+    active: dev

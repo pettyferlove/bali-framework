@@ -1,0 +1,6 @@
+spring:
+  application:
+    group: bali-framework
+    name: bali-resource-server
+  profiles:
+    active: dev
