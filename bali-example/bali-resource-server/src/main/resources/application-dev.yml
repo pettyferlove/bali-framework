@@ -28,6 +28,15 @@ spring:
     allow-bean-definition-overriding: true
   mvc:
     static-path-pattern: /static/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://127.0.0.1:9000/oauth/keys
+#        opaquetoken:
+#          introspection-uri: http://127.0.0.1:9000/oauth/check_token
+#          client-id: bali-client
+#          client-secret: bali-secret
   cache:
     redis:
       use-key-prefix: true

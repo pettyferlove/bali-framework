@@ -32,13 +32,13 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Slf4j
 @Configuration
 @EnableWebSecurity
-public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/oauth2/keys").permitAll()
+                .antMatchers("/oauth/keys").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin();

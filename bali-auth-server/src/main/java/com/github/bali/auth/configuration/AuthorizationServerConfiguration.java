@@ -1,6 +1,10 @@
 package com.github.bali.auth.configuration;
 
 import com.github.bali.auth.utils.KeyUtil;
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.KeyUse;
+import com.nimbusds.jose.jwk.RSAKey;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +20,7 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.approval.ApprovalStore;
@@ -36,13 +41,15 @@ import java.util.Map;
 @Slf4j
 @Configuration
 @EnableAuthorizationServer
-public class AuthorizationServerConfigurer extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     private ClientDetailsService clientDetailsService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -52,6 +59,12 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
                 .scopes("message.read", "message.write")
                 .secret("{noop}bali-secret")
                 .redirectUris("http://localhost:8080/authorized");
+    }
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security.allowFormAuthenticationForClients()
+                .checkTokenAccess("permitAll");
     }
 
     @Override
@@ -107,6 +120,15 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
     @Bean
     public ApprovalStore approvalStore() {
         return new InMemoryApprovalStore();
+    }
+
+    @Bean
+    public JWKSet jwkSet() {
+        RSAKey.Builder builder = new RSAKey.Builder(KeyUtil.getVerifierKey())
+                .keyUse(KeyUse.SIGNATURE)
+                .algorithm(JWSAlgorithm.RS256)
+                .keyID(KeyUtil.VERIFIER_KEY_ID);
+        return new JWKSet(builder.build());
     }
 
 }
