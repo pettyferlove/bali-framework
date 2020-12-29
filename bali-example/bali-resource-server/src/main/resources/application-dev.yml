@@ -32,7 +32,10 @@ spring:
     oauth2:
       resourceserver:
         jwt:
+          #配置远程密钥集
           jwk-set-uri: http://127.0.0.1:9000/.well-known/jwks.json
+          #配置本地密钥集
+          #public-key-location: classpath:bali-auth-public-key.pem
 #        opaquetoken:
 #          introspection-uri: http://127.0.0.1:9000/oauth/check_token
 #          client-id: bali-client
