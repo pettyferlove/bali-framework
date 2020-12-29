@@ -32,6 +32,25 @@ spring:
     redis:
       use-key-prefix: true
       time-to-live: 1d
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            # http://localhost:9001/oauth2/authorization/github
+            client-id: 85be31954323df1dd95f
+            client-secret: e79350fa501cdda62efba260ffc861807ce47af0
+          bali-auth:
+            provider: bali
+            client-id: bali-client
+            client-secret: bali-secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/bali"
+            scope: message.read,message.write
+        provider:
+          bali:
+            authorization-uri: http://127.0.0.1:9000/oauth/authorize
+            token-uri: http://127.0.0.1:9000/oauth/token
   redis:
     host: 127.0.0.1
     password:

@@ -58,7 +58,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .authorizedGrantTypes("authorization_code", "refresh_token", "client_credentials", "password")
                 .scopes("message.read", "message.write")
                 .secret("{noop}bali-secret")
-                .redirectUris("http://localhost:8080/authorized");
+                .redirectUris("http://localhost:9001/login/oauth2/code/bali");
     }
 
     @Override
