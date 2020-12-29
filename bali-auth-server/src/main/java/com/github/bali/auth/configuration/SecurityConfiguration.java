@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/oauth/keys").permitAll()
+                .antMatchers("/.well-known/jwks.json").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin();

@@ -32,7 +32,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://127.0.0.1:9000/oauth/keys
+          jwk-set-uri: http://127.0.0.1:9000/.well-known/jwks.json
 #        opaquetoken:
 #          introspection-uri: http://127.0.0.1:9000/oauth/check_token
 #          client-id: bali-client

@@ -13,26 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.bali.auth.restful;
+package com.github.bali.auth.endpoint;
 
 import com.nimbusds.jose.jwk.JWKSet;
+import org.springframework.security.oauth2.provider.endpoint.FrameworkEndpoint;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Map;
 
 /**
  * @author Petty
  */
-@RestController
-public class JwkController {
+@FrameworkEndpoint
+public class JwkSetEndpoint {
 
     private final JWKSet jwkSet;
 
-    public JwkController(JWKSet jwkSet) {
+    public JwkSetEndpoint(JWKSet jwkSet) {
         this.jwkSet = jwkSet;
     }
 
-    @GetMapping(value = "/oauth/keys", produces = "application/json; charset=UTF-8")
-    public String keys() {
-        return this.jwkSet.toString();
+    /**
+     * 验证JWT密钥集
+     * @return Map
+     */
+    @GetMapping(value = "/.well-known/jwks.json", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public Map<String, Object> keys() {
+        return this.jwkSet.toJSONObject();
     }
 }
