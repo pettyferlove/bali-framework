@@ -1,5 +1,6 @@
 package com.github.bali.example.restful;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MessagesController {
 
     @GetMapping("/messages")
+    @PreAuthorize("hasRole('ADMIN')")
     public String[] getMessages(Authentication authentication) {
         Object principal = authentication.getPrincipal();
         System.out.println(principal);

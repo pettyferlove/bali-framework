@@ -5,6 +5,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * @author Pettyfer
@@ -22,7 +27,14 @@ public class ResourceServerConfiguration extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/messages/**").authenticated()
                 .and()
                 .oauth2ResourceServer()
-                .jwt();
+                .jwt().jwtAuthenticationConverter(jwt -> {
+            Collection<SimpleGrantedAuthority> authorities =
+                    ((Collection<String>) jwt.getClaims()
+                            .get("authorities")).stream()
+                            .map(SimpleGrantedAuthority::new)
+                            .collect(Collectors.toSet());
+            return new JwtAuthenticationToken(jwt, authorities);
+        });
     }
 
 }
