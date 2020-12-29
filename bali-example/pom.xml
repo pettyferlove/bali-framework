@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>bali-examples</artifactId>
+    <artifactId>bali-example</artifactId>
     <version>${revision}</version>
-    <name>bali-examples</name>
+    <name>bali-example</name>
     <description>示例</description>
     <packaging>pom</packaging>
 
