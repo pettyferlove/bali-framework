@@ -36,7 +36,8 @@ spring:
           jwk-set-uri: http://127.0.0.1:9000/.well-known/jwks.json
           #配置本地密钥集
           #public-key-location: classpath:bali-auth-public-key.pem
-#        opaquetoken:
+          issuer-uri: http://127.0.0.1:9000
+  #        opaquetoken:
 #          introspection-uri: http://127.0.0.1:9000/oauth/check_token
 #          client-id: bali-client
 #          client-secret: bali-secret

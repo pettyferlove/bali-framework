@@ -51,6 +51,7 @@ spring:
           bali:
             authorization-uri: http://127.0.0.1:9000/oauth/authorize
             token-uri: http://127.0.0.1:9000/oauth/token
+            user-info-uri: http://127.0.0.1:9000/user
   redis:
     host: 127.0.0.1
     password:

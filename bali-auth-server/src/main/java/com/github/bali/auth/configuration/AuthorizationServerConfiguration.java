@@ -1,5 +1,6 @@
 package com.github.bali.auth.configuration;
 
+import com.github.bali.auth.provider.token.BaliAccessTokenConverter;
 import com.github.bali.auth.utils.KeyUtil;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -58,6 +59,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .authorizedGrantTypes("authorization_code", "refresh_token", "client_credentials", "password")
                 .scopes("message.read", "message.write")
                 .secret("{noop}bali-secret")
+                .autoApprove(true)
                 .redirectUris("http://localhost:9001/login/oauth2/code/bali");
     }
 
@@ -114,6 +116,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         };
         converter.setSigner(signer);
         converter.setVerifier(new RsaVerifier(KeyUtil.getVerifierKey()));
+        converter.setAccessTokenConverter(new BaliAccessTokenConverter());
         return converter;
     }
 
