@@ -25,6 +25,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 /**
  * @author Petty
@@ -34,6 +35,12 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private final PersistentTokenRepository tokenRepository;
+
+    public SecurityConfiguration(PersistentTokenRepository tokenRepository) {
+        this.tokenRepository = tokenRepository;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -41,7 +48,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/.well-known/jwks.json").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin();
+                .formLogin()
+                .and()
+                .rememberMe()
+                .tokenRepository(tokenRepository)
+                .tokenValiditySeconds(604800)
+                .and()
+                .csrf().disable()
+                .httpBasic().disable()
+                .csrf().disable()
+                .headers().frameOptions().disable();
     }
 
     @Bean
