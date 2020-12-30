@@ -1,6 +1,8 @@
 package com.github.bali.auth.configuration;
 
 import com.github.bali.auth.provider.token.BaliAccessTokenConverter;
+import com.github.bali.auth.service.OAuth2ClientDetailsService;
+import com.github.bali.auth.service.OAuth2UserDetailsService;
 import com.github.bali.auth.utils.KeyUtil;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -9,6 +11,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.jwt.JwtHelper;
 import org.springframework.security.jwt.crypto.sign.RsaSigner;
@@ -23,11 +26,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.approval.ApprovalStore;
-import org.springframework.security.oauth2.provider.approval.ApprovalStoreUserApprovalHandler;
-import org.springframework.security.oauth2.provider.approval.InMemoryApprovalStore;
-import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
-import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
+import org.springframework.security.oauth2.provider.approval.*;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
@@ -44,26 +43,23 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     private final TokenStore tokenStore;
 
-    private final ClientDetailsService clientDetailsService;
+    private final OAuth2ClientDetailsService clientDetailsService;
+
+    private final OAuth2UserDetailsService userDetailsService;
 
     private final AuthenticationManager authenticationManager;
 
-    public AuthorizationServerConfiguration(TokenStore tokenStore, ClientDetailsService clientDetailsService, AuthenticationManager authenticationManager) {
+    public AuthorizationServerConfiguration(TokenStore tokenStore, ClientDetailsService clientDetailsService, OAuth2ClientDetailsService clientDetailsService1, OAuth2UserDetailsService userDetailsService, AuthenticationManager authenticationManager) {
         this.tokenStore = tokenStore;
-        this.clientDetailsService = clientDetailsService;
+        this.clientDetailsService = clientDetailsService1;
+        this.userDetailsService = userDetailsService;
         this.authenticationManager = authenticationManager;
     }
 
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
-                .withClient("bali-client")
-                .authorizedGrantTypes("authorization_code", "refresh_token", "client_credentials", "password")
-                .scopes("message.read", "message.write")
-                .secret("{noop}bali-secret")
-                .autoApprove(true)
-                .redirectUris("http://localhost:9001/login/oauth2/code/bali");
+        clients.withClientDetails(clientDetailsService);
     }
 
     @Override
@@ -76,20 +72,14 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
-                .authenticationManager(this.authenticationManager)
+                .authenticationManager(authenticationManager)
                 .tokenStore(tokenStore)
-                .userApprovalHandler(userApprovalHandler())
-                .accessTokenConverter(accessTokenConverter());
+                .userDetailsService(userDetailsService)
+                .approvalStore(approvalStore())
+                .accessTokenConverter(accessTokenConverter())
+                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
     }
 
-    @Bean
-    public UserApprovalHandler userApprovalHandler() {
-        ApprovalStoreUserApprovalHandler userApprovalHandler = new ApprovalStoreUserApprovalHandler();
-        userApprovalHandler.setApprovalStore(approvalStore());
-        userApprovalHandler.setClientDetailsService(this.clientDetailsService);
-        userApprovalHandler.setRequestFactory(new DefaultOAuth2RequestFactory(this.clientDetailsService));
-        return userApprovalHandler;
-    }
 
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
@@ -119,7 +109,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Bean
     public ApprovalStore approvalStore() {
-        return new InMemoryApprovalStore();
+        TokenApprovalStore store = new TokenApprovalStore();
+        store.setTokenStore(tokenStore);
+        return store;
     }
 
     @Bean
