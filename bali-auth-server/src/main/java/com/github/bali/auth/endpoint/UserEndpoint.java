@@ -12,7 +12,7 @@ import java.security.Principal;
 @FrameworkEndpoint
 public class UserEndpoint {
 
-    @RequestMapping(value = "/user", produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/oauth/user")
     @ResponseBody
     public Principal user(Principal principal) {
         return principal;

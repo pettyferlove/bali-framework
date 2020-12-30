@@ -40,18 +40,21 @@ spring:
             # http://localhost:9001/oauth2/authorization/github
             client-id: 85be31954323df1dd95f
             client-secret: e79350fa501cdda62efba260ffc861807ce47af0
-          bali-auth:
+          bali:
             provider: bali
             client-id: bali-client
             client-secret: bali-secret
             authorization-grant-type: authorization_code
-            redirect-uri: "{baseUrl}/login/oauth2/code/bali"
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: message.read,message.write
         provider:
           bali:
+            jwk-set-uri: http://127.0.0.1:9000/.well-known/jwks.json
             authorization-uri: http://127.0.0.1:9000/oauth/authorize
             token-uri: http://127.0.0.1:9000/oauth/token
-            user-info-uri: http://127.0.0.1:9000/user
+            user-info-uri: http://127.0.0.1:9002/oauth/user
+            user-info-authentication-method: header
+            user-name-attribute: name
   redis:
     host: 127.0.0.1
     password:

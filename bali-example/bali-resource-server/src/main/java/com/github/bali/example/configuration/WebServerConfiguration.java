@@ -24,9 +24,9 @@ public class WebServerConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .mvcMatcher("/messages/**")
+                .mvcMatcher("/oauth/user")
                 .authorizeRequests()
-                .mvcMatchers("/messages/**").authenticated()
+                .mvcMatchers("/oauth/user").authenticated()
                 .and()
                 .oauth2ResourceServer()
                 .jwt().jwtAuthenticationConverter(jwt -> {
@@ -35,7 +35,7 @@ public class WebServerConfiguration extends WebSecurityConfigurerAdapter {
                             .get("authorities")).stream()
                             .map(SimpleGrantedAuthority::new)
                             .collect(Collectors.toSet());
-            return new JwtAuthenticationToken(jwt, authorities);
+            return new JwtAuthenticationToken(jwt, authorities, "user");
         });
     }
 
