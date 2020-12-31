@@ -46,6 +46,7 @@ public class BaliUserDetails implements UserDetails {
     private String email;
     /**
      * 用户状态
+     *
      * @see com.github.bali.auth.constants.SecurityConstant
      */
     private Integer status;
@@ -55,24 +56,15 @@ public class BaliUserDetails implements UserDetails {
     private String tenant;
     @Builder.Default
     private List<String> roles = new ArrayList<>();
-    @Builder.Default
-    private List<String> permissions = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authoritySet = new HashSet<>();
-        for (String permission : permissions) {
-            if (StrUtil.isNotEmpty(permission)) {
-                authoritySet.add(new SimpleGrantedAuthority(SecurityConstant.PERMISSION_PREFIX + permission));
-            }
-        }
         for (String role : roles) {
             if (StrUtil.isNotEmpty(role)) {
                 authoritySet.add(new SimpleGrantedAuthority(SecurityConstant.ROLE_PREFIX + role));
             }
         }
-        //增加基础用户角色 ROLE_USER
-        //如果用户自身具备 ROLE_USER则通过Set唯一性保留一个
         authoritySet.add(new SimpleGrantedAuthority(SecurityConstant.ROLE_PREFIX + SecurityConstant.BASE_ROLE));
         return authoritySet;
     }

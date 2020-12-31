@@ -32,10 +32,12 @@ public class WebServerConfiguration extends WebSecurityConfigurerAdapter {
                 .jwt().jwtAuthenticationConverter(jwt -> {
             Collection<SimpleGrantedAuthority> authorities =
                     ((Collection<String>) jwt.getClaims()
-                            .get("roles")).stream()
+                            .get("authorities")).stream()
                             .map(SimpleGrantedAuthority::new)
                             .collect(Collectors.toSet());
-            return new JwtAuthenticationToken(jwt, authorities);
+            String username = (String) jwt.getClaims()
+                    .get("username");
+            return new JwtAuthenticationToken(jwt, authorities, username);
         });
     }
 

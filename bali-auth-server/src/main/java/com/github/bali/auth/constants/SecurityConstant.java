@@ -11,11 +11,6 @@ public interface SecurityConstant {
     String ROLE_PREFIX = "ROLE_";
 
     /**
-     * 权限前缀
-     */
-    String PERMISSION_PREFIX = "PERMISSION_";
-
-    /**
      * 基础用户角色
      */
     String BASE_ROLE = "USER";
