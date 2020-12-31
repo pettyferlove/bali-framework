@@ -1,5 +1,6 @@
 package com.github.bali.auth.configuration;
 
+import com.github.bali.auth.provider.error.ResponseExceptionTranslator;
 import com.github.bali.auth.provider.token.BaliAccessTokenConverter;
 import com.github.bali.auth.service.OAuth2ClientDetailsService;
 import com.github.bali.auth.service.OAuth2UserDetailsService;
@@ -77,6 +78,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .userDetailsService(userDetailsService)
                 .approvalStore(approvalStore())
                 .accessTokenConverter(accessTokenConverter())
+        .        exceptionTranslator(new ResponseExceptionTranslator())
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
     }
 
