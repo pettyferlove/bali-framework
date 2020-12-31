@@ -52,7 +52,7 @@ spring:
             jwk-set-uri: http://127.0.0.1:9000/.well-known/jwks.json
             authorization-uri: http://127.0.0.1:9000/oauth/authorize
             token-uri: http://127.0.0.1:9000/oauth/token
-            user-info-uri: http://127.0.0.1:9000/resource/user
+            user-info-uri: http://127.0.0.1:9000/resource/user-info
             user-info-authentication-method: header
             user-name-attribute: name
   redis:

@@ -84,7 +84,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         final RsaSigner signer = new RsaSigner(KeyUtil.getSignerKey());
-
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter() {
             private final JsonParser objectMapper = JsonParserFactory.create();
 

@@ -33,7 +33,7 @@ public class KeyUtil {
 	public static final String KEY_ALIAS = "oauth2-bali-key";
 	public static final KeyStoreKeyFactory KEY_STORE_KEY_FACTORY = new KeyStoreKeyFactory(
 			new ClassPathResource(KEY_STORE_FILE), KEY_STORE_PASSWORD.toCharArray());
-	public static final String VERIFIER_KEY_ID = new String(Base64.encode(KeyGenerators.secureRandom(32).generateKey()));
+	public static final String VERIFIER_KEY_ID = new String("bali-auth-server-key");
 
 	public static RSAPublicKey getVerifierKey() {
 		return (RSAPublicKey) getKeyPair().getPublic();
