@@ -1,5 +1,6 @@
 package com.github.bali.auth.provider.token;
 
+import com.github.bali.auth.userdetails.BaliUserDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -25,7 +26,7 @@ public class BaliAccessTokenConverter extends DefaultAccessTokenConverter {
         @Override
         public Map<String, ?> convertUserAuthentication(Authentication authentication) {
             Map<String, Object> response = new LinkedHashMap<String, Object>();
-            User principal = (User) authentication.getPrincipal();
+            BaliUserDetails principal = (BaliUserDetails) authentication.getPrincipal();
             response.put(USERNAME, authentication.getName());
             if (authentication.getAuthorities() != null && !authentication.getAuthorities().isEmpty()) {
                 response.put("authorities", AuthorityUtils.authorityListToSet(authentication.getAuthorities()));
