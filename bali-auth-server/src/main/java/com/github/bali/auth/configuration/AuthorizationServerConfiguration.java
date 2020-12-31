@@ -1,5 +1,6 @@
 package com.github.bali.auth.configuration;
 
+import com.github.bali.auth.filter.BaliClientCredentialsTokenEndpointFilter;
 import com.github.bali.auth.provider.error.OAuth2AuthExceptionEntryPoint;
 import com.github.bali.auth.provider.error.ResponseExceptionTranslator;
 import com.github.bali.auth.provider.token.BaliAccessTokenConverter;
@@ -31,10 +32,8 @@ import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
-import org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -73,9 +72,14 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        OAuth2AuthExceptionEntryPoint entryPoint = new OAuth2AuthExceptionEntryPoint();
         security.passwordEncoder(passwordEncoder);
-        security.authenticationEntryPoint(new OAuth2AuthExceptionEntryPoint());
+        security.authenticationEntryPoint(entryPoint);
         security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+        BaliClientCredentialsTokenEndpointFilter endpoint = new BaliClientCredentialsTokenEndpointFilter(security);
+        endpoint.afterPropertiesSet();
+        endpoint.setAuthenticationEntryPoint(entryPoint);
+        security.addTokenEndpointAuthenticationFilter(endpoint);
     }
 
     @Override
