@@ -1,5 +1,6 @@
 package com.github.bali.auth.configuration;
 
+import com.github.bali.auth.provider.error.OAuth2AuthExceptionEntryPoint;
 import com.github.bali.auth.provider.error.ResponseExceptionTranslator;
 import com.github.bali.auth.provider.token.BaliAccessTokenConverter;
 import com.github.bali.auth.service.OAuth2ClientDetailsService;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.jwt.JwtHelper;
 import org.springframework.security.jwt.crypto.sign.RsaSigner;
 import org.springframework.security.jwt.crypto.sign.RsaVerifier;
@@ -27,9 +29,12 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.approval.*;
+import org.springframework.security.oauth2.provider.approval.ApprovalStore;
+import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
+import org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,11 +55,14 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     private final AuthenticationManager authenticationManager;
 
-    public AuthorizationServerConfiguration(TokenStore tokenStore, ClientDetailsService clientDetailsService, OAuth2ClientDetailsService clientDetailsService1, OAuth2UserDetailsService userDetailsService, AuthenticationManager authenticationManager) {
+    private final PasswordEncoder passwordEncoder;
+
+    public AuthorizationServerConfiguration(TokenStore tokenStore, ClientDetailsService clientDetailsService, OAuth2ClientDetailsService clientDetailsService1, OAuth2UserDetailsService userDetailsService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
         this.tokenStore = tokenStore;
         this.clientDetailsService = clientDetailsService1;
         this.userDetailsService = userDetailsService;
         this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -65,9 +73,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.allowFormAuthenticationForClients()
-                .tokenKeyAccess("isAuthenticated()")
-                .checkTokenAccess("permitAll");
+        security.passwordEncoder(passwordEncoder);
+        security.authenticationEntryPoint(new OAuth2AuthExceptionEntryPoint());
+        security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
     }
 
     @Override
@@ -78,7 +86,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .userDetailsService(userDetailsService)
                 .approvalStore(approvalStore())
                 .accessTokenConverter(accessTokenConverter())
-        .        exceptionTranslator(new ResponseExceptionTranslator())
+                .exceptionTranslator(new ResponseExceptionTranslator())
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
     }
 
