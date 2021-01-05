@@ -17,7 +17,7 @@ public class BaliClientDetailsServiceImpl implements OAuth2ClientDetailsService 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
         BaseClientDetails baseClientDetails = new BaseClientDetails("bali-client", "",
-                "message.read,message.write", "authorization_code,refresh_token,client_credentials,password", "",
+                "message.read,message.write", "authorization_code,refresh_token,client_credentials,password,wechat", "",
                 "http://localhost:9001/login/oauth2/code/bali");
         baseClientDetails.setClientSecret(EncryptionConstant.SIGNATURE_NOOP + "bali-secret");
         return baseClientDetails;

@@ -1,11 +1,9 @@
 package com.github.bali.auth.factory.impl;
 
 import com.github.bali.auth.factory.ITokenGranterFactory;
-import lombok.SneakyThrows;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.oauth2.provider.TokenGranter;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +12,6 @@ import java.util.Map;
 /**
  * @author Petty
  */
-@Component
 public class TokenGranterFactoryImpl implements ITokenGranterFactory {
 
     private Map<String, TokenGranter> serviceMap;

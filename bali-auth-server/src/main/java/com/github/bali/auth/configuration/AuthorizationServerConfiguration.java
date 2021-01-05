@@ -1,6 +1,7 @@
 package com.github.bali.auth.configuration;
 
 import com.github.bali.auth.factory.ITokenGranterFactory;
+import com.github.bali.auth.factory.impl.TokenGranterFactoryImpl;
 import com.github.bali.auth.filter.BaliClientCredentialsTokenEndpointFilter;
 import com.github.bali.auth.provider.error.OAuth2AuthExceptionEntryPoint;
 import com.github.bali.auth.provider.error.ResponseExceptionTranslator;
@@ -69,16 +70,16 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     private final PasswordEncoder passwordEncoder;
 
-    private final ITokenGranterFactory tokenGranterFactory;
+    @Bean
+    public ITokenGranterFactory tokenGranterFactory() {
+        return new TokenGranterFactoryImpl();
+    }
 
     @Bean
     @ConditionalOnMissingBean(OAuth2RequestFactory.class)
     public OAuth2RequestFactory requestFactory() {
         return new DefaultOAuth2RequestFactory(clientDetailsService);
     }
-
-
-
 
     @Bean
     @ConditionalOnMissingBean(TokenService.class)
@@ -92,13 +93,12 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         return defaultTokenServices;
     }
 
-    public AuthorizationServerConfiguration(TokenStore tokenStore, OAuth2ClientDetailsService clientDetailsService, OAuth2UserDetailsService userDetailsService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, ITokenGranterFactory tokenGranterFactory) {
+    public AuthorizationServerConfiguration(TokenStore tokenStore, OAuth2ClientDetailsService clientDetailsService, OAuth2UserDetailsService userDetailsService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
         this.tokenStore = tokenStore;
         this.clientDetailsService = clientDetailsService;
         this.userDetailsService = userDetailsService;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
-        this.tokenGranterFactory = tokenGranterFactory;
     }
 
 
@@ -140,7 +140,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
             tokenGranters.add(new ResourceOwnerPasswordTokenGranter(authenticationManager,
                     tokenServices(), clientDetails, requestFactory()));
         }
-        List<TokenGranter> granters = tokenGranterFactory.getGranters();
+        List<TokenGranter> granters = tokenGranterFactory().getGranters();
         tokenGranters.addAll(granters);
         return tokenGranters;
     }
