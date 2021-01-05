@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.bali.core.cache.configuration.RedisAutoConfiguration,\
+  com.github.bali.core.cache.properties.CacheProperties

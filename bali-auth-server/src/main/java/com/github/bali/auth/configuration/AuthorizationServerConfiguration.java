@@ -42,15 +42,10 @@ import org.springframework.security.oauth2.provider.implicit.ImplicitTokenGrante
 import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
 import org.springframework.security.oauth2.provider.refresh.RefreshTokenGranter;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
-import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Petty
@@ -89,7 +84,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         defaultTokenServices.setTokenStore(tokenStore);
         defaultTokenServices.setSupportRefreshToken(true);
         defaultTokenServices.setReuseRefreshToken(false);
-        //defaultTokenServices.setTokenEnhancer(customerEnhancer());
+        defaultTokenServices.setTokenEnhancer(customerEnhancer());
         return defaultTokenServices;
     }
 
@@ -172,6 +167,12 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         super.configure(endpoints);
     }
 
+    @Bean
+    public TokenEnhancer customerEnhancer() {
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(accessTokenConverter()));
+        return tokenEnhancerChain;
+    }
 
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {

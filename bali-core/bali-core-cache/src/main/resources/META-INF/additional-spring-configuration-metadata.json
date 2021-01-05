@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "spring.cache.expire",
+      "type": "java.lang.String",
+      "description": "缓存过期时间."
+    }
+  ]
+}

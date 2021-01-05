@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 /**
@@ -36,7 +37,7 @@ public class RedisTokenRepositoryConfiguration {
     @Primary
     @ConditionalOnMissingBean(name = "securityRedisTemplate")
     public PersistentTokenRepository tokenRepository() {
-        return new RedisTokenRepository(securityRedisTemplate);
+        return new InMemoryTokenRepositoryImpl();
     }
 
 }
