@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "spring.application.group",
+      "type": "java.lang.String",
+      "description": "应用组."
+  }
+] }

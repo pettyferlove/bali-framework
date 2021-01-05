@@ -13,4 +13,8 @@
     <name>bali-core</name>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>bali-core-framework</module>
+    </modules>
+
 </project>
