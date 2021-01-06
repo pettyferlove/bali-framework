@@ -23,7 +23,7 @@
     </modules>
 
     <properties>
-        <revision>0.0.1.SNAPSHOT</revision>
+        <revision>0.0.1-SNAPSHOT</revision>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.compile.source.version>1.8</jdk.compile.source.version>
@@ -185,9 +185,8 @@
 
     <repositories>
         <repository>
-            <id>Ali Maven</id>
-            <name>阿里云公共仓库</name>
-            <url>https://maven.aliyun.com/repository/public</url>
+            <id>ali-maven-rdc-releases</id>
+            <url>https://packages.aliyun.com/maven/repository/2057506-release-6Ck7fw/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -196,22 +195,20 @@
             </snapshots>
         </repository>
         <repository>
-            <id>Spring</id>
-            <name>Spring</name>
-            <url>https://maven.aliyun.com/repository/spring</url>
+            <id>ali-maven-rdc-snapshots</id>
+            <url>https://packages.aliyun.com/maven/repository/2057506-snapshot-vsn2Xf/</url>
             <releases>
-                <enabled>true</enabled>
+                <enabled>false</enabled>
             </releases>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
         </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
-            <id>Spring-plugin</id>
-            <name>Spring-plugin</name>
-            <url>https://maven.aliyun.com/repository/spring-plugin</url>
+            <id>central</id>
+            <url>https://maven.aliyun.com/nexus/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -219,18 +216,48 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
+        <pluginRepository>
+            <id>snapshots</id>
+            <url>https://maven.aliyun.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>ali-maven-rdc-releases</id>
+            <url>https://packages.aliyun.com/maven/repository/2057506-release-6Ck7fw/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>ali-maven-rdc-snapshots</id>
+            <url>https://packages.aliyun.com/maven/repository/2057506-snapshot-vsn2Xf/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
     </pluginRepositories>
     <distributionManagement>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>Nexus Snapshot Repository</name>
-            <url>http://127.0.0.1:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
         <repository>
-            <id>releases</id>
+            <id>ali-maven-rdc-releases</id>
             <name>Nexus Release Repository</name>
-            <url>http://127.0.0.1:8081/repository/maven-releases/</url>
+            <url>https://packages.aliyun.com/maven/repository/2057506-release-6Ck7fw/</url>
         </repository>
+        <snapshotRepository>
+            <id>ali-maven-rdc-snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>https://packages.aliyun.com/maven/repository/2057506-snapshot-vsn2Xf/</url>
+        </snapshotRepository>
     </distributionManagement>
 
 </project>
