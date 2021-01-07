@@ -17,6 +17,8 @@
         <module>bali-core-cache</module>
         <module>bali-core-framework</module>
         <module>bali-core-persistence-mybatis</module>
+        <module>bali-core-security</module>
+        <module>bali-core-log</module>
     </modules>
 
 </project>
