@@ -7,10 +7,13 @@ import com.alibaba.fastjson.util.IOUtils;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.google.common.base.Preconditions;
 import org.springframework.data.redis.serializer.SerializationException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.oauth2.common.DefaultOAuth2RefreshToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreSerializationStrategy;
+import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 
 import java.nio.charset.StandardCharsets;
 
@@ -39,6 +42,12 @@ public class FastJsonRedisTokenStoreSerializationStrategy implements RedisTokenS
                 OAuth2Authentication.class);
         TypeUtils.addMapping("org.springframework.security.oauth2.provider.client.BaseClientDetails",
                 BaseClientDetails.class);
+        TypeUtils.addMapping("org.springframework.security.web.savedrequest.DefaultSavedRequest",
+                DefaultSavedRequest.class);
+        TypeUtils.addMapping("org.springframework.security.authentication.InternalAuthenticationServiceException",
+                InternalAuthenticationServiceException.class);
+        TypeUtils.addMapping("org.springframework.security.authentication.BadCredentialsException",
+                BadCredentialsException.class);
     }
 
     @Override
