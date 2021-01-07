@@ -16,6 +16,7 @@
     <modules>
         <module>bali-core-cache</module>
         <module>bali-core-framework</module>
+        <module>bali-core-persistence-mybatis</module>
     </modules>
 
 </project>
