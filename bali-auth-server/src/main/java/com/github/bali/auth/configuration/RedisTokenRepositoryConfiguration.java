@@ -20,22 +20,22 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 @Configuration
 public class RedisTokenRepositoryConfiguration {
 
-    private final RedisTemplate<Object, Object> securityRedisTemplate;
+    private final RedisTemplate<Object, Object> redisTemplate;
 
-    public RedisTokenRepositoryConfiguration(RedisTemplate<Object, Object> securityRedisTemplate) {
-        this.securityRedisTemplate = securityRedisTemplate;
+    public RedisTokenRepositoryConfiguration(RedisTemplate<Object, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
 
     @Bean("tokenRepository")
     @Primary
-    @ConditionalOnBean(name = "securityRedisTemplate")
+    @ConditionalOnBean(name = "redisTemplate")
     public PersistentTokenRepository redisTokenRepository() {
-        return new RedisTokenRepository(securityRedisTemplate);
+        return new RedisTokenRepository(redisTemplate);
     }
 
     @Bean("tokenRepository")
     @Primary
-    @ConditionalOnMissingBean(name = "securityRedisTemplate")
+    @ConditionalOnMissingBean(name = "redisTemplate")
     public PersistentTokenRepository tokenRepository() {
         return new InMemoryTokenRepositoryImpl();
     }

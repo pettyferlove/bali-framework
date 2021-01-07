@@ -3,8 +3,10 @@ package com.github.bali.auth.userdetails;
 import cn.hutool.core.util.StrUtil;
 import com.github.bali.auth.constants.EncryptionConstant;
 import com.github.bali.auth.constants.SecurityConstant;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +18,8 @@ import java.util.*;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class BaliUserDetails implements UserDetails {
 
     private static final long serialVersionUID = 1254385573535663771L;
