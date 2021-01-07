@@ -21,9 +21,9 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 @Slf4j
 @Configuration
 @EnableCaching(proxyTargetClass = true)
-@EnableConfigurationProperties(RedisProperties.class)
 @EnableRedisHttpSession
 @ConditionalOnWebApplication
+@EnableConfigurationProperties(RedisProperties.class)
 @ConditionalOnProperty(value = "spring.redis.host")
 public class RedisSessionConfiguration {
 

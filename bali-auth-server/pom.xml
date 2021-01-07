@@ -41,6 +41,19 @@
             <version>${revision}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.bali</groupId>
+            <artifactId>bali-core-persistence-mybatis</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- Spring Security 依赖 -->
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>
