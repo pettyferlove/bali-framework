@@ -30,7 +30,9 @@ public class RedisSessionConfiguration {
     @Bean
     @Primary
     public RedisIndexedSessionRepository sessionRepository(RedisTemplate<Object, Object> redisTemplate) {
-        return new RedisIndexedSessionRepository(redisTemplate);
+        RedisIndexedSessionRepository sessionRepository = new RedisIndexedSessionRepository(redisTemplate);
+        sessionRepository.setRedisKeyNamespace("security:session");
+        return sessionRepository;
     }
 
     @Bean
