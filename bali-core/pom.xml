@@ -19,6 +19,7 @@
         <module>bali-core-persistence-mybatis</module>
         <module>bali-core-security</module>
         <module>bali-core-log</module>
+        <module>bali-core-test</module>
     </modules>
 
 </project>
