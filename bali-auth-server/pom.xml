@@ -51,6 +51,7 @@
             <groupId>com.github.bali</groupId>
             <artifactId>bali-core-security</artifactId>
             <version>${revision}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
