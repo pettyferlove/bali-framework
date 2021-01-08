@@ -1,6 +1,5 @@
 package com.github.bali.auth.service.impl;
 
-import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -10,7 +9,7 @@ import com.github.bali.auth.service.ITenantService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
-import com.github.bali.auth.utils.SecurityUtil;
+import com.github.bali.security.utils.SecurityUtil;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

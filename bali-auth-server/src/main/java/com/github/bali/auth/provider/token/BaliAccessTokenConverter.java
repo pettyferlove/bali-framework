@@ -1,10 +1,9 @@
 package com.github.bali.auth.provider.token;
 
-import com.github.bali.auth.userdetails.BaliUserDetails;
+import com.github.bali.security.userdetails.BaliUserDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
 

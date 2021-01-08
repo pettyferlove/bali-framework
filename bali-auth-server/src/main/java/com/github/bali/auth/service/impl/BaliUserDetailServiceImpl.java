@@ -1,8 +1,8 @@
 package com.github.bali.auth.service.impl;
 
-import com.github.bali.auth.constants.SecurityConstant;
+import com.github.bali.security.constants.SecurityConstant;
 import com.github.bali.auth.service.OAuth2UserDetailsService;
-import com.github.bali.auth.userdetails.BaliUserDetails;
+import com.github.bali.security.userdetails.BaliUserDetails;
 import com.google.common.base.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,6 +1,6 @@
 package com.github.bali.auth.service.impl;
 
-import com.github.bali.auth.constants.EncryptionConstant;
+import com.github.bali.security.constants.EncryptionConstant;
 import com.github.bali.auth.service.OAuth2ClientDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.provider.ClientDetails;

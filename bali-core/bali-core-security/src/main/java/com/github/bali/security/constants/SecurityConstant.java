@@ -1,4 +1,4 @@
-package com.github.bali.auth.constants;
+package com.github.bali.security.constants;
 
 /**
  * @author Petty

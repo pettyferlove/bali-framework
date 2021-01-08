@@ -16,8 +16,6 @@
 package com.github.bali.auth.utils;
 
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.security.crypto.codec.Base64;
-import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
 import java.security.KeyPair;

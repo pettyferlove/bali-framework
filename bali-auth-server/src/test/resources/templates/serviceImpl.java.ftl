@@ -10,7 +10,7 @@ import ${package.Service}.${table.serviceName};
 import ${superServiceImplClassPackage};
 import org.springframework.stereotype.Service;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
-import com.github.bali.auth.utils.SecurityUtil;
+import com.github.bali.security.utils.SecurityUtil;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

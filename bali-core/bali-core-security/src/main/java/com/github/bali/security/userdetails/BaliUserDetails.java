@@ -1,8 +1,8 @@
-package com.github.bali.auth.userdetails;
+package com.github.bali.security.userdetails;
 
 import cn.hutool.core.util.StrUtil;
-import com.github.bali.auth.constants.EncryptionConstant;
-import com.github.bali.auth.constants.SecurityConstant;
+import com.github.bali.security.constants.EncryptionConstant;
+import com.github.bali.security.constants.SecurityConstant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -51,7 +51,7 @@ public class BaliUserDetails implements UserDetails {
     /**
      * 用户状态
      *
-     * @see com.github.bali.auth.constants.SecurityConstant
+     * @see com.github.bali.security.constants.SecurityConstant
      */
     private Integer status;
     /**
