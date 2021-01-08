@@ -45,6 +45,8 @@ spring:
         min-idle: 0
     # 选择数据库
     database: 0
+  liquibase:
+    enabled: false
   datasource:
     name: bali-user-center
     url: jdbc:mysql://127.0.0.1:3306/bali_user_center?characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
