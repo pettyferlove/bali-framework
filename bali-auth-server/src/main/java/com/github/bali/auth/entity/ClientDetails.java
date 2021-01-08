@@ -68,7 +68,7 @@ public class ClientDetails extends Model<ClientDetails> {
     private String additionalInformation;
 
     @ApiModelProperty(value = "是否自动授权")
-    private Boolean autoapprove;
+    private Boolean autoApprove;
 
     @ApiModelProperty(value = "删除标记 0 未删除 1 删除")
     @TableLogic

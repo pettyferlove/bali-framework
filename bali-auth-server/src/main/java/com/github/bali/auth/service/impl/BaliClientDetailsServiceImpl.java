@@ -1,5 +1,6 @@
 package com.github.bali.auth.service.impl;
 
+import com.github.bali.auth.service.IClientDetailsService;
 import com.github.bali.security.constants.EncryptionConstant;
 import com.github.bali.auth.service.OAuth2ClientDetailsService;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,13 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class BaliClientDetailsServiceImpl implements OAuth2ClientDetailsService {
+
+    private final IClientDetailsService clientDetailsService;
+
+    public BaliClientDetailsServiceImpl(IClientDetailsService clientDetailsService) {
+        this.clientDetailsService = clientDetailsService;
+    }
+
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
         BaseClientDetails baseClientDetails = new BaseClientDetails("bali-client", "",

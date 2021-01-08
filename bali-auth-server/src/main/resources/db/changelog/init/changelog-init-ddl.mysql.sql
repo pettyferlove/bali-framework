@@ -48,3 +48,7 @@ CREATE INDEX role_id_index ON uc_user_role(role_id);
 --changeset Pettyfer:1610078415154-14
 CREATE INDEX user_id_index ON uc_user_role(user_id);
 
+--changeset Pettyfer:1610078415154-15
+alter table uc_client_details change autoapprove auto_approve bit null comment '是否自动授权';
+
+

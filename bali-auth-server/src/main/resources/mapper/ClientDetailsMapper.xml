@@ -15,7 +15,7 @@
         <result column="access_token_validity" property="accessTokenValidity" />
         <result column="refresh_token_validity" property="refreshTokenValidity" />
         <result column="additional_information" property="additionalInformation" />
-        <result column="autoapprove" property="autoapprove" />
+        <result column="auto_approve" property="autoApprove" />
         <result column="del_flag" property="delFlag" />
         <result column="del_version" property="delVersion" />
         <result column="creator" property="creator" />
@@ -26,7 +26,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove, del_flag, del_version, creator, create_time, modifier, modify_time
+        id, client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, auto_approve, del_flag, del_version, creator, create_time, modifier, modify_time
     </sql>
 
 </mapper>
