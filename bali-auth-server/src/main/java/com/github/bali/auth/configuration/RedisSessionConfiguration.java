@@ -27,15 +27,9 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 @ConditionalOnProperty(value = "spring.redis.host")
 public class RedisSessionConfiguration {
 
-    private final RedisTemplate<Object, Object> redisTemplate;
-
-    public RedisSessionConfiguration(RedisTemplate<Object, Object> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
-
     @Bean
     @Primary
-    public RedisIndexedSessionRepository sessionRepository() {
+    public RedisIndexedSessionRepository sessionRepository(RedisTemplate<Object, Object> redisTemplate) {
         return new RedisIndexedSessionRepository(redisTemplate);
     }
 

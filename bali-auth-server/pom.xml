@@ -51,13 +51,13 @@
             <groupId>com.github.bali</groupId>
             <artifactId>bali-core-security</artifactId>
             <version>${revision}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>com.github.bali</groupId>
             <artifactId>bali-core-test</artifactId>
             <version>${revision}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

@@ -31,18 +31,9 @@ import java.time.Duration;
 @ConditionalOnProperty(value = "spring.redis.host")
 public class RedisAutoConfiguration extends CachingConfigurerSupport {
 
-    private final CacheProperties cacheProperties;
-
-    private final RedisConnectionFactory connectionFactory;
-
-    public RedisAutoConfiguration(CacheProperties cacheProperties, RedisConnectionFactory connectionFactory) {
-        this.cacheProperties = cacheProperties;
-        this.connectionFactory = connectionFactory;
-    }
-
     @Bean
     @Primary
-    public RedisTemplate<Object, Object> redisTemplate() {
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(keySerializer());
         redisTemplate.setHashKeySerializer(keySerializer());
@@ -61,7 +52,7 @@ public class RedisAutoConfiguration extends CachingConfigurerSupport {
     }
 
     @Bean
-    public RedisCacheConfiguration redisCacheConfiguration() {
+    public RedisCacheConfiguration redisCacheConfiguration(CacheProperties cacheProperties) {
         return RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofSeconds(cacheProperties.getExpiration()))
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(keySerializer()))
