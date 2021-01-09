@@ -11,9 +11,9 @@ import java.io.Serializable;
  *
  * @author Petty
  */
-@Setter
-@Getter
+@Data
 @ToString
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class BaseRuntimeException extends RuntimeException implements Serializable {

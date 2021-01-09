@@ -6,7 +6,6 @@ import com.github.bali.auth.entity.User;
 import com.github.bali.auth.entity.UserInfo;
 import com.github.bali.auth.entity.UserRole;
 import com.github.bali.auth.service.*;
-import com.github.bali.core.framework.exception.BaseRuntimeException;
 import com.github.bali.security.userdetails.BaliUserDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -70,7 +69,7 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
                     .avatar(userInfo.getUserAvatar())
                     .build();
         } else {
-            throw new BaseRuntimeException("没有找到该用户");
+            throw new RuntimeException("没有找到该用户");
         }
     }
 }
