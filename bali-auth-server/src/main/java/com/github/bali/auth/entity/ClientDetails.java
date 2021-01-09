@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2021-01-08
+ * @since 2021-01-09
  */
 @Data
 @NoArgsConstructor
@@ -62,8 +62,8 @@ public class ClientDetails extends BaseEntity<ClientDetails> {
     @ApiModelProperty(value = "附加信息")
     private String additionalInformation;
 
-    @ApiModelProperty(value = "是否自动授权")
-    private Boolean autoApprove;
+    @ApiModelProperty(value = "自动授权")
+    private String autoApprove;
 
 
     @Override
