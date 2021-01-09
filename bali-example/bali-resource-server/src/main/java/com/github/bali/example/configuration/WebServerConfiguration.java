@@ -1,5 +1,6 @@
 package com.github.bali.example.configuration;
 
+import com.github.bali.security.provider.error.OAuth2AuthExceptionEntryPoint;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,6 +30,7 @@ public class WebServerConfiguration extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/messages/**").authenticated()
                 .and()
                 .oauth2ResourceServer()
+                .authenticationEntryPoint(new OAuth2AuthExceptionEntryPoint())
                 .jwt().jwtAuthenticationConverter(jwt -> {
             Collection<SimpleGrantedAuthority> authorities =
                     ((Collection<String>) jwt.getClaims()

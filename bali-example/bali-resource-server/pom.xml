@@ -51,13 +51,14 @@
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <groupId>com.github.bali</groupId>
+            <artifactId>bali-core-security</artifactId>
+            <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
+            <groupId>com.github.bali</groupId>
+            <artifactId>bali-core-test</artifactId>
+            <version>${revision}</version>
         </dependency>
         <!-- Spring Security 依赖 -->
     </dependencies>
