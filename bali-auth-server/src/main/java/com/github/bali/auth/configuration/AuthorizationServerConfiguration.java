@@ -77,7 +77,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     }
 
     @Bean
-    @ConditionalOnMissingBean(TokenService.class)
     public DefaultTokenServices tokenServices() {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setClientDetailsService(clientDetailsService);
