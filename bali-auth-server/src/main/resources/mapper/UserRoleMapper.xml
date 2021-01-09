@@ -5,6 +5,11 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.github.bali.auth.entity.UserRole">
     <result column="id" property="id" />
+    <result column="del_flag" property="delFlag" />
+    <result column="creator" property="creator" />
+    <result column="create_time" property="createTime" />
+    <result column="modifier" property="modifier" />
+    <result column="modify_time" property="modifyTime" />
         <result column="user_id" property="userId" />
         <result column="role_id" property="roleId" />
     </resultMap>
@@ -12,6 +17,11 @@
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id,
+        del_flag,
+        creator,
+        create_time,
+        modifier,
+        modify_time,
         user_id, role_id
     </sql>
 
