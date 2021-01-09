@@ -1,16 +1,17 @@
 package com.github.bali.auth.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.github.bali.persistence.entity.BaseEntity;
-import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.github.bali.persistence.entity.BaseEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -26,9 +27,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@TableName("uc_client_details")
-@ApiModel(value="ClientDetails对象", description="终端信息")
-public class ClientDetails extends BaseEntity<ClientDetails> {
+@TableName("uc_auth_client_details")
+@ApiModel(value="AuthClientDetails对象", description="终端信息")
+public class AuthClientDetails extends BaseEntity<AuthClientDetails> {
 
     private static final long serialVersionUID = 1L;
 

@@ -1,6 +1,6 @@
 package com.github.bali.auth.mapper;
 
-import com.github.bali.auth.entity.ClientDetails;
+import com.github.bali.auth.entity.AuthClientDetails;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author Petty
- * @since 2021-01-07
+ * @since 2021-01-09
  */
-public interface ClientDetailsMapper extends BaseMapper<ClientDetails> {
+public interface AuthClientDetailsMapper extends BaseMapper<AuthClientDetails> {
 
 }

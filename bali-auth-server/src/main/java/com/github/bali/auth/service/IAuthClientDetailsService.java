@@ -2,7 +2,7 @@ package com.github.bali.auth.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.bali.auth.entity.ClientDetails;
+import com.github.bali.auth.entity.AuthClientDetails;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,26 +11,26 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author Petty
- * @since 2021-01-07
+ * @since 2021-01-09
  */
-public interface IClientDetailsService extends IService<ClientDetails> {
+public interface IAuthClientDetailsService extends IService<AuthClientDetails> {
 
     /**
      * List查找
      *
-     * @param clientDetails 查询参数对象
+     * @param authClientDetails 查询参数对象
      * @param page     Page分页对象
      * @return IPage 返回结果
      */
-    IPage<ClientDetails> page(ClientDetails clientDetails, Page<ClientDetails> page);
+    IPage<AuthClientDetails> page(AuthClientDetails authClientDetails, Page<AuthClientDetails> page);
 
     /**
-     * 通过Id查询ClientDetails信息
+     * 通过Id查询AuthClientDetails信息
      *
      * @param id 业务主键
      * @return 对象
      */
-    ClientDetails get(String id);
+    AuthClientDetails get(String id);
 
      /**
       * 通过Id删除信息
@@ -43,17 +43,17 @@ public interface IClientDetailsService extends IService<ClientDetails> {
      /**
       * 创建数据
       *
-      * @param clientDetails 要创建的对象
+      * @param authClientDetails 要创建的对象
       * @return Boolean
       */
-     String create(ClientDetails clientDetails);
+     String create(AuthClientDetails authClientDetails);
 
      /**
       * 更新数据（必须带Id）
       *
-      * @param clientDetails 对象
+      * @param authClientDetails 对象
       * @return Boolean
       */
-     Boolean update(ClientDetails clientDetails);
+     Boolean update(AuthClientDetails authClientDetails);
 
 }

@@ -1,6 +1,6 @@
 package com.github.bali.auth.web;
 
-import com.github.bali.auth.service.IClientDetailsService;
+import com.github.bali.auth.service.IAuthClientDetailsService;
 import com.github.bali.security.utils.SecurityUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 @RestController
 public class IndexController {
 
-    private final IClientDetailsService clientDetailsService;
+    private final IAuthClientDetailsService authClientDetailsService;
 
-    public IndexController(IClientDetailsService clientDetailsService) {
-        this.clientDetailsService = clientDetailsService;
+    public IndexController(IAuthClientDetailsService authClientDetailsService) {
+        this.authClientDetailsService = authClientDetailsService;
     }
 
     @GetMapping("user")
@@ -27,7 +27,7 @@ public class IndexController {
     @GetMapping("client")
     public Object client(LocalDateTime dateTime) {
         System.out.println(dateTime);
-        return clientDetailsService.list();
+        return authClientDetailsService.list();
     }
 
 }

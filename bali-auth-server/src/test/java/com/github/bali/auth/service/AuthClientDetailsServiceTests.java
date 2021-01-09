@@ -9,17 +9,17 @@ import org.wildfly.common.Assert;
 
 @SpringBootTest
 @Transactional
-public class ClientDetailsServiceTests {
+public class AuthClientDetailsServiceTests {
 
     @Autowired
-    private IClientDetailsService clientDetailsService;
+    private IAuthClientDetailsService authClientDetailsService;
 
     @Test
     @Rollback
     void contextLoads () {
-        Assert.assertTrue(clientDetailsService.list().size()==1);
-        Assert.assertTrue(clientDetailsService.delete("1347517937222574085"));
-        Assert.assertTrue(clientDetailsService.list().isEmpty());
+        Assert.assertTrue(authClientDetailsService.list().size()==1);
+        Assert.assertTrue(authClientDetailsService.delete("1347517937222574085"));
+        Assert.assertTrue(authClientDetailsService.list().isEmpty());
     }
 
 }

@@ -2,7 +2,8 @@ package com.github.bali.auth.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.github.bali.auth.service.IClientDetailsService;
+import com.github.bali.auth.entity.AuthClientDetails;
+import com.github.bali.auth.service.IAuthClientDetailsService;
 import com.github.bali.security.constants.EncryptionConstant;
 import com.github.bali.auth.service.OAuth2ClientDetailsService;
 import com.google.common.base.Preconditions;
@@ -22,15 +23,16 @@ import java.util.Map;
 @Service
 public class BaliClientDetailsServiceImpl implements OAuth2ClientDetailsService {
 
-    private final IClientDetailsService clientDetailsService;
+    private final IAuthClientDetailsService authClientDetailsService;
 
-    public BaliClientDetailsServiceImpl(IClientDetailsService clientDetailsService) {
-        this.clientDetailsService = clientDetailsService;
+    public BaliClientDetailsServiceImpl(IAuthClientDetailsService authClientDetailsService) {
+        this.authClientDetailsService = authClientDetailsService;
     }
+
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
-        com.github.bali.auth.entity.ClientDetails details = clientDetailsService.getOne(Wrappers.<com.github.bali.auth.entity.ClientDetails>lambdaQuery().eq(com.github.bali.auth.entity.ClientDetails::getClientId, clientId));
+        AuthClientDetails details = authClientDetailsService.getOne(Wrappers.<AuthClientDetails>lambdaQuery().eq(AuthClientDetails::getClientId, clientId));
         Preconditions.checkNotNull(details, "client is not registered");
         BaseClientDetails baseClientDetails = new BaseClientDetails(details.getClientId(), details.getResourceIds(),
                 details.getScope(), details.getAuthorizedGrantTypes(), details.getAuthorities(), details.getWebServerRedirectUri());
