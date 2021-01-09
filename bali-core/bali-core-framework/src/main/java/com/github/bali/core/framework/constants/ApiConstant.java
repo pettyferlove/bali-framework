@@ -5,14 +5,16 @@ package com.github.bali.core.framework.constants;
  */
 public interface ApiConstant {
 
-    /*
+    /**
      * Api统一前缀
-     * */
+     */
     String API_PREFIX = "/api";
 
-    /*
+    String API_MATCH_PREFIX = "/api/**";
+
+    /**
      * Api V1统一前缀
-     * */
+     */
     String API_V1_PREFIX = API_PREFIX + "/v1";
 
     String API_V2_PREFIX = API_PREFIX + "/v2";
