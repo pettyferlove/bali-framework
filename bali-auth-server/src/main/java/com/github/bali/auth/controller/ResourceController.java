@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/resource")
-@PreAuthorize("#oauth2.hasScope('resource.read')")
+@PreAuthorize("#oauth2.hasAnyScope('resource.read','user.read')")
 public class ResourceController {
 
 
