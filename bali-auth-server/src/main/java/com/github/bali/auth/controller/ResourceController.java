@@ -1,5 +1,6 @@
 package com.github.bali.auth.controller;
 
+import com.github.bali.auth.domain.vo.UserDetailsVO;
 import com.github.bali.security.userdetails.BaliUserDetails;
 import com.github.bali.security.utils.SecurityUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,8 +22,22 @@ public class ResourceController {
      * @return UserDetails
      */
     @RequestMapping("user-info")
-    public BaliUserDetails userInfo() {
-        return SecurityUtil.getUser();
+    public UserDetailsVO userInfo() {
+        BaliUserDetails user = SecurityUtil.getUser();
+        return UserDetailsVO.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .nickname(user.getNickname())
+                .avatar(user.getAvatar())
+                .email(user.getEmail())
+                .status(user.getStatus())
+                .tenant(user.getTenant())
+                .roles(user.getRoles())
+                .enabled(user.isEnabled())
+                .accountNonLocked(user.isAccountNonLocked())
+                .accountNonExpired(user.isAccountNonExpired())
+                .credentialsNonExpired(user.isCredentialsNonExpired())
+                .build();
     }
 
 
