@@ -1,4 +1,4 @@
-package com.github.bali.auth.domain.vo;
+package com.github.bali.security.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

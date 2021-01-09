@@ -1,6 +1,6 @@
 package com.github.bali.auth.configuration;
 
-import com.github.bali.auth.provider.error.OAuth2AuthExceptionEntryPoint;
+import com.github.bali.security.provider.error.OAuth2AuthExceptionEntryPoint;
 import com.github.bali.core.framework.constants.ApiConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;

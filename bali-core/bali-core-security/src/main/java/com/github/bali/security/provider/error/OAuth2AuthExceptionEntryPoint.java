@@ -1,7 +1,7 @@
-package com.github.bali.auth.provider.error;
+package com.github.bali.security.provider.error;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.bali.auth.domain.vo.OAuth2Response;
+import com.github.bali.security.domain.vo.OAuth2Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
