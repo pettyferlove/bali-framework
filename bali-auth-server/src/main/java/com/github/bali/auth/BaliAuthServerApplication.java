@@ -10,14 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Petty
  */
 @SpringBootApplication
-@RestController
 public class BaliAuthServerApplication {
-
-    @GetMapping("user")
-    public Object user() {
-        Object principal = SecurityUtil.getAuthentication().getPrincipal();
-        return principal;
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(BaliAuthServerApplication.class, args);

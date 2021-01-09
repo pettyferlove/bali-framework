@@ -3,9 +3,8 @@ package com.github.bali.auth.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.github.bali.persistence.entity.BaseEntity;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -19,23 +18,19 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2021-01-07
+ * @since 2021-01-08
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @TableName("uc_client_details")
 @ApiModel(value="ClientDetails对象", description="终端信息")
-public class ClientDetails extends Model<ClientDetails> {
+public class ClientDetails extends BaseEntity<ClientDetails> {
 
     private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty(value = "ID")
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
 
     @ApiModelProperty(value = "客户端名称")
     private String clientId;
@@ -70,29 +65,10 @@ public class ClientDetails extends Model<ClientDetails> {
     @ApiModelProperty(value = "是否自动授权")
     private Boolean autoApprove;
 
-    @ApiModelProperty(value = "删除标记 0 未删除 1 删除")
-    @TableLogic
-    private Integer delFlag;
-
-    @ApiModelProperty(value = "删除版本号")
-    private String delVersion;
-
-    @ApiModelProperty(value = "创建人")
-    private String creator;
-
-    @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty(value = "修改人")
-    private String modifier;
-
-    @ApiModelProperty(value = "修改时间")
-    private LocalDateTime modifyTime;
-
 
     @Override
     protected Serializable pkVal() {
-        return this.id;
+        return null;
     }
 
 }

@@ -37,7 +37,7 @@ public class MybatisGenerator {
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setDbType(DbType.MYSQL);
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/bali-user-center?characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true");
+        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/bali_user_center?characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("root");
@@ -53,6 +53,8 @@ public class MybatisGenerator {
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
+        strategy.setSuperEntityClass("com.github.bali.persistence.entity.BaseEntity");
+        strategy.setSuperEntityColumns("id", "del_flag", "creator", "create_time", "modifier", "modify_time");
         // 乐观锁字段
         //strategy.setVersionFieldName("VERSION");
         strategy.setLogicDeleteFieldName("del_flag");

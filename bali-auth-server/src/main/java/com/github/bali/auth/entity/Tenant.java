@@ -3,9 +3,8 @@ package com.github.bali.auth.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.github.bali.persistence.entity.BaseEntity;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -19,22 +18,19 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2021-01-07
+ * @since 2021-01-08
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @TableName("uc_tenant")
 @ApiModel(value="Tenant对象", description="租户信息")
-public class Tenant extends Model<Tenant> {
+public class Tenant extends BaseEntity<Tenant> {
 
     private static final long serialVersionUID = 1L;
-
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
 
     @ApiModelProperty(value = "租户ID")
     private String tenantId;
@@ -60,29 +56,10 @@ public class Tenant extends Model<Tenant> {
     @ApiModelProperty(value = "是否有效 0 无效 1 有效")
     private Integer status;
 
-    @ApiModelProperty(value = "删除标记 0 未删除 1 删除")
-    @TableLogic
-    private Integer delFlag;
-
-    @ApiModelProperty(value = "删除版本号")
-    private String delVersion;
-
-    @ApiModelProperty(value = "创建人")
-    private String creator;
-
-    @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty(value = "修改人")
-    private String modifier;
-
-    @ApiModelProperty(value = "修改时间")
-    private LocalDateTime modifyTime;
-
 
     @Override
     protected Serializable pkVal() {
-        return this.id;
+        return null;
     }
 
 }

@@ -4,7 +4,12 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.github.bali.auth.entity.Tenant">
-        <id column="id" property="id" />
+    <result column="id" property="id" />
+    <result column="del_flag" property="delFlag" />
+    <result column="creator" property="creator" />
+    <result column="create_time" property="createTime" />
+    <result column="modifier" property="modifier" />
+    <result column="modify_time" property="modifyTime" />
         <result column="tenant_id" property="tenantId" />
         <result column="tenant_name" property="tenantName" />
         <result column="link_man" property="linkMan" />
@@ -13,17 +18,17 @@
         <result column="remark" property="remark" />
         <result column="email" property="email" />
         <result column="status" property="status" />
-        <result column="del_flag" property="delFlag" />
-        <result column="del_version" property="delVersion" />
-        <result column="creator" property="creator" />
-        <result column="create_time" property="createTime" />
-        <result column="modifier" property="modifier" />
-        <result column="modify_time" property="modifyTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, tenant_id, tenant_name, link_man, contact_number, address, remark, email, status, del_flag, del_version, creator, create_time, modifier, modify_time
+        id,
+        del_flag,
+        creator,
+        create_time,
+        modifier,
+        modify_time,
+        tenant_id, tenant_name, link_man, contact_number, address, remark, email, status
     </sql>
 
 </mapper>

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.github.bali.persistence.entity.BaseEntity;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -17,22 +18,19 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2021-01-07
+ * @since 2021-01-08
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @TableName("uc_user_role")
 @ApiModel(value="UserRole对象", description="用户角色关联信息")
-public class UserRole extends Model<UserRole> {
+public class UserRole extends BaseEntity<UserRole> {
 
     private static final long serialVersionUID = 1L;
-
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
 
     private String userId;
 
@@ -41,7 +39,7 @@ public class UserRole extends Model<UserRole> {
 
     @Override
     protected Serializable pkVal() {
-        return this.id;
+        return null;
     }
 
 }
