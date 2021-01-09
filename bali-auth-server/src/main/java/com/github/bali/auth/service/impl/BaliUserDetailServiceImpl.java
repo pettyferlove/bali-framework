@@ -1,19 +1,24 @@
 package com.github.bali.auth.service.impl;
 
-import com.github.bali.security.constants.SecurityConstant;
-import com.github.bali.auth.service.OAuth2UserDetailsService;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.github.bali.auth.entity.Role;
+import com.github.bali.auth.entity.User;
+import com.github.bali.auth.entity.UserInfo;
+import com.github.bali.auth.entity.UserRole;
+import com.github.bali.auth.service.*;
+import com.github.bali.core.framework.exception.BaseRuntimeException;
 import com.github.bali.security.userdetails.BaliUserDetails;
-import com.google.common.base.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.MessageDigestPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Petty
@@ -22,35 +27,50 @@ import java.util.UUID;
 @Service
 public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
 
+    private final IUserService userService;
+
+    private final IUserInfoService userInfoService;
+
+    private final IUserRoleService userRoleService;
+
+    private final IRoleService roleService;
+
     private final PasswordEncoder passwordEncoder;
 
-    public BaliUserDetailServiceImpl(PasswordEncoder passwordEncoder) {
+    public BaliUserDetailServiceImpl(IUserService userService, IUserInfoService userInfoService, IUserRoleService userRoleService, IRoleService roleService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.userInfoService = userInfoService;
+        this.userRoleService = userRoleService;
+        this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        BaliUserDetails userDetails = null;
-        if ("pettyfer".equals(username)) {
-            List<String> roles = new ArrayList<>();
-            roles.add("USER");
-            roles.add("ADMIN");
-            String encode = new MessageDigestPasswordEncoder("SHA-256").encode("123456");
-            userDetails = BaliUserDetails.builder()
-                    .id(UUID.randomUUID().toString())
-                    .username("pettyfer")
-                    .password(encode)
-                    .status(SecurityConstant.STATUS_NORMAL)
-                    .nickname("AlexPettyfer")
+    public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
+        Optional<User> userOptional = Optional.ofNullable(userService.getOne(Wrappers.<User>lambdaQuery().eq(User::getLoginId, loginName)));
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            UserInfo userInfo = Optional.ofNullable(userInfoService.getOne(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, user.getId()))).orElseGet(UserInfo::new);
+            List<UserRole> userRoles = Optional.ofNullable(userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, user.getId()))).orElseGet(ArrayList::new);
+            List<String> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
+            List<String> roles = new LinkedList<>();
+            if (!roleIds.isEmpty()) {
+                List<Role> roleList = Optional.ofNullable(roleService.list(Wrappers.<Role>lambdaQuery().in(Role::getId, roleIds))).orElseGet(LinkedList::new);
+                roles = roleList.stream().map(Role::getRoleName).collect(Collectors.toList());
+            }
+            return BaliUserDetails.builder()
+                    .id(user.getId())
+                    .username(user.getLoginId())
+                    .password(user.getPassword())
+                    .status(user.getStatus())
+                    .nickname(userInfo.getNickName())
                     .roles(roles)
-                    .email("pettyferlove@live.cn")
-                    .tenant("000000001")
-                    .avatar("https://bali-attachment.oss-cn-shanghai.aliyuncs.com/bali/avatar/6fdbd6c29f074e38abe1ad6929351192.png")
+                    .email(userInfo.getEmail())
+                    .tenant(user.getTenantId())
+                    .avatar(userInfo.getUserAvatar())
                     .build();
         } else {
-            userDetails = BaliUserDetails.builder().build();
+            throw new BaseRuntimeException("没有找到该用户");
         }
-        Preconditions.checkNotNull(userDetails.getId(), "没有找到该用户");
-        return userDetails;
     }
 }

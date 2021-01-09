@@ -1,7 +1,6 @@
 package com.github.bali.security.userdetails;
 
 import cn.hutool.core.util.StrUtil;
-import com.github.bali.security.constants.EncryptionConstant;
 import com.github.bali.security.constants.SecurityConstant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -75,7 +74,7 @@ public class BaliUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return EncryptionConstant.SIGNATURE_SHA256 + this.password;
+        return this.password;
     }
 
     @Override
