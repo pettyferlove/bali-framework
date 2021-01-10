@@ -22,7 +22,7 @@ import java.util.Collections;
 @Configuration
 @ConditionalOnWebApplication
 @EnableSwagger2
-public class Swagger2AutoConfiguration {
+public class Swagger2Configuration {
 
     @Bean
     public Docket createRestApi() {
