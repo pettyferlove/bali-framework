@@ -36,6 +36,7 @@ public class OAuth2AuthenticationConverter implements Converter<Jwt, AbstractAut
                 .email((String) claims.get("email"))
                 .status(((Long) claims.get("status")).intValue())
                 .tenant((String) claims.get("tenant"))
+                .channel((String) claims.get("channel"))
                 .roles(roles)
                 .build();
         return new UsernamePasswordAuthenticationToken(userDetails, null, authorities);

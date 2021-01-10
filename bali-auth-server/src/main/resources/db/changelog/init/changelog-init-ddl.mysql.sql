@@ -54,6 +54,9 @@ alter table uc_client_details change autoapprove auto_approve bit null comment '
 --changeset Pettyfer:1610078415154-16
 alter table uc_user_info modify nick_name varchar(128) null comment '用户昵称';
 
+--changeset Pettyfer:1610078415154-17
+alter table uc_user modify user_channel varchar(255) default 'web' not null comment '用户所属渠道';
+
 
 
 

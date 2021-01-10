@@ -2,6 +2,7 @@ package com.github.bali.security.userdetails;
 
 import cn.hutool.core.util.StrUtil;
 import com.github.bali.security.constants.SecurityConstant;
+import com.github.bali.security.constants.UserChannelConstant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,6 +44,13 @@ public class BaliUserDetails implements UserDetails {
      * 用户密码
      */
     private String password;
+
+    /**
+     * 用户渠道
+     */
+    @Builder.Default
+    private String channel = UserChannelConstant.WEB;
+
     /**
      * 电子邮箱
      */

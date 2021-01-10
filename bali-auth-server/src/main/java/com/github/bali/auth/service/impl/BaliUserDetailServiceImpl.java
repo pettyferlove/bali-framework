@@ -62,6 +62,7 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
                     .id(user.getId())
                     .username(user.getLoginId())
                     .password(user.getPassword())
+                    .channel(user.getUserChannel())
                     .status(user.getStatus())
                     .nickname(StrUtil.isEmpty(userInfo.getUserName())?userInfo.getUserName():userInfo.getNickName())
                     .roles(roles)
