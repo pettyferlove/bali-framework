@@ -1,17 +1,18 @@
 package com.github.bali.auth.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.github.bali.persistence.entity.BaseEntity;
-import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.github.bali.persistence.entity.BaseEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -39,7 +40,7 @@ public class UserInfo extends BaseEntity<UserInfo> {
     @ApiModelProperty(value = "姓名")
     private String userName;
 
-    @ApiModelProperty(value = "用户全名")
+    @ApiModelProperty(value = "用户昵称")
     private String nickName;
 
     @ApiModelProperty(value = "性别")

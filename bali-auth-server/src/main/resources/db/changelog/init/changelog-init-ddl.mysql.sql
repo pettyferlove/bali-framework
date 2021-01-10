@@ -51,4 +51,9 @@ CREATE INDEX user_id_index ON uc_user_role(user_id);
 --changeset Pettyfer:1610078415154-15
 alter table uc_client_details change autoapprove auto_approve bit null comment '是否自动授权';
 
+--changeset Pettyfer:1610078415154-16
+alter table uc_user_info modify nick_name varchar(128) null comment '用户昵称';
+
+
+
 
