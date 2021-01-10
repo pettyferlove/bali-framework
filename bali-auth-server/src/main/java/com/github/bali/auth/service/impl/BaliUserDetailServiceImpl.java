@@ -1,5 +1,6 @@
 package com.github.bali.auth.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.bali.auth.entity.Role;
 import com.github.bali.auth.entity.User;
@@ -62,7 +63,7 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
                     .username(user.getLoginId())
                     .password(user.getPassword())
                     .status(user.getStatus())
-                    .nickname(userInfo.getNickName())
+                    .nickname(StrUtil.isEmpty(userInfo.getUserName())?userInfo.getUserName():userInfo.getNickName())
                     .roles(roles)
                     .email(userInfo.getEmail())
                     .tenant(user.getTenantId())
