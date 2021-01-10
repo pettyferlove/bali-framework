@@ -37,12 +37,4 @@ public @interface EnableOAuth2ResourceServer {
      */
     String[] ignores() default {};
 
-
-    /**
-     * OAuth2 资源ID
-     *
-     * @return String
-     */
-    String resourceId() default "";
-
 }
