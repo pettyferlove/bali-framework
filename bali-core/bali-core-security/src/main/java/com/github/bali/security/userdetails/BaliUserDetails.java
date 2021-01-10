@@ -65,7 +65,12 @@ public class BaliUserDetails implements UserDetails {
         Set<GrantedAuthority> authoritySet = new HashSet<>();
         for (String role : roles) {
             if (StrUtil.isNotEmpty(role)) {
-                authoritySet.add(new SimpleGrantedAuthority(SecurityConstant.ROLE_PREFIX + role));
+                String r = role.toUpperCase();
+                if(!r.contains(SecurityConstant.ROLE_PREFIX)){
+                    authoritySet.add(new SimpleGrantedAuthority(SecurityConstant.ROLE_PREFIX + r));
+                } else {
+                    authoritySet.add(new SimpleGrantedAuthority(r));
+                }
             }
         }
         authoritySet.add(new SimpleGrantedAuthority(SecurityConstant.ROLE_PREFIX + SecurityConstant.BASE_ROLE));

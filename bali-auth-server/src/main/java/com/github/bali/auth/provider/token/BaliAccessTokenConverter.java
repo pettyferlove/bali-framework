@@ -26,10 +26,14 @@ public class BaliAccessTokenConverter extends DefaultAccessTokenConverter {
         public Map<String, ?> convertUserAuthentication(Authentication authentication) {
             Map<String, Object> response = new LinkedHashMap<String, Object>();
             BaliUserDetails principal = (BaliUserDetails) authentication.getPrincipal();
-            response.put("user_id", principal.getId());
+            response.put("id", principal.getId());
             response.put("username", principal.getUsername());
+            response.put("nickname", principal.getNickname());
+            response.put("avatar", principal.getAvatar());
+            response.put("email", principal.getEmail());
+            response.put("status", principal.getStatus());
             response.put("authorities", AuthorityUtils.authorityListToSet(authentication.getAuthorities()));
-            response.put("tenant_id", principal.getTenant());
+            response.put("tenant", principal.getTenant());
             response.put("iss", "http://127.0.0.1:9000");
             return response;
         }
