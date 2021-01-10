@@ -21,6 +21,7 @@
         <result column="refresh_token_validity" property="refreshTokenValidity" />
         <result column="additional_information" property="additionalInformation" />
         <result column="auto_approve" property="autoApprove" />
+        <result column="tenant_id" property="tenantId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -31,7 +32,7 @@
         create_time,
         modifier,
         modify_time,
-        client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, auto_approve
+        client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, auto_approve, tenant_id
     </sql>
 
 </mapper>

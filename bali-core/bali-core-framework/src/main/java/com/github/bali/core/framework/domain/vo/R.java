@@ -19,7 +19,7 @@ import java.io.Serializable;
 public class R<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private HttpStatus status = HttpStatus.OK;
+    private int status = HttpStatus.OK.value();
 
     private long timestamp;
 
@@ -47,14 +47,14 @@ public class R<T> implements Serializable {
 
     public R(Throwable e, HttpStatus status) {
         super();
-        this.status = status;
+        this.status = status.value();
         this.message = e.getMessage();
         this.timestamp = System.currentTimeMillis();
     }
 
     public R(Throwable e, String message, HttpStatus status) {
         super();
-        this.status = status;
+        this.status = status.value();
         this.message = message;
         this.timestamp = System.currentTimeMillis();
     }

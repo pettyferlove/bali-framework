@@ -66,6 +66,9 @@ public class AuthClientDetails extends BaseEntity<AuthClientDetails> {
     @ApiModelProperty(value = "自动授权")
     private String autoApprove;
 
+    @ApiModelProperty(value = "租户ID")
+    private String tenantId;
+
 
     @Override
     protected Serializable pkVal() {
