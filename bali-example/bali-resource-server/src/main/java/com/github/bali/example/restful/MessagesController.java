@@ -2,6 +2,7 @@ package com.github.bali.example.restful;
 
 import com.github.bali.security.userdetails.BaliUserDetails;
 import com.github.bali.security.utils.SecurityUtil;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,7 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MessagesController {
 
-    @GetMapping("/messages")
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/messages/info")
     public String[] getMessages() {
         BaliUserDetails user = SecurityUtil.getUser();
         System.out.println(user);

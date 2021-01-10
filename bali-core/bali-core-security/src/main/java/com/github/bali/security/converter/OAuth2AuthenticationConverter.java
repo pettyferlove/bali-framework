@@ -1,4 +1,4 @@
-package com.github.bali.example;
+package com.github.bali.security.converter;
 
 import com.github.bali.security.constants.SecurityConstant;
 import com.github.bali.security.userdetails.BaliUserDetails;

@@ -1,8 +1,9 @@
-package com.github.bali.example.configuration;
+package com.github.bali.security.configuration;
 
-import com.github.bali.example.OAuth2AuthenticationConverter;
+import com.github.bali.security.converter.OAuth2AuthenticationConverter;
 import com.github.bali.security.provider.error.OAuth2AuthExceptionEntryPoint;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,9 +13,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @author Pettyfer
  */
 @Slf4j
+@Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebServerConfiguration extends WebSecurityConfigurerAdapter {
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+public class WebServerAutoConfiguration extends WebSecurityConfigurerAdapter {
 
 
 
@@ -28,6 +30,11 @@ public class WebServerConfiguration extends WebSecurityConfigurerAdapter {
                 .oauth2ResourceServer()
                 .authenticationEntryPoint(new OAuth2AuthExceptionEntryPoint())
                 .jwt().jwtAuthenticationConverter(new OAuth2AuthenticationConverter());
+        http.csrf().disable()
+                .httpBasic().disable()
+                .csrf().disable()
+                .headers().frameOptions().disable();
+        http.rememberMe().disable();
     }
 
 }
