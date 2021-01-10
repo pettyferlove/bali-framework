@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -16,6 +15,8 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class BaseEntity<T> extends Model<BaseEntity<T>> {
+
+    private static final long serialVersionUID = 1602376530658930002L;
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
