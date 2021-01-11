@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
  * @author Pettyfer
  */
 @SuppressWarnings("ALL")
-public class DefaultOAuth2RefreshTokenSerializer implements ObjectDeserializer {
+public class DefaultOAuth2RefreshTokenDeserializer implements ObjectDeserializer {
 
     @Override
     public <T> T deserialze(DefaultJSONParser parser, Type type, Object fieldName) {

@@ -23,7 +23,7 @@ import java.util.Set;
  * @author Pettyfer
  */
 @SuppressWarnings("ALL")
-public class OAuth2AuthenticationSerializer implements ObjectDeserializer {
+public class OAuth2AuthenticationDeserializer implements ObjectDeserializer {
     @Override
     public <T> T deserialze(DefaultJSONParser parser, Type type, Object fieldName) {
         if (type == OAuth2Authentication.class) {
