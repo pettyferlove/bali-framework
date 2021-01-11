@@ -1,10 +1,12 @@
 package com.github.bali.auth.granter;
 
 import cn.hutool.core.util.StrUtil;
+import com.github.bali.auth.service.impl.BaliUserDetailServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.token.AbstractTokenGranter;
@@ -28,25 +30,32 @@ public class WeChatTokenGranter extends AbstractTokenGranter {
 
     private final OAuth2RequestFactory requestFactory;
 
-    protected WeChatTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory) {
+    private final BaliUserDetailServiceImpl userDetailsService;
+
+    protected WeChatTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory, BaliUserDetailServiceImpl userDetailsService) {
         super(tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
         this.requestFactory = requestFactory;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
     public OAuth2Authentication getOAuth2Authentication(ClientDetails client, TokenRequest tokenRequest) {
         Map<String, String> parameters = new LinkedHashMap<String, String>(tokenRequest.getRequestParameters());
         UserDetails userDetails = null;
-        if (parameters.containsKey(UNION_ID_KEY)) {
-            String unionId = parameters.get(UNION_ID_KEY);
-            if (StrUtil.isNotBlank(unionId)) {
-                //userDetails = userDetailsService.loadUserByWeChatUnionId(unionId);
+        try {
+            if (parameters.containsKey(UNION_ID_KEY)) {
+                String unionId = parameters.get(UNION_ID_KEY);
+                if (StrUtil.isNotBlank(unionId)) {
+                    userDetails = userDetailsService.loadUserByWeChatUnionId(unionId);
+                }
+            } else if (parameters.containsKey(OPEN_ID_KEY)) {
+                String openId = parameters.get(OPEN_ID_KEY);
+                if (StrUtil.isNotBlank(openId)) {
+                    userDetails = userDetailsService.loadUserByWeChatOpenId(openId);
+                }
             }
-        } else if (parameters.containsKey(OPEN_ID_KEY)) {
-            String openId = parameters.get(OPEN_ID_KEY);
-            if (StrUtil.isNotBlank(openId)) {
-                //userDetails = userDetailsService.loadUserByWeChatOpenId(openId);
-            }
+        } catch (Exception e) {
+            throw new InvalidGrantException(e.getMessage());
         }
         if (userDetails == null) {
             throw new OAuth2Exception("请求参数异常");
@@ -54,7 +63,7 @@ public class WeChatTokenGranter extends AbstractTokenGranter {
         AbstractAuthenticationToken userAuth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         userAuth.setDetails(parameters);
         OAuth2Request authRequest = getRequestFactory().createOAuth2Request(client, tokenRequest);
-        return new OAuth2Authentication(authRequest, null);
+        return new OAuth2Authentication(authRequest, userAuth);
     }
 
 }
