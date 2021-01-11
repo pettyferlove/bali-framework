@@ -23,7 +23,7 @@ public class MultiTenancyProperties {
 
     String tableField;
 
-    IgnoreObject ignore;
+    IgnoreObject ignore = new IgnoreObject();
 
 
     @Data
