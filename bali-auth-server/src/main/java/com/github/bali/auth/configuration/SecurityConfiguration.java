@@ -48,9 +48,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.formLogin()
+                // 页面
+                .loginPage("/login")
+                // 登录处理url
+                .loginProcessingUrl("/authorize")
+                .and()
                 .authorizeRequests()
-                .antMatchers("/.well-known/jwks.json").permitAll()
+                .antMatchers("/login", "/.well-known/jwks.json").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bali OAuth2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <th:block th:replace="fragments/css/css-import::core-css"/>
+</head>
+
+<body class="layui-layout-body">
+<div class="authorize">
+    <div class="authorize-main">
+        <div class="layui-card">
+            <div class="layui-card-header authorize-card-header">
+                <b><span class="font-bold" th:text="${client.clientId}"></span></b>希望访问你的账号,并获取用户信息
+            </div>
+            <div class="layui-card-body authorize-content">
+                <h4>检查权限</h4>
+                <hr/>
+                <form class="layui-form" name="confirmationForm" th:action="@{/oauth2/authorize}" method="post">
+                    <input name="user_oauth_approval" value="true" type="hidden"/>
+
+                    <th:block th:each="scope, stat:${scopes}">
+
+                        <div class="layui-form-item authorize-form">
+                            <input th:for="${'scope-'+stat.index}" type="checkbox" th:id="${'scope-'+stat.index}"
+                                   th:name="${scope.key}" checked="checked" value="true" name="like[write]"
+                                   th:title="${#strings.substringAfter(scope.key,'.')}">
+                        </div>
+                    </th:block>
+                    <br/>
+                    <button class="layui-btn layui-btn-fluid layui-btn-normal">确认授权</button>
+                </form>
+            </div>
+        </div>
+        <th:block th:replace="common/footer"/>
+    </div>
+</div>
+</body>
+<th:block th:replace="fragments/js/js-import::core-js"/>
+</html>

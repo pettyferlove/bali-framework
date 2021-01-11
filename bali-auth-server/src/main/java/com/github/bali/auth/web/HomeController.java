@@ -13,19 +13,19 @@ import java.util.Objects;
  * @author Petty
  */
 @Controller
-public class IndexController {
+public class HomeController {
 
     private final IUserService userService;
 
-    public IndexController(IUserService userService) {
+    public HomeController(IUserService userService) {
         this.userService = userService;
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/home")
     public String index(Model model) {
         User userInfo = userService.get(Objects.requireNonNull(SecurityUtil.getUser()).getId());
-        model.addAttribute("user", userInfo);
-        return "index";
+        model.addAttribute("user",userInfo);
+        return "home/home";
     }
 
 }

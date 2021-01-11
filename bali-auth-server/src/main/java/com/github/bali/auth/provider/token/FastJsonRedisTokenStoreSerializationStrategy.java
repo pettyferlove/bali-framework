@@ -10,6 +10,7 @@ import org.springframework.data.redis.serializer.SerializationException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.oauth2.common.DefaultOAuth2RefreshToken;
+import org.springframework.security.oauth2.provider.AuthorizationRequest;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreSerializationStrategy;
@@ -48,6 +49,8 @@ public class FastJsonRedisTokenStoreSerializationStrategy implements RedisTokenS
                 InternalAuthenticationServiceException.class);
         TypeUtils.addMapping("org.springframework.security.authentication.BadCredentialsException",
                 BadCredentialsException.class);
+        TypeUtils.addMapping("org.springframework.security.oauth2.provider.AuthorizationRequest",
+                AuthorizationRequest.class);
     }
 
     @Override

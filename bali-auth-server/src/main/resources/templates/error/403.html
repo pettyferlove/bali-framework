@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bali OAuth2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <th:block th:replace="fragments/css/css-import::core-css"/>
+</head>
+<body>
+<div class="layui-layout-body">
+    <div class="layui-fluid">
+        <div class="error-tips">
+            <i class="layui-icon layui-icon-face-surprised error-icon"></i>
+            <div class="layui-text error-text">
+                <h1>
+                    <span class="layui-anim layui-anim-loop layui-anim-">4</span>
+                    <span class="layui-anim layui-anim-loop layui-anim-rotate">0</span>
+                    <span class="layui-anim layui-anim-loop layui-anim-">3</span>
+                </h1>
+            </div>
+            <div class="layui-text" style="font-size: 20px;">
+                <th:block th:text="${message}"></th:block>
+            </div>
+            <div class="layui-text" style="font-size: 16px;margin-top: 14px">
+                <th:block th:text="${path}"></th:block>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
