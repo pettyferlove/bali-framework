@@ -16,21 +16,15 @@ import org.springframework.context.annotation.Configuration;
 @MapperScan("com.github.bali.auth.mapper")
 public class MyBatisPlusAutoConfiguration {
 
-   /* private final TenantSqlParser tenantSqlParser;
-
-    public MyBatisPlusAutoConfiguration(TenantSqlParser tenantSqlParser) {
-        this.tenantSqlParser = tenantSqlParser;
-    }*/
-
     /**
      * 分页插件
      *
      * @return PaginationInterceptor
      */
     @Bean
-    public PaginationInterceptor paginationInterceptor() {
+    public PaginationInterceptor paginationInterceptor(TenantSqlParser tenantSqlParser) {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        //paginationInterceptor.setSqlParserList(Lists.newArrayList(tenantSqlParser));
+        paginationInterceptor.setSqlParserList(Lists.newArrayList(tenantSqlParser));
         return paginationInterceptor;
     }
 

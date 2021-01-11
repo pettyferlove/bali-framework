@@ -83,3 +83,5 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: true
     call-setters-on-nulls: true
+multi-tenancy:
+  table-field: tenant_id # 租户标识字段

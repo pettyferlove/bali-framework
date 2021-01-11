@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "multi-tenancy.table-field",
+      "type": "java.lang.String",
+      "description": "租户控制标识字段."
+    },
+    {
+      "name": "multi-tenancy.ignore.roles",
+      "type": "java.lang.String",
+      "description": "需要忽略租户控制的角色标记."
+    },
+    {
+      "name": "multi-tenancy.ignore.tables",
+      "type": "java.lang.String",
+      "description": "需要忽略租户控制的数据表格."
+    }
+  ]
+}

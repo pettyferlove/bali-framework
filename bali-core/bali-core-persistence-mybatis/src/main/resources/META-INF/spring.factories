@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.bali.persistence.properties.MultiTenancyProperties,\
+  com.github.bali.persistence.configuration.MultiTenancyAutoConfiguration
