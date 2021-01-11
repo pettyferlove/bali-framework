@@ -31,8 +31,6 @@ public class OAuth2AuthenticationConverter implements Converter<Jwt, AbstractAut
         BaliUserDetails userDetails = BaliUserDetails.builder()
                 .id((String) claims.get("id"))
                 .username((String) claims.get("username"))
-                .nickname((String) claims.get("nickname"))
-                .email((String) claims.get("email"))
                 .status(((Long) claims.get("status")).intValue())
                 .tenant((String) claims.get("tenant"))
                 .channel((String) claims.get("channel"))
