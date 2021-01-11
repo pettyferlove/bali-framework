@@ -3,11 +3,14 @@ package com.github.bali.auth.controller;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.github.bali.auth.domain.vo.WeChatUserRegister;
 import com.github.bali.auth.domain.vo.WebUserRegister;
 import com.github.bali.auth.entity.AuthClientDetails;
 import com.github.bali.auth.service.IAuthClientDetailsService;
+import com.github.bali.auth.service.IRegisterService;
 import com.github.bali.core.framework.domain.vo.R;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
+import com.github.bali.security.constants.UserChannelConstant;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpHeaders;
@@ -32,16 +35,19 @@ public class RegisterController {
 
     private final IAuthClientDetailsService authClientDetailsService;
 
+    private final IRegisterService registerService;
+
     private final PasswordEncoder passwordEncoder;
 
-    public RegisterController(IAuthClientDetailsService authClientDetailsService, PasswordEncoder passwordEncoder) {
+    public RegisterController(IAuthClientDetailsService authClientDetailsService, IRegisterService registerService, PasswordEncoder passwordEncoder) {
         this.authClientDetailsService = authClientDetailsService;
+        this.registerService = registerService;
         this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("web")
     @ApiOperation(value = "Web用户注册", notes = "需客户端Basic认证")
-    public R<Boolean> web(WebUserRegister webUserRegister, @RequestHeader HttpHeaders headers) {
+    public R<Boolean> web(WebUserRegister register, @RequestHeader HttpHeaders headers) {
         String tenantId = authenticate(headers);
         throw new BaseRuntimeException("暂不支持Web端用户注册，请联系管理员添加用户");
     }
@@ -55,9 +61,9 @@ public class RegisterController {
 
     @PostMapping("wechat-mini-program")
     @ApiOperation(value = "小程序用户注册", notes = "需客户端Basic认证")
-    public R<Boolean> wechatMiniProgram(@RequestHeader HttpHeaders headers) {
+    public R<Boolean> wechatMiniProgram(WeChatUserRegister register, @RequestHeader HttpHeaders headers) {
         String tenantId = authenticate(headers);
-        return null;
+        return new R<>(registerService.registerWeChat(register, tenantId, UserChannelConstant.WECHAT_MINI_PROGRAM));
     }
 
     private String authenticate(HttpHeaders headers) {
@@ -73,8 +79,8 @@ public class RegisterController {
             String clientId = split[0];
             String clientSecret = split[1];
             AuthClientDetails authClientDetails = authClientDetailsService.getOne(Wrappers.<AuthClientDetails>lambdaQuery().eq(AuthClientDetails::getClientId, clientId));
-            if(ObjectUtil.isNotNull(authClientDetails)) {
-                if(passwordEncoder.matches(clientSecret, authClientDetails.getClientSecret())){
+            if (ObjectUtil.isNotNull(authClientDetails)) {
+                if (passwordEncoder.matches(clientSecret, authClientDetails.getClientSecret())) {
                     return authClientDetails.getTenantId();
                 } else {
                     throw new BaseRuntimeException("client authentication error", HttpStatus.UNAUTHORIZED);
