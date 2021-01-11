@@ -1,7 +1,7 @@
 --liquibase formatted sql
 
 --changeset Petty:1610264051415-1
-INSERT INTO uc_auth_client_details (id, client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, auto_approve, tenant_id, del_flag, creator, create_time, modifier, modify_time) VALUES ('1347517937222574085', 'bali', NULL, '123456', 'user.read,resource.read', 'password,refresh_token,authorization_code,client_credentials,mobile,wechat', 'http://localhost:9001/login/oauth2/code/bali', NULL, 36000, 36000, NULL, NULL, '0000000001', 0, NULL, '2021-01-08 21:26:13', NULL, '2021-01-08 21:26:18');
+INSERT INTO uc_auth_client_details (id, client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, auto_approve, tenant_id, del_flag, creator, create_time, modifier, modify_time) VALUES ('1347517937222574085', 'bali', NULL, '{noop}123456', 'user.read,resource.read', 'password,refresh_token,authorization_code,client_credentials,mobile,wechat', 'http://localhost:9001/login/oauth2/code/bali', NULL, 36000, 36000, NULL, NULL, '0000000001', 0, NULL, '2021-01-08 21:26:13', NULL, '2021-01-08 21:26:18');
 
 --changeset Petty:1610264051415-2
 INSERT INTO uc_tenant (id, tenant_id, tenant_name, link_man, contact_number, address, remark, email, status, del_flag, creator, create_time, modifier, modify_time) VALUES ('1250754808025112580', '0000000001', '系统管理方', 'Alex Pettyfer', '13094186549', '广州', NULL, 'pettyferlove@live.cn', 1, 0, '1250752809141460993', '2019-07-13 11:58:05', '1250752809141460993', '2020-04-16 20:08:56');

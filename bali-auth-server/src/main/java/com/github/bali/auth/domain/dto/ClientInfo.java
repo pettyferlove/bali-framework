@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClientDTO implements IDTO {
+public class ClientInfo implements IDTO {
     private static final long serialVersionUID = -9063295362323632850L;
 
     private String clientId;

@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.bali.auth.entity.AuthClientDetails;
 import com.github.bali.auth.service.IAuthClientDetailsService;
-import com.github.bali.security.constants.EncryptionConstant;
 import com.github.bali.auth.service.OAuth2ClientDetailsService;
 import com.google.common.base.Preconditions;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +35,7 @@ public class BaliClientDetailsServiceImpl implements OAuth2ClientDetailsService 
         Preconditions.checkNotNull(details, "client is not registered");
         BaseClientDetails baseClientDetails = new BaseClientDetails(details.getClientId(), details.getResourceIds(),
                 details.getScope(), details.getAuthorizedGrantTypes(), details.getAuthorities(), details.getWebServerRedirectUri());
-        baseClientDetails.setClientSecret(EncryptionConstant.SIGNATURE_NOOP + details.getClientSecret());
+        baseClientDetails.setClientSecret(details.getClientSecret());
         if (details.getAccessTokenValidity() != null) {
             baseClientDetails.setAccessTokenValiditySeconds(details.getAccessTokenValidity());
         }

@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class WebUserRegisterVO implements IVO {
+public class WebUserRegister implements IVO {
     private static final long serialVersionUID = 999821014362807723L;
 
     @ApiModelProperty(value = "用户登录名")
@@ -25,7 +25,7 @@ public class WebUserRegisterVO implements IVO {
     @ApiModelProperty(value = "账号密码")
     private String password;
 
-    @ApiModelProperty(value = "重复")
+    @ApiModelProperty(value = "重复密码")
     private String repeatPassword;
 
 
