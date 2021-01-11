@@ -9,7 +9,10 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.session.data.redis.RedisIndexedSessionRepository;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.session.web.http.CookieSerializer;
@@ -29,7 +32,13 @@ public class RedisSessionConfiguration {
 
     @Bean
     @Primary
-    public RedisIndexedSessionRepository sessionRepository(RedisTemplate<Object, Object> redisTemplate) {
+    public RedisIndexedSessionRepository sessionRepository(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setDefaultSerializer(new JdkSerializationRedisSerializer(this.getClass().getClassLoader()));
+        redisTemplate.setConnectionFactory(connectionFactory);
+        redisTemplate.afterPropertiesSet();
         RedisIndexedSessionRepository sessionRepository = new RedisIndexedSessionRepository(redisTemplate);
         sessionRepository.setRedisKeyNamespace("security:session");
         return sessionRepository;
