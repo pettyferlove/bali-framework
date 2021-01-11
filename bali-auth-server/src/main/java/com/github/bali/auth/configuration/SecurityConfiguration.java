@@ -15,15 +15,18 @@
  */
 package com.github.bali.auth.configuration;
 
+import com.github.bali.auth.service.OAuth2UserDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 /**
@@ -37,8 +40,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final PersistentTokenRepository tokenRepository;
 
-    public SecurityConfiguration(PersistentTokenRepository tokenRepository) {
+    private final OAuth2UserDetailsService userDetailsService;
+
+    private final PasswordEncoder passwordEncoder;
+
+    public SecurityConfiguration(PersistentTokenRepository tokenRepository, OAuth2UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         this.tokenRepository = tokenRepository;
+        this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -68,6 +77,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 .csrf().disable()
                 .headers().frameOptions().disable();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        super.configure(auth);
     }
 
     @Bean

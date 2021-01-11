@@ -12,6 +12,7 @@ import com.github.bali.core.framework.exception.BaseRuntimeException;
 import com.github.bali.security.utils.SecurityUtil;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -56,6 +57,36 @@ public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> impleme
         tenant.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getId());
         tenant.setModifyTime(LocalDateTime.now());
         return this.updateById(tenant);
+    }
+
+    @Override
+    public List<Tenant> all() {
+        return null;
+    }
+
+    @Override
+    public String create(String userId, Tenant tenant) {
+        return null;
+    }
+
+    @Override
+    public Boolean update(String userId, Tenant tenant) {
+        return null;
+    }
+
+    @Override
+    public Boolean changeStatus(String userId, Tenant tenant) {
+        return null;
+    }
+
+    @Override
+    public Boolean check(String tenantId) {
+        return null;
+    }
+
+    @Override
+    public Boolean checkTenantStatus(String tenantId) {
+        return null;
     }
 
 }

@@ -12,6 +12,7 @@ import com.github.bali.core.framework.exception.BaseRuntimeException;
 import com.github.bali.security.utils.SecurityUtil;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -52,10 +53,45 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     }
 
     @Override
+    public String create(String userId, Role role) {
+        return null;
+    }
+
+    @Override
     public Boolean update(Role role) {
         role.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getId());
         role.setModifyTime(LocalDateTime.now());
         return this.updateById(role);
+    }
+
+    @Override
+    public Boolean update(String userId, Role role) {
+        return null;
+    }
+
+    @Override
+    public List<Role> findRoleByUserId(String userId) {
+        return null;
+    }
+
+    @Override
+    public Boolean addUserRole(String userId, String[] roleIds) {
+        return null;
+    }
+
+    @Override
+    public Boolean deleteUserRole(String userId, String[] roleIds) {
+        return null;
+    }
+
+    @Override
+    public Boolean check(String role) {
+        return null;
+    }
+
+    @Override
+    public List<String> findRoleKeyByUserId(String userId) {
+        return null;
     }
 
 }
