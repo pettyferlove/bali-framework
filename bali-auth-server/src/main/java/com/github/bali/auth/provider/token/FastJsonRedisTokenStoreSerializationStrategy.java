@@ -25,7 +25,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class FastJsonRedisTokenStoreSerializationStrategy implements RedisTokenStoreSerializationStrategy {
 
-    private static ParserConfig config = new ParserConfig();
+    private static final ParserConfig config = new ParserConfig();
 
     static {
         init();

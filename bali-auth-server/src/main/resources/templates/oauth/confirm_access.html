@@ -18,7 +18,7 @@
             <div class="layui-card-body authorize-content">
                 <h4>检查权限</h4>
                 <hr/>
-                <form class="layui-form" name="confirmationForm" th:action="@{/oauth2/authorize}" method="post">
+                <form class="layui-form" name="confirmationForm" th:action="@{/oauth/authorize}" method="post">
                     <input name="user_oauth_approval" value="true" type="hidden"/>
 
                     <th:block th:each="scope, stat:${scopes}">
