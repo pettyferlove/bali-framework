@@ -3,16 +3,15 @@ package com.github.bali.auth.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.bali.auth.entity.Role;
 import com.github.bali.auth.mapper.RoleMapper;
 import com.github.bali.auth.service.IRoleService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
 import com.github.bali.security.utils.SecurityUtil;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -53,45 +52,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     }
 
     @Override
-    public String create(String userId, Role role) {
-        return null;
-    }
-
-    @Override
     public Boolean update(Role role) {
         role.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getId());
         role.setModifyTime(LocalDateTime.now());
         return this.updateById(role);
-    }
-
-    @Override
-    public Boolean update(String userId, Role role) {
-        return null;
-    }
-
-    @Override
-    public List<Role> findRoleByUserId(String userId) {
-        return null;
-    }
-
-    @Override
-    public Boolean addUserRole(String userId, String[] roleIds) {
-        return null;
-    }
-
-    @Override
-    public Boolean deleteUserRole(String userId, String[] roleIds) {
-        return null;
-    }
-
-    @Override
-    public Boolean check(String role) {
-        return null;
-    }
-
-    @Override
-    public List<String> findRoleKeyByUserId(String userId) {
-        return null;
     }
 
 }
