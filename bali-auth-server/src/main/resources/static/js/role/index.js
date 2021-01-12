@@ -1,9 +1,7 @@
 layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function(){
-    var laydate = layui.laydate //日期
-        ,laypage = layui.laypage //分页
+    let laydate = layui.laydate
         ,layer = layui.layer //弹层
-        ,table = layui.table //表格
-        ,carousel = layui.carousel //轮播
+        ,table = layui.table
 
     //执行一个 table 实例
     table.render({
@@ -33,30 +31,28 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         }
     });
 
-    var $ = layui.$, active = {
+    let $ = layui.$, active = {
         reload: function(){
-            var demoReload = $('#demoReload');
-
-            //执行重载
+            let roleName = $('#roleName');
             table.reload('table', {
                 page: {
-                    curr: 1 //重新从第 1 页开始
+                    curr: 1
                 }
                 ,where: {
-                    roleName: demoReload.val()
+                    roleName: roleName.val()
                 }
             }, 'data');
         }
     };
 
-    $('.demoTable .layui-btn').on('click', function(){
-        var type = $(this).data('type');
+    $('.search .layui-btn').on('click', function(){
+        let type = $(this).data('type');
         active[type] ? active[type].call(this) : '';
     });
 
     //监听头工具栏事件
     table.on('toolbar(filter)', function(obj){
-        var checkStatus = table.checkStatus(obj.config.id)
+        let checkStatus = table.checkStatus(obj.config.id)
             ,data = checkStatus.data; //获取选中的数据
         switch(obj.event){
             case 'add':
@@ -83,7 +79,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
     //监听行工具事件
     table.on('tool(filter)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-        var data = obj.data //获得当前行数据
+        let data = obj.data //获得当前行数据
             ,layEvent = obj.event; //获得 lay-event 对应的值
         if(layEvent === 'detail'){
             layer.msg('查看操作');
@@ -99,7 +95,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     });
 
     //将日期直接嵌套在指定容器中
-    var dateIns = laydate.render({
+    let dateIns = laydate.render({
         elem: '#laydateDemo'
         ,position: 'static'
         ,calendar: true //是否开启公历重要节日

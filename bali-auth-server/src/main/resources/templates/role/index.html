@@ -16,23 +16,36 @@
     <span class="layui-breadcrumb" lay-separator="—">
       <a href="">首页</a>
       <a href="">管理中心</a>
-      <a><cite>仪表盘</cite></a>
+      <a><cite>角色管理</cite></a>
     </span>
 </div>
 
-<div class="demoTable">
-    <div class="layui-inline">
-        <input placeholder="请输入角色名" class="layui-input" name="id" id="demoReload" autocomplete="off">
-    </div>
-    <button class="layui-btn" data-type="reload">搜索</button>
-</div>
-<table class="layui-hide" id="table" lay-filter="filter"></table>
+<div>
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="search">
+                        <div class="layui-inline">
+                            <input placeholder="请输入角色名" class="layui-input" name="id" id="roleName" autocomplete="off">
+                        </div>
+                        <button class="layui-btn" data-type="reload">搜索</button>
+                    </div>
+                    <table class="layui-hide" id="table" lay-filter="filter"></table>
 
-<script type="text/html" id="action">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-</script>
+                    <script type="text/html" id="action">
+                        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+                        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 </body>
 <th:block th:replace="fragments/js/js-import::core-js"/>
 <script th:src="@{/static/js/role/index.js}"></script>
