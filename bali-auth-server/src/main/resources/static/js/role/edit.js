@@ -32,7 +32,7 @@ layui.use(['form'], function(){
                 parent.layer.close(index);
             },
             error: function (err) {
-                console.log(err);
+                layer.msg('修改失败', {icon: 2});
             }
         })
         return false;

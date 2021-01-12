@@ -5,9 +5,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.bali.auth.entity.Role;
 import com.github.bali.auth.service.IRoleService;
 import com.github.bali.core.framework.domain.vo.R;
+import com.github.bali.core.framework.exception.BaseRuntimeException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * @author Pettyfer
@@ -45,7 +48,7 @@ public class RoleController {
 
     @RequestMapping("/edit/{id}")
     public String edit(@PathVariable String id, Model model) {
-        model.addAttribute("role", roleService.get(id));
+        model.addAttribute("role", Optional.ofNullable(roleService.get(id)).orElseGet(Role::new));
         return "role/edit";
     }
 
@@ -58,13 +61,31 @@ public class RoleController {
     @RequestMapping(value = "create", method = RequestMethod.POST)
     @ResponseBody
     public R<String> create(@RequestBody Role role) {
-        return new R<>(roleService.create(role));
+        try {
+            return new R<>(roleService.create(role));
+        } catch (Exception e) {
+            throw new BaseRuntimeException("新增角色失败");
+        }
     }
 
     @RequestMapping(value = "update", method = RequestMethod.PUT)
     @ResponseBody
     public R<Boolean> update(@RequestBody Role role) {
-        return new R<>(roleService.update(role));
+        try {
+            return new R<>(roleService.update(role));
+        } catch (Exception e) {
+            throw new BaseRuntimeException("新增角色失败");
+        }
+    }
+
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public R<Boolean> delete(@PathVariable String id) {
+        try {
+            return new R<>(roleService.delete(id));
+        } catch (Exception e) {
+            throw new BaseRuntimeException("删除角色失败");
+        }
     }
 
 }
