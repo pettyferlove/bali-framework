@@ -1,5 +1,7 @@
 package com.github.bali.auth.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -27,7 +29,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 
     @Override
     public IPage<Role> page(Role role, Page<Role> page) {
-        return this.page(page, Wrappers.lambdaQuery(role).orderByDesc(Role::getCreateTime));
+        LambdaQueryWrapper<Role> queryWrapper = Wrappers.<Role>lambdaQuery().orderByDesc(Role::getCreateTime);
+        if(StrUtil.isNotEmpty(role.getRoleName())){
+            queryWrapper.likeRight(Role::getRoleName, role.getRoleName());
+        }
+        return this.page(page, queryWrapper);
     }
 
     @Override

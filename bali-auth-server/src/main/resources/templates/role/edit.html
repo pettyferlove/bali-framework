@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>角色管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <th:block th:replace="fragments/css/css-import::core-css"/>
+    <link rel="stylesheet" th:href="@{/static/css/role.css}">
+</head>
+<body style="background-color: white">
+<form class="layui-form" lay-filter="form" action="" style="padding: 20px 60px 20px 30px">
+    <input type="text" name="id" class="layui-hide" th:value="${role.getId()}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色标识</label>
+        <div class="layui-input-block">
+            <input type="text" name="role" lay-verify="role" autocomplete="off" placeholder="请输入角色标识" class="layui-input" th:value="${role.getRole()}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="roleName" lay-verify="required" lay-reqtext="角色名称是必填项，不能为空" placeholder="请输入角色名称" autocomplete="off" class="layui-input" th:value="${role.getRoleName()}">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <div class="layui-form-item">
+                <label class="layui-form-label">排序号</label>
+                <div class="layui-input-block">
+                    <input type="number" name="sort" lay-verify="number" autocomplete="off" class="layui-input" th:value="${role.getSort()}">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block">
+            <textarea name="description" placeholder="请输入内容" class="layui-textarea" th:text="${role.getDescription()}"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="form-submit" id="form-submit" value="确认添加">
+    </div>
+</form>
+</body>
+</body>
+<th:block th:replace="fragments/js/js-import::core-js"/>
+<script th:src="@{/static/js/role/edit.js}"></script>
+</html>

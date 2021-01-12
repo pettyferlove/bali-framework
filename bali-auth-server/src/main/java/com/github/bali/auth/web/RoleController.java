@@ -7,8 +7,7 @@ import com.github.bali.auth.service.IRoleService;
 import com.github.bali.core.framework.domain.vo.R;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Pettyfer
@@ -30,12 +29,42 @@ public class RoleController {
 
     @RequestMapping("/list")
     @ResponseBody
-    public R<IPage<Role>> list(int page, int limit) {
+    public R<IPage<Role>> list(String roleName, int page, int limit) {
         Role role = new Role();
+        role.setRoleName(roleName);
         Page<Role> pageQuery = new Page<>();
         pageQuery.setCurrent(page);
         pageQuery.setSize(limit);
-       return new R<>(roleService.page(role, pageQuery));
+        return new R<>(roleService.page(role, pageQuery));
+    }
+
+    @RequestMapping("/add")
+    public String add(Model model) {
+        return "role/add";
+    }
+
+    @RequestMapping("/edit/{id}")
+    public String edit(@PathVariable String id, Model model) {
+        model.addAttribute("role", roleService.get(id));
+        return "role/edit";
+    }
+
+    @RequestMapping("/view")
+    public String view(Model model) {
+        return "role/view";
+    }
+
+
+    @RequestMapping(value = "create", method = RequestMethod.POST)
+    @ResponseBody
+    public R<String> create(@RequestBody Role role) {
+        return new R<>(roleService.create(role));
+    }
+
+    @RequestMapping(value = "update", method = RequestMethod.PUT)
+    @ResponseBody
+    public R<Boolean> update(@RequestBody Role role) {
+        return new R<>(roleService.update(role));
     }
 
 }

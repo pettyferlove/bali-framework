@@ -3,7 +3,6 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
 >
-
 <head>
     <meta charset="UTF-8">
     <title>角色管理</title>
@@ -29,7 +28,12 @@
                         <div class="layui-inline">
                             <input placeholder="请输入角色名" class="layui-input" name="id" id="roleName" autocomplete="off">
                         </div>
-                        <button class="layui-btn" data-type="reload">搜索</button>
+                        <button class="layui-btn" data-type="reload">
+                            <i class="layui-icon layui-icon-search"></i>
+                        </button>
+                        <button class="layui-btn layui-btn-primary" data-type="reset">
+                            <i class="layui-icon layui-icon-refresh"></i>
+                        </button>
                     </div>
                     <table class="layui-hide" id="table" lay-filter="filter"></table>
 
