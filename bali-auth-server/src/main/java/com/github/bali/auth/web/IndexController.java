@@ -1,13 +1,9 @@
 package com.github.bali.auth.web;
 
-import com.github.bali.auth.entity.User;
-import com.github.bali.auth.service.IUserService;
-import com.github.bali.security.utils.SecurityUtil;
+import com.github.bali.auth.service.IUserOperateService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.Objects;
 
 /**
  * @author Petty
@@ -15,16 +11,16 @@ import java.util.Objects;
 @Controller
 public class IndexController {
 
-    private final IUserService userService;
+    private final IUserOperateService userOperateService;
 
-    public IndexController(IUserService userService) {
-        this.userService = userService;
+    public IndexController(IUserOperateService userOperateService) {
+        this.userOperateService = userOperateService;
     }
 
     @RequestMapping("/")
     public String index(Model model) {
-        User userInfo = userService.get(Objects.requireNonNull(SecurityUtil.getUser()).getId());
-        model.addAttribute("user", userInfo);
+        model.addAttribute("user", userOperateService.getCurrentUser());
+        model.addAttribute("userInfo", userOperateService.getCurrentUserInfo());
         return "index";
     }
 

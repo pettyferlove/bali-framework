@@ -13,6 +13,7 @@ import java.util.Objects;
  * @author Petty
  */
 @Controller
+@RequestMapping("/home")
 public class HomeController {
 
     private final IUserService userService;
@@ -21,7 +22,7 @@ public class HomeController {
         this.userService = userService;
     }
 
-    @RequestMapping("/home")
+    @RequestMapping("/index")
     public String index(Model model) {
         User userInfo = userService.get(Objects.requireNonNull(SecurityUtil.getUser()).getId());
         model.addAttribute("user",userInfo);
