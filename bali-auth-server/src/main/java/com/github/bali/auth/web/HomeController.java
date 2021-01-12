@@ -26,7 +26,7 @@ public class HomeController {
     public String index(Model model) {
         User userInfo = userService.get(Objects.requireNonNull(SecurityUtil.getUser()).getId());
         model.addAttribute("user",userInfo);
-        return "home/home";
+        return "home/index";
     }
 
 }

@@ -21,12 +21,12 @@
                 <img th:src="@{/static/images/logo.png}" class="layui-nav-img">Bali用户中心
             </div>
             <!-- 头部区域（可配合layui已有的水平导航） -->
-            <ul class="layui-nav layui-layout-left">
-                <li class="layui-nav-item"><a href="javascript:;">仪表盘</a></li>
-                <li class="layui-nav-item layui-this">
+            <ul class="header-menu layui-nav layui-layout-left">
+                <li class="layui-nav-item layui-this"><a href="javascript:;" path="home/index">仪表盘</a></li>
+                <li class="layui-nav-item">
                     <a href="javascript:;">管理中心</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" lay-href="user/index">用户管理</a></dd>
+                        <dd><a href="javascript:;" path="user/index">用户管理</a></dd>
                         <dd><a href="javascript:;">角色管理</a></dd>
                         <dd><a href="javascript:;">租户管理</a></dd>
                     </dl>
