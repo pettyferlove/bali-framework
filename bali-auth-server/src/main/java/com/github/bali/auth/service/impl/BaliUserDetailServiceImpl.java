@@ -52,7 +52,7 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
             List<String> roles = new LinkedList<>();
             if (!roleIds.isEmpty()) {
                 List<Role> roleList = Optional.ofNullable(roleService.list(Wrappers.<Role>lambdaQuery().in(Role::getId, roleIds))).orElseGet(LinkedList::new);
-                roles = roleList.stream().map(Role::getRoleName).collect(Collectors.toList());
+                roles = roleList.stream().map(Role::getRole).collect(Collectors.toList());
             }
             return BaliUserDetails.builder()
                     .id(user.getId())
