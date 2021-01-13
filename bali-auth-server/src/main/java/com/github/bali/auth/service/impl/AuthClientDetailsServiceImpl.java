@@ -1,16 +1,17 @@
 package com.github.bali.auth.service.impl;
 
-import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.bali.auth.entity.AuthClientDetails;
 import com.github.bali.auth.mapper.AuthClientDetailsMapper;
 import com.github.bali.auth.service.IAuthClientDetailsService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
 import com.github.bali.security.utils.SecurityUtil;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -28,7 +29,11 @@ public class AuthClientDetailsServiceImpl extends ServiceImpl<AuthClientDetailsM
 
     @Override
     public IPage<AuthClientDetails> page(AuthClientDetails authClientDetails, Page<AuthClientDetails> page) {
-        return this.page(page, Wrappers.lambdaQuery(authClientDetails).orderByDesc(AuthClientDetails::getCreateTime));
+        LambdaQueryWrapper<AuthClientDetails> queryWrapper = Wrappers.<AuthClientDetails>lambdaQuery().orderByDesc(AuthClientDetails::getCreateTime);
+        if (StrUtil.isNotEmpty(authClientDetails.getClientId())) {
+            queryWrapper.likeRight(AuthClientDetails::getClientId, authClientDetails.getClientId());
+        }
+        return this.page(page, queryWrapper);
     }
 
     @Override

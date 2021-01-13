@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>客户端管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <th:block th:replace="fragments/css/css-import::core-css"/>
+    <th:block th:replace="fragments/css/css-import::common-css"/>
+</head>
+<body style="background-color: white">
+<form class="layui-form" lay-filter="form" action="" style="padding: 20px 60px 20px 30px">
+    <input type="text" name="id" class="layui-hide" th:value="${tenant.getId()}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">租户名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="tenantName" lay-verify="required" lay-reqtext="租户名称是必填项，不能为空" placeholder="请输入租户名称" autocomplete="off" class="layui-input" th:value="${tenant.getTenantName()}">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系人</label>
+        <div class="layui-input-block">
+            <input type="text" name="linkMan" lay-verify="required" lay-reqtext="联系人是必填项，不能为空" placeholder="请输入联系人" autocomplete="off" class="layui-input" th:value="${tenant.getLinkMan()}">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系电话</label>
+        <div class="layui-input-block">
+            <input type="text" name="contactNumber" lay-verify="required" lay-reqtext="联系电话是必填项，不能为空" placeholder="请输入联系电话" autocomplete="off" class="layui-input" th:value="${tenant.getContactNumber()}">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">电子邮箱</label>
+        <div class="layui-input-block">
+            <input type="text" name="email" lay-verify="required" lay-reqtext="电子邮箱是必填项，不能为空" placeholder="请输入电子邮箱" autocomplete="off" class="layui-input" th:value="${tenant.getEmail()}">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">地址</label>
+        <div class="layui-input-block">
+            <textarea name="address" placeholder="请输入地址" class="layui-textarea" th:text="${tenant.getAddress()}"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <textarea name="remark" placeholder="请输入备注" class="layui-textarea" th:text="${tenant.getRemark()}"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-inline">
+            <input type="checkbox" lay-verify="required" lay-filter="status" name="status" lay-skin="switch" lay-text="启用|关闭" value="1" th:attr="checked=${tenant.getStatus()==1}">
+        </div>
+    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="form-submit" id="form-submit" value="确认添加">
+    </div>
+</form>
+</body>
+</body>
+<th:block th:replace="fragments/js/js-import::core-js"/>
+<script th:src="@{/static/js/client/edit.js}"></script>
+</html>
