@@ -34,7 +34,16 @@
                         </dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="javascript:;" path="client/index" sec:authorize="hasAnyRole('SUPER_ADMIN','TENANT_ADMIN')">客户端</a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">客户端管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" path="client/index"
+                               sec:authorize="hasAnyRole('SUPER_ADMIN','TENANT_ADMIN')">应用管理</a></dd>
+                        <dd><a href="javascript:;" path="scope/index"
+                               sec:authorize="hasAnyRole('SUPER_ADMIN','TENANT_ADMIN')">应用域</a>
+                        </dd>
+                    </dl>
+                </li>
             </ul>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
