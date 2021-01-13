@@ -26,12 +26,12 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">管理中心</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" path="user/index" sec:authorize="hasRole('ADMIN')">用户管理</a></dd>
-                        <dd><a href="javascript:;" path="role/index" sec:authorize="hasRole('ADMIN')">角色管理</a></dd>
+                        <dd><a href="javascript:;" path="user/index">用户管理</a></dd>
+                        <dd><a href="javascript:;" path="role/index">角色管理</a></dd>
                         <dd><a href="javascript:;" path="tenant/index" sec:authorize="hasRole('SUPER_ADMIN')">租户管理</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="javascript:;" path="client/index" sec:authorize="hasRole('ADMIN')">客户端</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" path="client/index">客户端</a></li>
             </ul>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">

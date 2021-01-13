@@ -53,18 +53,19 @@ public class MybatisGenerator {
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setSuperEntityClass("com.github.bali.persistence.entity.BaseEntity");
-        strategy.setSuperEntityColumns("id", "del_flag", "creator", "create_time", "modifier", "modify_time");
+//        strategy.setSuperEntityClass("com.github.bali.persistence.entity.BaseEntity");
+//        strategy.setSuperEntityColumns("id", "del_flag", "creator", "create_time", "modifier", "modify_time");
         // 乐观锁字段
         //strategy.setVersionFieldName("VERSION");
         strategy.setLogicDeleteFieldName("del_flag");
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         // 表名生成策略
+        strategy.setInclude("v_user_info_view");
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
         strategy.setEntityBuilderModel(false);
         strategy.setNaming(NamingStrategy.underline_to_camel);
-        strategy.setTablePrefix("uc_");
+        strategy.setTablePrefix("v_");
         mpg.setStrategy(strategy);
         // 配置包路径
         PackageConfig pc = new PackageConfig();

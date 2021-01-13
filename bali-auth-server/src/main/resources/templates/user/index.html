@@ -8,9 +8,80 @@
     <title>用户管理</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <th:block th:replace="fragments/css/css-import::core-css"/>
+    <th:block th:replace="fragments/css/css-import::common-css"/>
 </head>
-<body>
-用户
+<body class="bali-content">
+<div class="breadcrumb-wrapper">
+    <span class="layui-breadcrumb" lay-separator="—">
+      <a href="">首页</a>
+      <a href="">管理中心</a>
+      <a><cite>用户管理</cite></a>
+    </span>
+</div>
+<div>
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="search">
+                        <div class="layui-inline">
+                            <input placeholder="请输入用户名" class="layui-input" name="userName" id="userName" autocomplete="off">
+                        </div>
+                        <button class="layui-btn" data-type="reload">
+                            <i class="layui-icon layui-icon-search"></i>
+                        </button>
+                        <button class="layui-btn layui-btn-primary" data-type="reset">
+                            <i class="layui-icon layui-icon-refresh"></i>
+                        </button>
+                    </div>
+                    <table class="layui-hide" id="table" lay-filter="filter">
+                        <script type="text/html" id="userNameTpl">
+                            {{#  if(d.userName){ }}
+                            <span>{{d.userName}}</span>
+                            {{#  } else { }}
+                            <span>{{d.nickName}}</span>
+                            {{#  } }}
+                        </script>
+                        <script type="text/html" id="userSexTpl">
+                            {{#  if(d.userSex == 1){ }}
+                            <span>男</span>
+                            {{#  } else { }}
+                            <span>女</span>
+                            {{#  } }}
+                        </script>
+                        <script type="text/html" id="tatusTpl">
+                            {{#  if(d.status == 1){ }}
+                            <button class="layui-btn layui-btn-xs">正常</button>
+                            {{#  } else if(d.status == 9){ }}
+                            <button class="layui-btn layui-btn-danger layui-btn-xs">锁定</button>
+                            {{#  } else { }}
+                            <button class="layui-btn layui-btn-warm layui-btn-xs">无效</button>
+                            {{#  } }}
+                        </script>
+                        <script type="text/html" id="userChannelTpl">
+                            {{#  if(d.userChannel == 'web'){ }}
+                            <button class="layui-btn layui-btn-xs">Web</button>
+                            {{#  } else if(d.userChannel == 'mobile'){ }}
+                            <button class="layui-btn layui-btn-xs">移动用户</button>
+                            {{#  } else if(d.userChannel == 'wechat_mini_program'){ }}
+                            <button class="layui-btn layui-btn-xs">小程序用户</button>
+                            {{#  } else { }}
+                            <button class="layui-btn layui-btn-xs"></button>
+                            {{#  } }}
+                        </script>
+                    </table>
+
+                    <script type="text/html" id="action">
+                        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+                        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <th:block th:replace="fragments/js/js-import::core-js"/>
+<script th:src="@{/static/js/user/index.js}"></script>
 </html>

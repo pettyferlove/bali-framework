@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.bali.auth.mapper.UserInfoViewMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.github.bali.auth.entity.UserInfoView">
+        <result column="id" property="id" />
+        <result column="tenant_id" property="tenantId" />
+        <result column="user_channel" property="userChannel" />
+        <result column="status" property="status" />
+        <result column="user_name" property="userName" />
+        <result column="nick_name" property="nickName" />
+        <result column="user_sex" property="userSex" />
+        <result column="user_born" property="userBorn" />
+        <result column="user_avatar" property="userAvatar" />
+        <result column="email" property="email" />
+        <result column="user_address" property="userAddress" />
+        <result column="mobile_tel" property="mobileTel" />
+        <result column="phone_tel" property="phoneTel" />
+        <result column="user_iden_type" property="userIdenType" />
+        <result column="user_iden" property="userIden" />
+        <result column="organization" property="organization" />
+        <result column="education" property="education" />
+        <result column="positional_title" property="positionalTitle" />
+        <result column="political_status" property="politicalStatus" />
+        <result column="graduated_school" property="graduatedSchool" />
+        <result column="graduated_year" property="graduatedYear" />
+        <result column="major" property="major" />
+        <result column="verified" property="verified" />
+        <result column="region_id" property="regionId" />
+        <result column="creator" property="creator" />
+        <result column="creator_name" property="creatorName" />
+        <result column="create_time" property="createTime" />
+        <result column="modifier" property="modifier" />
+        <result column="modifier_name" property="modifierName" />
+        <result column="modify_time" property="modifyTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, tenant_id, user_channel, status, user_name, nick_name, user_sex, user_born, user_avatar, email, user_address, mobile_tel, phone_tel, user_iden_type, user_iden, organization, education, positional_title, political_status, graduated_school, graduated_year, major, verified, region_id, creator, creator_name, create_time, modifier, modifier_name, modify_time
+    </sql>
+
+</mapper>
