@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <th:block th:replace="fragments/css/css-import::core-css"/>
     <th:block th:replace="fragments/css/css-import::common-css"/>
+    <link rel="stylesheet" th:href="@{/static/css/user/user.css}">
 </head>
 <body class="bali-content">
 <div class="breadcrumb-wrapper">
@@ -37,7 +38,7 @@
                     <table class="layui-hide" id="table" lay-filter="filter">
                         <script type="text/html" id="userNameTpl">
                             {{#  if(d.userName){ }}
-                            <span>{{d.userName}}</span>
+                            <div><img src="{{d.userAvatar}}" class="layui-nav-img"> {{d.userName}}</div>
                             {{#  } else { }}
                             <span>{{d.nickName}}</span>
                             {{#  } }}

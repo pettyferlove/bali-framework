@@ -1,0 +1,6 @@
+.layui-table-cell {
+    height: auto;
+    padding: 0 15px;
+    position: relative;
+    box-sizing: border-box;
+}
