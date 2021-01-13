@@ -21,6 +21,20 @@ public interface IUserOperateService {
     Page<UserInfoView> userInfoPage(UserInfoView userInfoView, Page<UserInfoView> page);
 
     /**
+     * 根据用户ID获取用户信息
+     * @param userId 用户ID
+     * @return User
+     */
+    User getUser(String userId);
+
+    /**
+     * 根据用户ID获取用户信息详情
+     * @param userId 用户ID
+     * @return UserInfo
+     */
+    UserInfo getUserInfo(String userId);
+
+    /**
      * 获取当前登录的用户
      *
      * @return User

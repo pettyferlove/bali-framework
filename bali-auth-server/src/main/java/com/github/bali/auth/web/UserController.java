@@ -45,6 +45,8 @@ public class UserController {
 
     @RequestMapping("/edit/{id}")
     public String edit(@PathVariable String id, Model model) {
+        model.addAttribute("user", userOperateService.getUser(id));
+        model.addAttribute("userInfo", userOperateService.getUserInfo(id));
         return "user/edit";
     }
 

@@ -2,6 +2,7 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
     <meta charset="UTF-8">
@@ -15,28 +16,40 @@
     <div class="layui-form-item">
         <label class="layui-form-label">登录名</label>
         <div class="layui-input-block">
-            <input type="text" name="loginId" lay-verify="required" lay-reqtext="登录名是必填项，不能为空" placeholder="请输入登录名" autocomplete="off" class="layui-input">
+            <input type="text" name="loginId" lay-verify="required" lay-reqtext="登录名是必填项，不能为空" placeholder="请输入登录名"
+                   autocomplete="off" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">账号密码</label>
         <div class="layui-input-block">
-            <input type="password" name="password" lay-verify="required" lay-reqtext="账号密码是必填项，不能为空" placeholder="请输入账号密码" autocomplete="off" class="layui-input">
+            <input type="password" name="password" lay-verify="required" lay-reqtext="账号密码是必填项，不能为空"
+                   placeholder="请输入账号密码" autocomplete="off" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">姓名</label>
         <div class="layui-input-block">
-            <input type="text" name="userName" lay-verify="required" lay-reqtext="姓名是必填项，不能为空" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+            <input type="text" name="userName" lay-verify="required" lay-reqtext="姓名是必填项，不能为空" placeholder="请输入姓名"
+                   autocomplete="off" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">用户昵称</label>
         <div class="layui-input-block">
-            <input type="text" name="nickName" lay-verify="required" lay-reqtext="联系电话是必填项，不能为空" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+            <input type="text" name="nickName" placeholder="请输入用户昵称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item" sec:authorize="hasRole('SUPER_ADMIN')">
+        <label class="layui-form-label">所属租户</label>
+        <div class="layui-input-block">
+            <select id="tenantId" lay-verify="required" lay-reqtext="用户必须绑定租户" name="tenantId" lay-filter="tenantId">
+                <option value=""></option>
+            </select>
         </div>
     </div>
 
@@ -52,7 +65,8 @@
         <div class="layui-inline">
             <label class="layui-form-label">生日</label>
             <div class="layui-input-inline">
-                <input type="text" id="userBorn" name="userBorn" placeholder="选择日期" autocomplete="off" class="layui-input date-select">
+                <input type="text" id="userBorn" name="userBorn" placeholder="选择日期" autocomplete="off"
+                       class="layui-input date-select">
             </div>
         </div>
     </div>
@@ -60,7 +74,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">电子邮件</label>
         <div class="layui-input-block">
-            <input type="text" name="email" lay-verify="required" lay-reqtext="电子邮箱是必填项，不能为空" placeholder="请输入电子邮箱" autocomplete="off" class="layui-input">
+            <input type="text" name="email" placeholder="请输入电子邮箱" autocomplete="off" class="layui-input">
         </div>
     </div>
 

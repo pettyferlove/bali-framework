@@ -51,6 +51,16 @@ public class UserOperateServiceImpl implements IUserOperateService {
     }
 
     @Override
+    public User getUser(String userId) {
+        return userService.get(userId);
+    }
+
+    @Override
+    public UserInfo getUserInfo(String userId) {
+        return userInfoService.getOne(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, userId));
+    }
+
+    @Override
     public User getCurrentUser() {
         return userService.get(Objects.requireNonNull(SecurityUtil.getUser()).getId());
     }
@@ -82,9 +92,11 @@ public class UserOperateServiceImpl implements IUserOperateService {
         User user = new User();
         user.setId(userOperate.getId());
         user.setStatus(userOperate.getStatus());
+        user.setTenantId(userOperate.getTenantId());
         userService.update(user);
         UserInfo userInfo = ConverterUtil.convert(userOperate, new UserInfo());
-        userInfo.setUserId(userOperate.getId());
+        UserInfo info = userInfoService.getOne(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, userOperate.getId()));
+        userInfo.setId(info.getId());
         userInfoService.update(userInfo);
         return true;
     }

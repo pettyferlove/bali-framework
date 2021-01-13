@@ -3,7 +3,10 @@ package com.github.bali.auth.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.bali.auth.domain.vo.TenantDictVO;
 import com.github.bali.auth.entity.Tenant;
+
+import java.util.List;
 
 /**
  * <p>
@@ -55,4 +58,10 @@ public interface ITenantService extends IService<Tenant> {
      * @return Boolean
      */
     Boolean update(Tenant tenant);
+
+    /**
+     * 获取租户字典
+     * @return 全部租户集合
+     */
+    List<TenantDictVO> dict();
 }

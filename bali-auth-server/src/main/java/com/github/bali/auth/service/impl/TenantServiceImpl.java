@@ -7,15 +7,20 @@ import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.bali.auth.domain.vo.TenantDictVO;
 import com.github.bali.auth.entity.Tenant;
 import com.github.bali.auth.mapper.TenantMapper;
 import com.github.bali.auth.service.ITenantService;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
+import com.github.bali.core.framework.utils.ConverterUtil;
 import com.github.bali.security.utils.SecurityUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * <p>
@@ -64,6 +69,12 @@ public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> impleme
         tenant.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getId());
         tenant.setModifyTime(LocalDateTime.now());
         return this.updateById(tenant);
+    }
+
+    @Override
+    public List<TenantDictVO> dict() {
+        List<Tenant> tenants = Optional.ofNullable(this.list()).orElseGet(ArrayList::new);
+        return Optional.ofNullable(ConverterUtil.convertList(Tenant.class, TenantDictVO.class, tenants)).orElseGet(ArrayList::new);
     }
 
 }

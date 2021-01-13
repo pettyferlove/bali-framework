@@ -14,9 +14,9 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         , cols: [[ //表头
             {type: 'checkbox', fixed: 'left'}
             , {type: 'id', fixed: 'left', hide: true}
-            , {field: 'userName', title: '姓名', sort: true, fixed: 'left' , templet: '#userNameTpl'}
+            , {field: 'userName', title: '姓名', sort: true, fixed: 'left', templet: '#userNameTpl'}
             , {field: 'nickName', title: '用户昵称', sort: true}
-            , {field: 'userSex', title: '性别', align: 'center',width: 60 , templet: '#userSexTpl'}
+            , {field: 'userSex', title: '性别', align: 'center', width: 60, templet: '#userSexTpl'}
             , {field: 'userBorn', title: '生日'}
             , {field: 'email', title: '电子邮箱'}
             , {field: 'status', title: '账号状态', width: 100, align: 'center', templet: '#tatusTpl'}
@@ -92,21 +92,25 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                 } else if (data.length > 1) {
                     layer.msg('只能同时编辑一个');
                 } else {
-                    layer.open({
-                        type: 2,
-                        title: '编辑用户',
-                        btn: ['保存', '取消'],
-                        area: ['70%', '70%'],
-                        content: '/user/edit/' + checkStatus.data[0].id
-                        , yes: function (index, layero) {
-                            let submit = layero.find('iframe').contents().find("#form-submit");
-                            submit.click();
-                        }
-                        , btn2: function (index) {
-                            layer.close(index)
-                            return false;
-                        }
-                    });
+                    if (checkStatus.data[0].userChannel === 'web') {
+                        layer.open({
+                            type: 2,
+                            title: '编辑用户',
+                            btn: ['保存', '取消'],
+                            area: ['70%', '70%'],
+                            content: '/user/edit/' + checkStatus.data[0].id
+                            , yes: function (index, layero) {
+                                let submit = layero.find('iframe').contents().find("#form-submit");
+                                submit.click();
+                            }
+                            , btn2: function (index) {
+                                layer.close(index)
+                                return false;
+                            }
+                        });
+                    } else {
+                        layer.msg('不支持在Web端修改移动端用户信息');
+                    }
                 }
                 break;
             case 'delete':
@@ -155,21 +159,25 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                 layer.close(index);
             });
         } else if (layEvent === 'edit') {
-            layer.open({
-                type: 2,
-                title: '编辑用户',
-                btn: ['保存', '取消'],
-                area: ['70%', '70%'],
-                content: '/user/edit/' + data.id
-                , yes: function (index, layero) {
-                    let submit = layero.find('iframe').contents().find("#form-submit");
-                    submit.click();
-                }
-                , btn2: function (index) {
-                    layer.close(index)
-                    return false;
-                }
-            });
+            if (data.userChannel === 'web') {
+                layer.open({
+                    type: 2,
+                    title: '编辑用户',
+                    btn: ['保存', '取消'],
+                    area: ['70%', '70%'],
+                    content: '/user/edit/' + data.id
+                    , yes: function (index, layero) {
+                        let submit = layero.find('iframe').contents().find("#form-submit");
+                        submit.click();
+                    }
+                    , btn2: function (index) {
+                        layer.close(index)
+                        return false;
+                    }
+                });
+            } else {
+                layer.msg('不支持在Web端修改移动端用户信息');
+            }
         }
     });
 

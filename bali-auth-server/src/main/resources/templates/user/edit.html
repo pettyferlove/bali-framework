@@ -2,6 +2,7 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
     <meta charset="UTF-8">
@@ -11,53 +12,101 @@
     <th:block th:replace="fragments/css/css-import::common-css"/>
 </head>
 <body style="background-color: white;">
+<input class="layui-hide" id="tId" th:value="${user.getTenantId()}">
 <form class="layui-form" lay-filter="form" action="" style="padding: 20px 60px 20px 30px;background-color: white">
-    <input type="text" name="id" class="layui-hide" th:value="${tenant.getId()}">
+    <input type="text" name="id" class="layui-hide" th:value="${user.getId()}">
     <div class="layui-form-item">
-        <label class="layui-form-label">租户名称</label>
+        <label class="layui-form-label">登录名</label>
         <div class="layui-input-block">
-            <input type="text" name="tenantName" lay-verify="required" lay-reqtext="租户名称是必填项，不能为空" placeholder="请输入租户名称" autocomplete="off" class="layui-input" th:value="${tenant.getTenantName()}">
+            <input type="text" name="loginId" lay-verify="required" lay-reqtext="登录名是必填项，不能为空" placeholder="请输入登录名"
+                   autocomplete="off" class="layui-input" th:value="${user.getLoginId()}" disabled>
         </div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">联系人</label>
+        <label class="layui-form-label">姓名</label>
         <div class="layui-input-block">
-            <input type="text" name="linkMan" lay-verify="required" lay-reqtext="联系人是必填项，不能为空" placeholder="请输入联系人" autocomplete="off" class="layui-input" th:value="${tenant.getLinkMan()}">
+            <input type="text" name="userName" lay-verify="required" lay-reqtext="姓名是必填项，不能为空" placeholder="请输入姓名"
+                   autocomplete="off" class="layui-input" th:value="${userInfo.getUserName()}">
         </div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">联系电话</label>
+        <label class="layui-form-label">用户昵称</label>
         <div class="layui-input-block">
-            <input type="text" name="contactNumber" lay-verify="required" lay-reqtext="联系电话是必填项，不能为空" placeholder="请输入联系电话" autocomplete="off" class="layui-input" th:value="${tenant.getContactNumber()}">
+            <input type="text" name="nickName" placeholder="请输入用户昵称" autocomplete="off" class="layui-input"
+                   th:value="${userInfo.getNickName()}">
+        </div>
+    </div>
+
+    <div class="layui-form-item" sec:authorize="hasRole('SUPER_ADMIN')">
+        <label class="layui-form-label">所属租户</label>
+        <div class="layui-input-block">
+            <select id="tenantId" lay-verify="required" lay-reqtext="用户必须绑定租户" name="tenantId" lay-filter="tenantId">
+                <option value=""></option>
+            </select>
         </div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">电子邮箱</label>
+        <div class="layui-inline">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" name="userSex" value="1" title="男" th:checked="${userInfo.getUserSex()==1}">
+                <input type="radio" name="userSex" value="0" title="女" th:checked="${userInfo.getUserSex()==0}">
+                <input type="radio" name="userSex" value="" title="禁用" th:checked="${userInfo.getUserSex()==null}">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">生日</label>
+            <div class="layui-input-inline">
+                <input type="text" id="userBorn" name="userBorn" placeholder="选择日期" autocomplete="off"
+                       class="layui-input date-select"
+                       th:value="${#temporals.format(userInfo.getUserBorn(), 'yyyy-MM-dd HH:mm:ss')}">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">电子邮件</label>
         <div class="layui-input-block">
-            <input type="text" name="email" lay-verify="required" lay-reqtext="电子邮箱是必填项，不能为空" placeholder="请输入电子邮箱" autocomplete="off" class="layui-input" th:value="${tenant.getEmail()}">
+            <input type="text" name="email" placeholder="请输入电子邮箱" autocomplete="off" class="layui-input"
+                   th:value="${userInfo.getEmail()}">
         </div>
     </div>
 
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">地址</label>
+        <label class="layui-form-label">居住地址</label>
         <div class="layui-input-block">
-            <textarea name="address" placeholder="请输入地址" class="layui-textarea" th:text="${tenant.getAddress()}"></textarea>
+            <textarea name="userAddress" placeholder="请输入地址" class="layui-textarea"
+                      th:text="${userInfo.getUserAddress()}"></textarea>
         </div>
     </div>
 
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">备注</label>
-        <div class="layui-input-block">
-            <textarea name="remark" placeholder="请输入备注" class="layui-textarea" th:text="${tenant.getRemark()}"></textarea>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">移动电话</label>
+            <div class="layui-input-inline">
+                <input type="text" name="mobileTel" placeholder="请输入移动电话" autocomplete="off" class="layui-input"
+                       th:value="${userInfo.getMobileTel()}">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">联系电话</label>
+            <div class="layui-input-inline">
+                <input type="text" name="phoneTel" placeholder="请输入联系电话" autocomplete="off" class="layui-input"
+                       th:value="${userInfo.getPhoneTel()}">
+            </div>
         </div>
     </div>
+
     <div class="layui-form-item">
         <label class="layui-form-label">状态</label>
-        <div class="layui-input-inline">
-            <input type="checkbox" lay-verify="required" lay-filter="status" name="status" lay-skin="switch" lay-text="启用|关闭" value="1" th:attr="checked=${tenant.getStatus()==1}">
+        <div class="layui-input-block">
+            <input type="radio" name="status" value="1" title="正常" th:checked="${user.getStatus()==1}">
+            <input type="radio" name="status" value="0" title="无效" th:checked="${user.getStatus()==0}">
+            <input type="radio" name="status" value="9" title="锁定" th:checked="${user.getStatus()==9}">
+            <input type="radio" name="status" value="8" title="失效" th:checked="${user.getStatus()==8}">
         </div>
     </div>
     <div class="layui-form-item layui-hide">

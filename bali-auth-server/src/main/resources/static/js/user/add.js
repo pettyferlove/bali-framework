@@ -8,6 +8,20 @@ layui.use(['form', 'laydate'], function () {
             ,trigger: 'click'
         });
     });
+
+    $.ajax({
+        type: "GET",
+        url: "/tenant/all",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (res) {
+            $.each(res.data, function (index, item) {
+                $('#tenantId').append(new Option(item.tenantName, item.tenantId));// 下拉菜单里添加元素
+            });
+            layui.form.render("select");
+        }
+    })
+
     form.on('submit(form-submit)', function (data) {
         if(!data.field.status){
             data.field.status = 0

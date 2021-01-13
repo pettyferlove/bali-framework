@@ -1,8 +1,35 @@
-layui.use(['form'], function(){
-    let form = layui.form,layer = layui.layer
-    //监听提交
-    form.on('submit(form-submit)', function(data){
-        if(!data.field.status){
+layui.use(['form', 'laydate'], function () {
+    let form = layui.form, layer = layui.layer, laydate = layui.laydate;
+
+    lay('.date-select').each(function () {
+        laydate.render({
+            elem: this
+            , format: 'yyyy-MM-dd HH:mm:ss'
+            , type: 'datetime'
+            , trigger: 'click'
+        });
+    });
+
+    let tId = $("#tId").val();
+    $.ajax({
+        type: "GET",
+        url: "/tenant/all",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (res) {
+            $.each(res.data, function (index, item) {
+                if (tId === item.tenantId) {
+                    $('#tenantId').append(new Option(item.tenantName, item.tenantId, false, true));
+                } else {
+                    $('#tenantId').append(new Option(item.tenantName, item.tenantId, false, false));
+                }
+            });
+            layui.form.render("select");
+        }
+    })
+
+    form.on('submit(form-submit)', function (data) {
+        if (!data.field.status) {
             data.field.status = 0
         }
         let index = parent.layer.getFrameIndex(window.name);
