@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.bali.auth.entity.Role;
 import com.github.bali.auth.service.IRoleService;
 import com.github.bali.core.framework.domain.vo.R;
-import com.github.bali.core.framework.exception.BaseRuntimeException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -64,7 +63,7 @@ public class RoleController {
         try {
             return new R<>(roleService.create(role));
         } catch (Exception e) {
-            throw new BaseRuntimeException("新增角色失败");
+            return new R<>(null, e.getMessage());
         }
     }
 
@@ -74,7 +73,7 @@ public class RoleController {
         try {
             return new R<>(roleService.update(role));
         } catch (Exception e) {
-            throw new BaseRuntimeException("更新角色失败");
+            return new R<>(false, e.getMessage());
         }
     }
 
@@ -84,7 +83,7 @@ public class RoleController {
         try {
             return new R<>(roleService.delete(id));
         } catch (Exception e) {
-            throw new BaseRuntimeException("删除角色失败");
+            return new R<>(false, e.getMessage());
         }
     }
 

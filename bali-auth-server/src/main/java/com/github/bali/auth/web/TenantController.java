@@ -6,7 +6,6 @@ import com.github.bali.auth.domain.vo.TenantDictVO;
 import com.github.bali.auth.entity.Tenant;
 import com.github.bali.auth.service.ITenantService;
 import com.github.bali.core.framework.domain.vo.R;
-import com.github.bali.core.framework.exception.BaseRuntimeException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,7 +67,7 @@ public class TenantController {
         try {
             return new R<>(tenantService.create(tenant));
         } catch (Exception e) {
-            throw new BaseRuntimeException("新增租户失败");
+            return new R<>(null, e.getMessage());
         }
     }
 
@@ -78,7 +77,7 @@ public class TenantController {
         try {
             return new R<>(tenantService.update(tenant));
         } catch (Exception e) {
-            throw new BaseRuntimeException("更新租户失败");
+            return new R<>(false, e.getMessage());
         }
     }
 
@@ -88,7 +87,7 @@ public class TenantController {
         try {
             return new R<>(tenantService.delete(id));
         } catch (Exception e) {
-            throw new BaseRuntimeException("删除租户失败");
+            return new R<>(false, e.getMessage());
         }
     }
 

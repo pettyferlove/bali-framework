@@ -115,8 +115,12 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                             type: "DELETE",
                             url: "/role/delete/" + checkStatus.data[0].id,
                             success: function (res) {
-                                layer.msg('删除成功');
-                                table.reload('table')
+                                if(res.message){
+                                    layer.msg(res.message, {icon: 2});
+                                } else {
+                                    layer.msg('删除成功');
+                                    table.reload('table')
+                                }
                             },
                             error: function (err) {
                                 layer.msg('删除失败', {icon: 2});
@@ -142,8 +146,12 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                     type: "DELETE",
                     url: "/role/delete/" + data.id,
                     success: function (res) {
-                        layer.msg('删除成功');
-                        table.reload('table')
+                        if(res.message){
+                            layer.msg(res.message, {icon: 2});
+                        } else {
+                            layer.msg('删除成功');
+                            table.reload('table')
+                        }
                     },
                     error: function (err) {
                         layer.msg('删除失败', {icon: 2});
