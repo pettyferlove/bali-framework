@@ -53,6 +53,12 @@
             <textarea name="remark" placeholder="请输入备注" class="layui-textarea"></textarea>
         </div>
     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-inline">
+            <input type="checkbox" lay-verify="required" lay-filter="status" name="status" lay-skin="switch" lay-text="启用|关闭">
+        </div>
+    </div>
     <div class="layui-form-item layui-hide">
         <input type="button" lay-submit lay-filter="form-submit" id="form-submit" value="确认添加">
     </div>

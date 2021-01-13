@@ -35,7 +35,15 @@
                             <i class="layui-icon layui-icon-refresh"></i>
                         </button>
                     </div>
-                    <table class="layui-hide" id="table" lay-filter="filter"></table>
+                    <table class="layui-hide" id="table" lay-filter="filter">
+                        <script type="text/html" id="tenantStatus">
+                            {{#  if(d.status == 1){ }}
+                            <button class="layui-btn layui-btn-xs">已启用</button>
+                            {{#  } else { }}
+                            <button class="layui-btn layui-btn-danger layui-btn-xs">已关闭</button>
+                            {{#  } }}
+                        </script>
+                    </table>
 
                     <script type="text/html" id="action">
                         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>

@@ -19,6 +19,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             , {field: 'contactNumber', title: '联系电话'}
             , {field: 'email', title: '电子邮箱'}
             , {field: 'address', title: '地址', sort: true,}
+            , {field: 'status', title: '启用状态', width: 80, align: 'center', templet: '#tenantStatus'}
             , {field: 'createTime', title: '创建时间', sort: true,}
             , {field: 'modifyTime', title: '最后修改时间', sort: true,}
             , {fixed: 'right', width: 165, align: 'center', toolbar: '#action'}
