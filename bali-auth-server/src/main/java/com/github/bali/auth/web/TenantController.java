@@ -83,7 +83,7 @@ public class TenantController {
         try {
             return new R<>(tenantService.update(tenant));
         } catch (Exception e) {
-            throw new BaseRuntimeException("新增租户失败");
+            throw new BaseRuntimeException("更新租户失败");
         }
     }
 

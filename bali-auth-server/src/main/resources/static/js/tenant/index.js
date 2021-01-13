@@ -73,7 +73,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                     type: 2,
                     title: '添加租户',
                     btn: ['创建', '取消'],
-                    area: ['70%', '70%'],
+                    area: ['50%', '70%'],
                     content: '/tenant/add'
                     , yes: function (index, layero) {
                         let submit = layero.find('iframe').contents().find("#form-submit");
@@ -95,7 +95,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                         type: 2,
                         title: '编辑租户',
                         btn: ['保存', '取消'],
-                        area: ['70%', '70%'],
+                        area: ['50%', '70%'],
                         content: '/tenant/edit/' + checkStatus.data[0].id
                         , yes: function (index, layero) {
                             let submit = layero.find('iframe').contents().find("#form-submit");
@@ -158,7 +158,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                 type: 2,
                 title: '编辑租户',
                 btn: ['保存', '取消'],
-                area: ['70%', '70%'],
+                area: ['50%', '70%'],
                 content: '/tenant/edit/' + data.id
                 , yes: function (index, layero) {
                     let submit = layero.find('iframe').contents().find("#form-submit");

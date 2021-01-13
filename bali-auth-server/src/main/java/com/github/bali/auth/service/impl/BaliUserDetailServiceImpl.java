@@ -54,6 +54,10 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
                 List<Role> roleList = Optional.ofNullable(roleService.list(Wrappers.<Role>lambdaQuery().in(Role::getId, roleIds))).orElseGet(LinkedList::new);
                 roles = roleList.stream().map(Role::getRole).collect(Collectors.toList());
             }
+            if (StrUtil.isEmpty(user.getTenantId())) {
+                log.error("The user tries to log in, but does not belong to any tenant; login_id is {}", loginName);
+                throw new RuntimeException("用户异常，无法登录");
+            }
             return BaliUserDetails.builder()
                     .id(user.getId())
                     .username(user.getLoginId())
@@ -83,6 +87,10 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
             if (!roleIds.isEmpty()) {
                 List<Role> roleList = Optional.ofNullable(roleService.list(Wrappers.<Role>lambdaQuery().in(Role::getId, roleIds))).orElseGet(LinkedList::new);
                 roles = roleList.stream().map(Role::getRoleName).collect(Collectors.toList());
+            }
+            if (StrUtil.isEmpty(user.getTenantId())) {
+                log.error("The user tries to log in, but does not belong to any tenant; open_id is {}", openId);
+                throw new RuntimeException("用户异常，无法登录");
             }
             return BaliUserDetails.builder()
                     .id(user.getId())
@@ -118,6 +126,10 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
             if (!roleIds.isEmpty()) {
                 List<Role> roleList = Optional.ofNullable(roleService.list(Wrappers.<Role>lambdaQuery().in(Role::getId, roleIds))).orElseGet(LinkedList::new);
                 roles = roleList.stream().map(Role::getRoleName).collect(Collectors.toList());
+            }
+            if (StrUtil.isEmpty(user.getTenantId())) {
+                log.error("The user tries to log in, but does not belong to any tenant; union_id is {}", unionId);
+                throw new RuntimeException("用户异常，无法登录");
             }
             return BaliUserDetails.builder()
                     .id(user.getId())

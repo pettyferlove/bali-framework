@@ -74,7 +74,7 @@ public class RoleController {
         try {
             return new R<>(roleService.update(role));
         } catch (Exception e) {
-            throw new BaseRuntimeException("新增角色失败");
+            throw new BaseRuntimeException("更新角色失败");
         }
     }
 

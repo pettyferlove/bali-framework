@@ -10,53 +10,89 @@
     <th:block th:replace="fragments/css/css-import::core-css"/>
     <th:block th:replace="fragments/css/css-import::common-css"/>
 </head>
-<body style="background-color: white">
-<form class="layui-form" lay-filter="form" action="" style="padding: 20px 60px 20px 30px">
+<body style="background-color: white;">
+<form class="layui-form" lay-filter="form" action="" style="padding: 20px 60px 20px 30px;background-color: white">
     <div class="layui-form-item">
-        <label class="layui-form-label">租户名称</label>
+        <label class="layui-form-label">登录名</label>
         <div class="layui-input-block">
-            <input type="text" name="tenantName" lay-verify="required" lay-reqtext="租户名称是必填项，不能为空" placeholder="请输入租户名称" autocomplete="off" class="layui-input">
+            <input type="text" name="loginId" lay-verify="required" lay-reqtext="登录名是必填项，不能为空" placeholder="请输入登录名" autocomplete="off" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">联系人</label>
+        <label class="layui-form-label">账号密码</label>
         <div class="layui-input-block">
-            <input type="text" name="linkMan" lay-verify="required" lay-reqtext="联系人是必填项，不能为空" placeholder="请输入联系人" autocomplete="off" class="layui-input">
+            <input type="password" name="password" lay-verify="required" lay-reqtext="账号密码是必填项，不能为空" placeholder="请输入账号密码" autocomplete="off" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">联系电话</label>
+        <label class="layui-form-label">姓名</label>
         <div class="layui-input-block">
-            <input type="text" name="contactNumber" lay-verify="required" lay-reqtext="联系电话是必填项，不能为空" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+            <input type="text" name="userName" lay-verify="required" lay-reqtext="姓名是必填项，不能为空" placeholder="请输入姓名" autocomplete="off" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">电子邮箱</label>
+        <label class="layui-form-label">用户昵称</label>
+        <div class="layui-input-block">
+            <input type="text" name="nickName" lay-verify="required" lay-reqtext="联系电话是必填项，不能为空" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" name="userSex" value="1" title="男" checked="">
+                <input type="radio" name="userSex" value="0" title="女">
+                <input type="radio" name="userSex" value="" title="禁用">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">生日</label>
+            <div class="layui-input-inline">
+                <input type="text" id="userBorn" name="userBorn" placeholder="选择日期" autocomplete="off" class="layui-input date-select">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">电子邮件</label>
         <div class="layui-input-block">
             <input type="text" name="email" lay-verify="required" lay-reqtext="电子邮箱是必填项，不能为空" placeholder="请输入电子邮箱" autocomplete="off" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">地址</label>
+        <label class="layui-form-label">居住地址</label>
         <div class="layui-input-block">
-            <textarea name="address" placeholder="请输入地址" class="layui-textarea"></textarea>
+            <textarea name="userAddress" placeholder="请输入地址" class="layui-textarea"></textarea>
         </div>
     </div>
 
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">备注</label>
-        <div class="layui-input-block">
-            <textarea name="remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">移动电话</label>
+            <div class="layui-input-inline">
+                <input type="text" name="mobileTel" placeholder="请输入移动电话" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">联系电话</label>
+            <div class="layui-input-inline">
+                <input type="text" name="phoneTel" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+            </div>
         </div>
     </div>
+
     <div class="layui-form-item">
         <label class="layui-form-label">状态</label>
-        <div class="layui-input-inline">
-            <input type="checkbox" lay-verify="required" lay-filter="status" name="status" lay-skin="switch" lay-text="启用|关闭">
+        <div class="layui-input-block">
+            <input type="radio" name="status" value="1" title="正常" checked="">
+            <input type="radio" name="status" value="0" title="无效">
+            <input type="radio" name="status" value="9" title="锁定">
+            <input type="radio" name="status" value="8" title="失效">
         </div>
     </div>
     <div class="layui-form-item layui-hide">
