@@ -120,6 +120,9 @@ public class UserOperateServiceImpl implements IUserOperateService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public Boolean delete(String id) {
+        if (id.equals(SecurityUtil.getUser().getId())) {
+            throw new BaseRuntimeException("无法删除你自己");
+        }
         UserRole userRole = userRoleService.getOne(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, id));
         if (ObjectUtil.isNotNull(userRole)) {
             Role role = Optional.ofNullable(roleService.get(userRole.getRoleId())).orElseGet(Role::new);
