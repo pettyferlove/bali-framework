@@ -16,6 +16,16 @@ public interface SecurityConstant {
     String BASE_ROLE = "USER";
 
     /**
+     * 系统超级管理员角色
+     */
+    String SUPER_ADMIN_ROLE = "SUPER_ADMIN";
+
+    /**
+     * 租户管理员角色
+     */
+    String TENANT_ADMIN_ROLE = "TENANT_ADMIN";
+
+    /**
      * 用户无效
      */
     int STATUS_INVALID = 0;

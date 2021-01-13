@@ -6,7 +6,6 @@ import com.github.bali.auth.domain.vo.UserOperateVO;
 import com.github.bali.auth.entity.UserInfoView;
 import com.github.bali.auth.service.IUserOperateService;
 import com.github.bali.core.framework.domain.vo.R;
-import com.github.bali.core.framework.exception.BaseRuntimeException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -61,7 +60,7 @@ public class UserController {
         try {
             return new R<>(userOperateService.create(user));
         } catch (Exception e) {
-            throw new BaseRuntimeException("新增用户失败");
+            return new R<>( null, e.getMessage());
         }
     }
 
@@ -71,7 +70,7 @@ public class UserController {
         try {
             return new R<>(userOperateService.update(user));
         } catch (Exception e) {
-            throw new BaseRuntimeException("更新用户失败");
+            return new R<>(false, e.getMessage());
         }
     }
 
@@ -81,7 +80,7 @@ public class UserController {
         try {
             return new R<>(userOperateService.delete(id));
         } catch (Exception e) {
-            throw new BaseRuntimeException("删除用户失败");
+            return new R<>(false, e.getMessage());
         }
     }
 

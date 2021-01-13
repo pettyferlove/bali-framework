@@ -1,18 +1,16 @@
 package com.github.bali.auth.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.bali.auth.domain.vo.UserOperateVO;
-import com.github.bali.auth.entity.User;
-import com.github.bali.auth.entity.UserInfo;
-import com.github.bali.auth.entity.UserInfoView;
-import com.github.bali.auth.service.IUserInfoService;
-import com.github.bali.auth.service.IUserInfoViewService;
-import com.github.bali.auth.service.IUserOperateService;
-import com.github.bali.auth.service.IUserService;
+import com.github.bali.auth.entity.*;
+import com.github.bali.auth.service.*;
+import com.github.bali.core.framework.exception.BaseRuntimeException;
 import com.github.bali.core.framework.utils.ConverterUtil;
+import com.github.bali.security.constants.SecurityConstant;
 import com.github.bali.security.constants.UserChannelConstant;
 import com.github.bali.security.utils.SecurityUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Petty
@@ -35,11 +34,17 @@ public class UserOperateServiceImpl implements IUserOperateService {
 
     private final IUserInfoViewService userInfoViewService;
 
-    public UserOperateServiceImpl(PasswordEncoder passwordEncoder, IUserService userService, IUserInfoService userInfoService, IUserInfoViewService userInfoViewService) {
+    private final IRoleService roleService;
+
+    private final IUserRoleService userRoleService;
+
+    public UserOperateServiceImpl(PasswordEncoder passwordEncoder, IUserService userService, IUserInfoService userInfoService, IUserInfoViewService userInfoViewService, IRoleService roleService, IUserRoleService userRoleService) {
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
         this.userInfoService = userInfoService;
         this.userInfoViewService = userInfoViewService;
+        this.roleService = roleService;
+        this.userRoleService = userRoleService;
     }
 
     @Override
@@ -83,6 +88,17 @@ public class UserOperateServiceImpl implements IUserOperateService {
         UserInfo userInfo = ConverterUtil.convert(userOperate, new UserInfo());
         userInfo.setUserId(userId);
         userInfoService.create(userInfo);
+        if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
+            Role role = roleService.getOne(Wrappers.<Role>lambdaQuery().eq(Role::getRole, SecurityConstant.TENANT_ADMIN_ROLE));
+            if (ObjectUtil.isNull(role)) {
+                throw new BaseRuntimeException("租户管理员角色不存在，请确保系统关键数据完整");
+            } else {
+                UserRole userRole = new UserRole();
+                userRole.setUserId(userId);
+                userRole.setRoleId(role.getId());
+                userRoleService.create(userRole);
+            }
+        }
         return userId;
     }
 
@@ -104,6 +120,13 @@ public class UserOperateServiceImpl implements IUserOperateService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public Boolean delete(String id) {
+        UserRole userRole = userRoleService.getOne(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, id));
+        if (ObjectUtil.isNotNull(userRole)) {
+            Role role = Optional.ofNullable(roleService.get(userRole.getRoleId())).orElseGet(Role::new);
+            if (SecurityConstant.SUPER_ADMIN_ROLE.equals(role.getRole())) {
+                throw new BaseRuntimeException("警告，请勿删除系统关键数据");
+            }
+        }
         userService.delete(id);
         userInfoService.remove(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, id));
         return true;

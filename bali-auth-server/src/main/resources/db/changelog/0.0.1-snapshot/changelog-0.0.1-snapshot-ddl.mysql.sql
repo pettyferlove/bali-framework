@@ -40,4 +40,4 @@ select user.id,
         where (user_info.modifier = u.user_id)) AS modifier_name,
        user_info.modify_time
 from uc_user user
-         left join uc_user_info user_info on user.id = user_info.user_id;
+         left join uc_user_info user_info on user.id = user_info.user_id where user.del_flag = 0;
