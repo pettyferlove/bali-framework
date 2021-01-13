@@ -7,13 +7,11 @@ import com.github.bali.auth.entity.Tenant;
 import com.github.bali.auth.service.ITenantService;
 import com.github.bali.core.framework.domain.vo.R;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
-import com.github.bali.core.framework.utils.ConverterUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
