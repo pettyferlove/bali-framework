@@ -8,7 +8,7 @@
     <title>角色管理</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <th:block th:replace="fragments/css/css-import::core-css"/>
-    <link rel="stylesheet" th:href="@{/static/css/role.css}">
+    <th:block th:replace="fragments/css/css-import::common-css"/>
 </head>
 <body class="bali-content">
 <div class="breadcrumb-wrapper">
@@ -47,9 +47,6 @@
         </div>
     </div>
 </div>
-
-
-
 </body>
 <th:block th:replace="fragments/js/js-import::core-js"/>
 <script th:src="@{/static/js/role/index.js}"></script>

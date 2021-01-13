@@ -1,6 +1,9 @@
 package com.github.bali.auth.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -27,7 +30,11 @@ public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> impleme
 
     @Override
     public IPage<Tenant> page(Tenant tenant, Page<Tenant> page) {
-        return this.page(page, Wrappers.lambdaQuery(tenant).orderByDesc(Tenant::getCreateTime));
+        LambdaQueryWrapper<Tenant> queryWrapper = Wrappers.<Tenant>lambdaQuery().orderByDesc(Tenant::getCreateTime);
+        if (StrUtil.isNotEmpty(tenant.getTenantName())) {
+            queryWrapper.likeRight(Tenant::getTenantName, tenant.getTenantName());
+        }
+        return this.page(page, queryWrapper);
     }
 
     @Override
@@ -42,6 +49,7 @@ public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> impleme
 
     @Override
     public String create(Tenant tenant) {
+        tenant.setTenantId(IdWorker.getIdStr());
         tenant.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getId());
         tenant.setCreateTime(LocalDateTime.now());
         if (this.save(tenant)) {
