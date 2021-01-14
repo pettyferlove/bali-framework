@@ -78,3 +78,11 @@ alter table uc_auth_client_details modify application_name varchar(255) not null
 
 alter table uc_auth_client_details
     add description varchar(1000) null comment '描述信息' after application_name;
+
+--changeset Petty:0.0.1-snapshot-9
+alter table uc_auth_client_details modify application_name varchar(255) null comment '应用名称';
+
+alter table uc_auth_client_details drop column scope;
+
+alter table uc_auth_client_details drop column auto_approve;
+

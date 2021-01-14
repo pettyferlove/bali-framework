@@ -48,9 +48,6 @@ public class AuthClientDetails extends BaseEntity<AuthClientDetails> {
     @ApiModelProperty(value = "客户端密钥")
     private String clientSecret;
 
-    @ApiModelProperty(value = "域")
-    private String scope;
-
     @ApiModelProperty(value = "授权模式")
     private String authorizedGrantTypes;
 
@@ -68,9 +65,6 @@ public class AuthClientDetails extends BaseEntity<AuthClientDetails> {
 
     @ApiModelProperty(value = "附加信息")
     private String additionalInformation;
-
-    @ApiModelProperty(value = "自动授权")
-    private String autoApprove;
 
     @ApiModelProperty(value = "租户ID")
     private String tenantId;
