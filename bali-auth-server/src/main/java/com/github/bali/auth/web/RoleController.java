@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.bali.auth.entity.Role;
 import com.github.bali.auth.service.IRoleService;
 import com.github.bali.core.framework.domain.vo.R;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.Optional;
  */
 @Controller
 @RequestMapping("role")
+@PreAuthorize("hasRole('TENANT_ADMIN')")
 public class RoleController {
 
     private final IRoleService roleService;

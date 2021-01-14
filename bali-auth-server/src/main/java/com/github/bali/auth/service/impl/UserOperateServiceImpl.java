@@ -143,6 +143,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
         }
         userService.delete(id);
         userInfoService.remove(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, id));
+        userRoleService.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, id));
         return true;
     }
 }
