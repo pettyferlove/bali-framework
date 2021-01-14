@@ -13,9 +13,13 @@ layui.use(['form'], function () {
             contentType: "application/json",
             dataType: "json",
             success: function (res) {
-                layer.msg('新增成功');
-                parent.layui.table.reload('table');
-                parent.layer.close(index);
+                if (res.message) {
+                    layer.msg(res.message, {icon: 2});
+                } else {
+                    layer.msg('新增成功');
+                    parent.layui.table.reload('table');
+                    parent.layer.close(index);
+                }
             },
             error: function (err) {
                 layer.msg('新增失败', {icon: 2});
