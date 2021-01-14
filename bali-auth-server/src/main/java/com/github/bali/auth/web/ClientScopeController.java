@@ -7,9 +7,9 @@ import com.github.bali.auth.service.IAuthClientScopeService;
 import com.github.bali.core.framework.domain.vo.R;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * @author Pettyfer
@@ -45,12 +45,43 @@ public class ClientScopeController {
 
     @RequestMapping("/edit/{id}")
     public String edit(@PathVariable String id, Model model) {
+        model.addAttribute("scope", Optional.ofNullable(clientScopeService.get(id)).orElseGet(AuthClientScope::new));
         return "client/scope/edit";
     }
 
     @RequestMapping("/view")
     public String view(Model model) {
         return "client/scope/view";
+    }
+
+    @RequestMapping(value = "create", method = RequestMethod.POST)
+    @ResponseBody
+    public R<String> create(@RequestBody AuthClientScope scope) {
+        try {
+            return new R<>(clientScopeService.create(scope));
+        } catch (Exception e) {
+            return new R<>( null, e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "update", method = RequestMethod.PUT)
+    @ResponseBody
+    public R<Boolean> update(@RequestBody AuthClientScope scope) {
+        try {
+            return new R<>(clientScopeService.update(scope));
+        } catch (Exception e) {
+            return new R<>(false, e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public R<Boolean> delete(@PathVariable String id) {
+        try {
+            return new R<>(clientScopeService.delete(id));
+        } catch (Exception e) {
+            return new R<>(false, e.getMessage());
+        }
     }
 
 }

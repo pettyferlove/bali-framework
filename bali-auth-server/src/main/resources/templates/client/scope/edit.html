@@ -12,6 +12,25 @@
 </head>
 <body style="background-color: white;">
 <form class="layui-form" lay-filter="form" action="" style="padding: 20px 60px 20px 30px;background-color: white">
+    <input type="text" name="id" class="layui-hide" th:value="${scope.getId()}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">域</label>
+        <div class="layui-input-block">
+            <input type="text" name="scope" lay-verify="required" lay-reqtext="域是必填项，不能为空" placeholder="请输入域" autocomplete="off" class="layui-input" th:value="${scope.getScope()}">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block">
+            <textarea style="height: 150px" name="description" placeholder="请输入描述" class="layui-textarea" th:text="${scope.getDescription()}"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">自动授权</label>
+        <div class="layui-input-inline">
+            <input type="checkbox" lay-verify="required" lay-filter="auto" name="auto" lay-skin="switch" th:value="true" lay-text="启用|关闭" th:attr="checked=${scope.getAuto()}">
+        </div>
+    </div>
     <div class="layui-form-item layui-hide">
         <input type="button" lay-submit lay-filter="form-submit" id="form-submit" value="确认添加">
     </div>
@@ -19,5 +38,5 @@
 </body>
 </body>
 <th:block th:replace="fragments/js/js-import::core-js"/>
-<script th:src="@{/static/js/pages/client/edit.js}"></script>
+<script th:src="@{/static/js/pages/client/scope/edit.js}"></script>
 </html>
