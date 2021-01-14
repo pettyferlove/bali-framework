@@ -1,6 +1,5 @@
-layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function () {
-    let laydate = layui.laydate
-        , layer = layui.layer //弹层
+layui.use(['layer', 'table'], function () {
+    let layer = layui.layer
         , table = layui.table
 
     let module = '/client';
