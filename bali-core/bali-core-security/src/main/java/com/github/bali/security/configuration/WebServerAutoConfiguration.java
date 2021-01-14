@@ -27,6 +27,8 @@ public class WebServerAutoConfiguration extends WebSecurityConfigurerAdapter imp
 
     private String[] ignores = new String[]{};
 
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
