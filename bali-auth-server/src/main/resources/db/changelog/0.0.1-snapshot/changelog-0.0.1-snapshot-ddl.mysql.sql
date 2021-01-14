@@ -49,4 +49,23 @@ alter table uc_user_info
     add constraint user_id_del_flag_unique
         unique (user_id, user_iden, del_flag, tenant_id);
 
+--changeset Petty:0.0.1-snapshot-6
+create table uc_auth_client_details_scope
+(
+    id          varchar(128)                 not null
+        primary key,
+    details_id  varchar(128)                 not null,
+    scope_id    varchar(128)                 not null,
+    del_flag    tinyint unsigned default '0' null comment '删除标记 0 未删除 1 删除',
+    creator     varchar(128)                 null comment '创建人',
+    create_time datetime                     null comment '创建时间',
+    modifier    varchar(128)                 null comment '修改人',
+    modify_time datetime                     null comment '修改时间'
+);
+
+create index uc_auth_client_details_scope_details_id_del_flag_index
+    on uc_auth_client_details_scope (details_id, del_flag);
+
+create index uc_auth_client_details_scope_scope_id_del_flag_index
+    on uc_auth_client_details_scope (scope_id, del_flag);
 
