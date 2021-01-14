@@ -3,12 +3,14 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         , layer = layui.layer //弹层
         , table = layui.table
 
-    //执行一个 table 实例
+    let module = '/client';
+    let moduleName = '应用';
+
     table.render({
         elem: '#table'
         , height: 420
-        , url: '/client/list' //数据接口
-        , title: '客户端表'
+        , url: module + '/list' //数据接口
+        , title: moduleName + '列表'
         , page: true //开启分页
         , toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
         , cols: [[ //表头
@@ -66,21 +68,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             , data = checkStatus.data; //获取选中的数据
         switch (obj.event) {
             case 'add':
-                layer.open({
-                    type: 2,
-                    title: '添加客户端',
-                    btn: ['创建', '取消'],
-                    area: ['70%', '70%'],
-                    content: '/client/add'
-                    , yes: function (index, layero) {
-                        let submit = layero.find('iframe').contents().find("#form-submit");
-                        submit.click();
-                    }
-                    , btn2: function (index) {
-                        layer.close(index)
-                        return false;
-                    }
-                });
+                add();
                 break;
             case 'update':
                 if (data.length === 0) {
@@ -88,41 +76,14 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                 } else if (data.length > 1) {
                     layer.msg('只能同时编辑一个');
                 } else {
-                    layer.open({
-                        type: 2,
-                        title: '编辑客户端',
-                        btn: ['保存', '取消'],
-                        area: ['70%', '70%'],
-                        content: '/client/edit/' + checkStatus.data[0].id
-                        , yes: function (index, layero) {
-                            let submit = layero.find('iframe').contents().find("#form-submit");
-                            submit.click();
-                        }
-                        , btn2: function (index) {
-                            layer.close(index)
-                            return false;
-                        }
-                    });
+                    edit(checkStatus.data[0].id);
                 }
                 break;
             case 'delete':
                 if (data.length === 0) {
                     layer.msg('请选择一行');
                 } else {
-                    layer.confirm('真的删除行么', function (index) {
-                        $.ajax({
-                            type: "DELETE",
-                            url: "/client/delete/" + checkStatus.data[0].id,
-                            success: function (res) {
-                                layer.msg('删除成功');
-                                table.reload('table')
-                            },
-                            error: function (err) {
-                                layer.msg('删除失败', {icon: 2});
-                            }
-                        })
-                        layer.close(index);
-                    });
+                    del(checkStatus.data[0].id);
                 }
                 break;
         }
@@ -136,37 +97,63 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         if (layEvent === 'detail') {
             layer.msg('查看操作');
         } else if (layEvent === 'del') {
-            layer.confirm('真的删除行么', function (index) {
-                $.ajax({
-                    type: "DELETE",
-                    url: "/client/delete/" + data.id,
-                    success: function (res) {
-                        layer.msg('删除成功');
-                        table.reload('table')
-                    },
-                    error: function (err) {
-                        layer.msg('删除失败', {icon: 2});
-                    }
-                })
-                layer.close(index);
-            });
+            del(data.id);
         } else if (layEvent === 'edit') {
-            layer.open({
-                type: 2,
-                title: '编辑客户端',
-                btn: ['保存', '取消'],
-                area: ['70%', '70%'],
-                content: '/client/edit/' + data.id
-                , yes: function (index, layero) {
-                    let submit = layero.find('iframe').contents().find("#form-submit");
-                    submit.click();
-                }
-                , btn2: function (index) {
-                    layer.close(index)
-                    return false;
-                }
-            });
+            edit(data.id);
         }
     });
+
+    function add(){
+        layer.open({
+            type: 2,
+            title: '添加' + moduleName,
+            btn: ['创建', '取消'],
+            area: ['70%', '70%'],
+            content: module + '/add'
+            , yes: function (index, layero) {
+                let submit = layero.find('iframe').contents().find("#form-submit");
+                submit.click();
+            }
+            , btn2: function (index) {
+                layer.close(index)
+                return false;
+            }
+        });
+    }
+
+    function del(id){
+        layer.confirm('真的删除行么', function (index) {
+            $.ajax({
+                type: "DELETE",
+                url: module + '/delete/' + id,
+                success: function (res) {
+                    layer.msg('删除成功');
+                    table.reload('table')
+                },
+                error: function (err) {
+                    layer.msg('删除失败', {icon: 2});
+                }
+            })
+            layer.close(index);
+        });
+    }
+
+    function edit(id) {
+        layer.open({
+            type: 2,
+            title: '编辑' + moduleName,
+            btn: ['保存', '取消'],
+            area: ['70%', '70%'],
+            content: module + '/edit/' + id
+            , yes: function (index, layero) {
+                let submit = layero.find('iframe').contents().find("#form-submit");
+                submit.click();
+            }
+            , btn2: function (index) {
+                layer.close(index)
+                return false;
+            }
+        });
+    }
 
 });
