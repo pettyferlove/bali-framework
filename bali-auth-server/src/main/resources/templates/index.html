@@ -48,7 +48,7 @@
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
                     <a href="javascript:;">
-                        <img th:src="${userInfo.getUserAvatar()}" class="layui-nav-img">
+                        <img th:src="${userInfo.getUserAvatar()!=null?userInfo.getUserAvatar():'/static/images/user_default.png'}" class="layui-nav-img">
                         <th:block
                                 th:text="${userInfo.getUserName()!=null?userInfo.getUserName():userInfo.getNickName()}"></th:block>
                     </a>

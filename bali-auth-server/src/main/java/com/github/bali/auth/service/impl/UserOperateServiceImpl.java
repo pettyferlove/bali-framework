@@ -13,6 +13,7 @@ import com.github.bali.core.framework.utils.ConverterUtil;
 import com.github.bali.security.constants.SecurityConstant;
 import com.github.bali.security.constants.UserChannelConstant;
 import com.github.bali.security.utils.SecurityUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ import java.util.Optional;
 /**
  * @author Petty
  */
+@Slf4j
 @Service
 public class UserOperateServiceImpl implements IUserOperateService {
 
@@ -127,7 +129,8 @@ public class UserOperateServiceImpl implements IUserOperateService {
         if (ObjectUtil.isNotNull(userRole)) {
             Role role = Optional.ofNullable(roleService.get(userRole.getRoleId())).orElseGet(Role::new);
             if (SecurityConstant.SUPER_ADMIN_ROLE.equals(role.getRole())) {
-                throw new BaseRuntimeException("警告，请勿删除系统关键数据");
+                log.error("attempts to remove the super administrator");
+                throw new BaseRuntimeException("警告，你无法删除系统超级管理员");
             }
         }
         userService.delete(id);

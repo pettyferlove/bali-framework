@@ -38,7 +38,11 @@
                     <table class="layui-hide" id="table" lay-filter="filter">
                         <script type="text/html" id="userNameTpl">
                             {{#  if(d.userName){ }}
-                            <div><img src="{{d.userAvatar}}" class="layui-nav-img"> {{d.userName}}</div>
+                                {{#  if(d.userAvatar){ }}
+                                    <div><img src="{{d.userAvatar}}" class="layui-nav-img"> {{d.userName}}</div>
+                                {{#  } else { }}
+                                    <div><img src="/static/images/user_default_black.png" class="layui-nav-img"> {{d.userName}}</div>
+                                {{#  } }}
                             {{#  } else { }}
                             <span>{{d.nickName}}</span>
                             {{#  } }}
