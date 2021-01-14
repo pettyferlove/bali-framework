@@ -106,7 +106,7 @@ layui.use(['layer', 'table'], function () {
             type: 2,
             title: '添加' + moduleName,
             btn: ['创建', '取消'],
-            area: ['40%', '50%'],
+            area: ['40%', '60%'],
             content: module + '/add'
             , yes: function (index, layero) {
                 let submit = layero.find('iframe').contents().find("#form-submit");
@@ -145,7 +145,7 @@ layui.use(['layer', 'table'], function () {
             type: 2,
             title: '编辑' + moduleName,
             btn: ['保存', '取消'],
-            area: ['40%', '50%'],
+            area: ['40%', '60%'],
             content: module + '/edit/' + id
             , yes: function (index, layero) {
                 let submit = layero.find('iframe').contents().find("#form-submit");
