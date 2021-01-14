@@ -45,39 +45,7 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
     public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
         Optional<User> userOptional = Optional.ofNullable(userService.getOne(Wrappers.<User>lambdaQuery().eq(User::getLoginId, loginName)));
         if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            UserInfo userInfo = Optional.ofNullable(userInfoService.getOne(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, user.getId()))).orElseGet(UserInfo::new);
-            List<UserRole> userRoles = Optional.ofNullable(userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, user.getId()))).orElseGet(ArrayList::new);
-            List<String> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
-            List<String> roles = new LinkedList<>();
-            if (!roleIds.isEmpty()) {
-                List<Role> roleList = Optional.ofNullable(roleService.list(Wrappers.<Role>lambdaQuery().in(Role::getId, roleIds))).orElseGet(LinkedList::new);
-                roles = roleList.stream().map(Role::getRole).collect(Collectors.toList());
-            }
-            if (StrUtil.isEmpty(user.getTenantId())) {
-                throw new RuntimeException("用户异常，无法登录");
-            } else {
-                try {
-                    Tenant tenant = tenantService.getOne(Wrappers.<Tenant>lambdaQuery().eq(Tenant::getTenantId, user.getTenantId()));
-                    if (tenant.getStatus() == 0) {
-                        throw new RuntimeException("租户无效，禁止登录");
-                    }
-                } catch (Exception e) {
-                    throw new RuntimeException("租户异常，禁止登录");
-                }
-            }
-            return BaliUserDetails.builder()
-                    .id(user.getId())
-                    .username(user.getLoginId())
-                    .password(user.getPassword())
-                    .channel(user.getUserChannel())
-                    .status(user.getStatus())
-                    .nickname(StrUtil.isNotEmpty(userInfo.getUserName()) ? userInfo.getUserName() : userInfo.getNickName())
-                    .roles(roles)
-                    .email(userInfo.getEmail())
-                    .tenant(user.getTenantId())
-                    .avatar(userInfo.getUserAvatar())
-                    .build();
+            return transform(userOptional.get());
         } else {
             throw new RuntimeException("用户未注册");
         }
@@ -87,39 +55,7 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
     public UserDetails loadUserByWeChatOpenId(String openId) {
         Optional<User> userOptional = Optional.ofNullable(userService.getOne(Wrappers.<User>lambdaQuery().eq(User::getOpenId, openId)));
         if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            UserInfo userInfo = Optional.ofNullable(userInfoService.getOne(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, user.getId()))).orElseGet(UserInfo::new);
-            List<UserRole> userRoles = Optional.ofNullable(userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, user.getId()))).orElseGet(ArrayList::new);
-            List<String> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
-            List<String> roles = new LinkedList<>();
-            if (!roleIds.isEmpty()) {
-                List<Role> roleList = Optional.ofNullable(roleService.list(Wrappers.<Role>lambdaQuery().in(Role::getId, roleIds))).orElseGet(LinkedList::new);
-                roles = roleList.stream().map(Role::getRoleName).collect(Collectors.toList());
-            }
-            if (StrUtil.isEmpty(user.getTenantId())) {
-                throw new RuntimeException("用户异常，无法登录");
-            } else {
-                try {
-                    Tenant tenant = tenantService.getOne(Wrappers.<Tenant>lambdaQuery().eq(Tenant::getTenantId, user.getTenantId()));
-                    if (tenant.getStatus() == 0) {
-                        throw new RuntimeException("租户无效，禁止登录");
-                    }
-                } catch (Exception e) {
-                    throw new RuntimeException("租户异常，禁止登录");
-                }
-            }
-            return BaliUserDetails.builder()
-                    .id(user.getId())
-                    .username(user.getLoginId())
-                    .password(user.getPassword())
-                    .channel(user.getUserChannel())
-                    .status(user.getStatus())
-                    .nickname(StrUtil.isNotEmpty(userInfo.getUserName()) ? userInfo.getUserName() : userInfo.getNickName())
-                    .roles(roles)
-                    .email(userInfo.getEmail())
-                    .tenant(user.getTenantId())
-                    .avatar(userInfo.getUserAvatar())
-                    .build();
+            return transform(userOptional.get());
         } else {
             throw new RuntimeException("用户未注册");
         }
@@ -134,42 +70,45 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
     public UserDetails loadUserByWeChatUnionId(String unionId) {
         Optional<User> userOptional = Optional.ofNullable(userService.getOne(Wrappers.<User>lambdaQuery().eq(User::getUnionId, unionId)));
         if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            UserInfo userInfo = Optional.ofNullable(userInfoService.getOne(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, user.getId()))).orElseGet(UserInfo::new);
-            List<UserRole> userRoles = Optional.ofNullable(userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, user.getId()))).orElseGet(ArrayList::new);
-            List<String> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
-            List<String> roles = new LinkedList<>();
-            if (!roleIds.isEmpty()) {
-                List<Role> roleList = Optional.ofNullable(roleService.list(Wrappers.<Role>lambdaQuery().in(Role::getId, roleIds))).orElseGet(LinkedList::new);
-                roles = roleList.stream().map(Role::getRoleName).collect(Collectors.toList());
-            }
-            if (StrUtil.isEmpty(user.getTenantId())) {
-                throw new RuntimeException("用户异常，无法登录");
-            } else {
-                try {
-                    Tenant tenant = tenantService.getOne(Wrappers.<Tenant>lambdaQuery().eq(Tenant::getTenantId, user.getTenantId()));
-                    if (tenant.getStatus() == 0) {
-                        throw new RuntimeException("租户无效，禁止登录");
-                    }
-                } catch (Exception e) {
-                    throw new RuntimeException("租户异常，禁止登录");
-                }
-            }
-            return BaliUserDetails.builder()
-                    .id(user.getId())
-                    .username(user.getLoginId())
-                    .password(user.getPassword())
-                    .channel(user.getUserChannel())
-                    .status(user.getStatus())
-                    .nickname(StrUtil.isNotEmpty(userInfo.getUserName()) ? userInfo.getUserName() : userInfo.getNickName())
-                    .roles(roles)
-                    .email(userInfo.getEmail())
-                    .tenant(user.getTenantId())
-                    .avatar(userInfo.getUserAvatar())
-                    .build();
+            return transform(userOptional.get());
         } else {
             throw new RuntimeException("用户未注册");
         }
+    }
+
+    private BaliUserDetails transform(User user) {
+        UserInfo userInfo = Optional.ofNullable(userInfoService.getOne(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, user.getId()))).orElseGet(UserInfo::new);
+        List<UserRole> userRoles = Optional.ofNullable(userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, user.getId()))).orElseGet(ArrayList::new);
+        List<String> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
+        List<String> roles = new LinkedList<>();
+        if (!roleIds.isEmpty()) {
+            List<Role> roleList = Optional.ofNullable(roleService.list(Wrappers.<Role>lambdaQuery().in(Role::getId, roleIds))).orElseGet(LinkedList::new);
+            roles = roleList.stream().map(Role::getRoleName).collect(Collectors.toList());
+        }
+        if (StrUtil.isEmpty(user.getTenantId())) {
+            throw new RuntimeException("用户异常，无法登录");
+        } else {
+            try {
+                Tenant tenant = tenantService.getOne(Wrappers.<Tenant>lambdaQuery().eq(Tenant::getTenantId, user.getTenantId()));
+                if (tenant.getStatus() == 0) {
+                    throw new RuntimeException("租户无效，禁止登录");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("租户异常，禁止登录");
+            }
+        }
+        return BaliUserDetails.builder()
+                .id(user.getId())
+                .username(user.getLoginId())
+                .password(user.getPassword())
+                .channel(user.getUserChannel())
+                .status(user.getStatus())
+                .nickname(StrUtil.isNotEmpty(userInfo.getUserName()) ? userInfo.getUserName() : userInfo.getNickName())
+                .roles(roles)
+                .email(userInfo.getEmail())
+                .tenant(user.getTenantId())
+                .avatar(userInfo.getUserAvatar())
+                .build();
     }
 
 }
