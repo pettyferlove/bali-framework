@@ -3,7 +3,6 @@ $(function () {
         let e = $(this);
         let path = e.attr("path");
         let title = e.attr("title");
-        console.log("click")
         $("iframe").attr("src", path)
         selectMenu(path);
     })
