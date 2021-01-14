@@ -126,8 +126,12 @@ layui.use(['layer', 'table'], function () {
                 type: "DELETE",
                 url: module + '/delete/' + id,
                 success: function (res) {
-                    layer.msg('删除成功');
-                    table.reload('table')
+                    if(res.message){
+                        layer.msg(res.message, {icon: 2});
+                    } else {
+                        layer.msg('删除成功');
+                        table.reload('table')
+                    }
                 },
                 error: function (err) {
                     layer.msg('删除失败', {icon: 2});

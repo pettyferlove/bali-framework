@@ -107,6 +107,14 @@ public class UserOperateServiceImpl implements IUserOperateService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public Boolean update(UserOperateVO userOperate) {
+        UserRole userRole = userRoleService.getOne(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userOperate.getId()));
+        if (ObjectUtil.isNotNull(userRole)) {
+            Role role = Optional.ofNullable(roleService.get(userRole.getRoleId())).orElseGet(Role::new);
+            if (SecurityConstant.SUPER_ADMIN_ROLE.equals(role.getRole())) {
+                log.error("attempts to remove the super administrator");
+                throw new BaseRuntimeException("警告，你无法修改系统超级管理员");
+            }
+        }
         User user = new User();
         user.setId(userOperate.getId());
         user.setStatus(userOperate.getStatus());
