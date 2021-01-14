@@ -18,7 +18,7 @@ layui.use(['layer', 'table'], function () {
             , {field: 'scope', width: 200, title: '域', align: 'center', templet: '#scopeTpl'}
             , {field: 'description', title: '描述信息'}
             , {field: 'auto', title: '是否自动授权', width: 140, align: 'center', sort: true, totalRow: true, templet: '#autoTpl'}
-            , {field: 'modifyTime', title: '最后修改时间', sort: true,}
+            , {field: 'modifyTime', title: '最后修改时间', width: 180 , align: 'center', sort: true}
             , {fixed: 'right', width: 165, align: 'center', toolbar: '#action'}
         ]], response: {
             statusCode: 200 //重新规定成功的状态码为 200，table 组件默认为 0
