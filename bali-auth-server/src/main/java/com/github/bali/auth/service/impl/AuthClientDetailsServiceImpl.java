@@ -34,6 +34,9 @@ public class AuthClientDetailsServiceImpl extends ServiceImpl<AuthClientDetailsM
         if (StrUtil.isNotEmpty(authClientDetails.getClientId())) {
             queryWrapper.likeRight(AuthClientDetails::getClientId, authClientDetails.getClientId());
         }
+        if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
+            queryWrapper.eq(AuthClientDetails::getTenantId, Objects.requireNonNull(SecurityUtil.getUser()).getTenant());
+        }
         return this.page(page, queryWrapper);
     }
 
@@ -51,7 +54,7 @@ public class AuthClientDetailsServiceImpl extends ServiceImpl<AuthClientDetailsM
     public String create(AuthClientDetails authClientDetails) {
         authClientDetails.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getId());
         authClientDetails.setCreateTime(LocalDateTime.now());
-        if(SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
+        if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
             authClientDetails.setTenantId(Objects.requireNonNull(SecurityUtil.getUser()).getTenant());
         }
         if (this.save(authClientDetails)) {

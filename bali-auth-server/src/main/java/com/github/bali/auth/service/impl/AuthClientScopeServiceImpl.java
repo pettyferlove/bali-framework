@@ -28,6 +28,9 @@ public class AuthClientScopeServiceImpl extends ServiceImpl<AuthClientScopeMappe
 
     @Override
     public IPage<AuthClientScope> page(AuthClientScope authClientScope, Page<AuthClientScope> page) {
+        if(SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
+            authClientScope.setTenantId(Objects.requireNonNull(SecurityUtil.getUser()).getTenant());
+        }
         return this.page(page, Wrappers.lambdaQuery(authClientScope).orderByDesc(AuthClientScope::getCreateTime));
     }
 
