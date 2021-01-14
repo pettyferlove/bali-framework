@@ -10,6 +10,8 @@
     <result column="create_time" property="createTime" />
     <result column="modifier" property="modifier" />
     <result column="modify_time" property="modifyTime" />
+        <result column="application_name" property="applicationName" />
+        <result column="description" property="description" />
         <result column="client_id" property="clientId" />
         <result column="resource_ids" property="resourceIds" />
         <result column="client_secret" property="clientSecret" />
@@ -32,7 +34,7 @@
         create_time,
         modifier,
         modify_time,
-        client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, auto_approve, tenant_id
+        description, application_name, client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, auto_approve, tenant_id
     </sql>
 
 </mapper>

@@ -14,7 +14,7 @@ layui.use(['layer', 'table'], function () {
         , toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
         , cols: [[ //表头
             {type: 'checkbox', fixed: 'left'}
-            , {field: 'clientId', title: '客户端ID', width: 100, sort: true, fixed: 'left'}
+            , {field: 'applicationName', title: '应用名称', sort: true, fixed: 'left'}
             , {field: 'authorizedGrantTypes', title: '授权模式'}
             , {field: 'webServerRedirectUri', title: '回调URL'}
             , {field: 'accessTokenValidity', title: 'Token有效时间', width: 100, sort: true, totalRow: true}

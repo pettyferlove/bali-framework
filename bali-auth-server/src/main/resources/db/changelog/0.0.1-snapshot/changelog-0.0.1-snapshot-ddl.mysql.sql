@@ -69,3 +69,12 @@ create index uc_auth_client_details_scope_details_id_del_flag_index
 create index uc_auth_client_details_scope_scope_id_del_flag_index
     on uc_auth_client_details_scope (scope_id, del_flag);
 
+--changeset Petty:0.0.1-snapshot-7
+alter table uc_auth_client_details
+    add application_name varchar(255) null comment '应用名称' after id;
+
+--changeset Petty:0.0.1-snapshot-8
+alter table uc_auth_client_details modify application_name varchar(255) not null comment '应用名称';
+
+alter table uc_auth_client_details
+    add description varchar(1000) null comment '描述信息' after application_name;

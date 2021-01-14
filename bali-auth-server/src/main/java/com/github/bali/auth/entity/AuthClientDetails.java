@@ -33,7 +33,13 @@ public class AuthClientDetails extends BaseEntity<AuthClientDetails> {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "客户端名称")
+    @ApiModelProperty(value = "应用名称名称")
+    private String applicationName;
+
+    @ApiModelProperty(value = "描述信息")
+    private String description;
+
+    @ApiModelProperty(value = "客户端ID")
     private String clientId;
 
     @ApiModelProperty(value = "客户端资源集")
