@@ -5,15 +5,19 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title>应用管理</title>
+    <title>应用域管理</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <th:block th:replace="fragments/css/css-import::core-css"/>
     <th:block th:replace="fragments/css/css-import::common-css"/>
 </head>
-<body>
-
-
-
+<body style="background-color: white;">
+<form class="layui-form" lay-filter="form" action="" style="padding: 20px 60px 20px 30px;background-color: white">
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="form-submit" id="form-submit" value="确认添加">
+    </div>
+</form>
+</body>
 </body>
 <th:block th:replace="fragments/js/js-import::core-js"/>
+<script th:src="@{/static/js/pages/client/edit.js}"></script>
 </html>
