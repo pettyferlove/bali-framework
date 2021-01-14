@@ -2,15 +2,16 @@ package com.github.bali.auth.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.bali.auth.domain.vo.ClientCreateResponseVO;
+import com.github.bali.auth.domain.vo.ClientDetailsVO;
 import com.github.bali.auth.entity.AuthClientDetails;
 import com.github.bali.auth.service.IAuthClientDetailsService;
 import com.github.bali.auth.service.IAuthClientScopeService;
+import com.github.bali.auth.service.IClientOperateService;
 import com.github.bali.core.framework.domain.vo.R;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -25,9 +26,12 @@ public class ClientController {
 
     private final IAuthClientScopeService authClientScopeService;
 
-    public ClientController(IAuthClientDetailsService authClientDetailsService, IAuthClientScopeService authClientScopeService) {
+    private final IClientOperateService clientOperateService;
+
+    public ClientController(IAuthClientDetailsService authClientDetailsService, IAuthClientScopeService authClientScopeService, IClientOperateService clientOperateService) {
         this.authClientDetailsService = authClientDetailsService;
         this.authClientScopeService = authClientScopeService;
+        this.clientOperateService = clientOperateService;
     }
 
     @RequestMapping("/index")
@@ -62,6 +66,36 @@ public class ClientController {
     @RequestMapping("/view")
     public String view(Model model) {
         return "client/view";
+    }
+
+    @RequestMapping(value = "create", method = RequestMethod.POST)
+    @ResponseBody
+    public R<ClientCreateResponseVO> create(@RequestBody ClientDetailsVO details) {
+        try {
+            return new R<>(clientOperateService.create(details));
+        } catch (Exception e) {
+            return new R<>( null, e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "update", method = RequestMethod.PUT)
+    @ResponseBody
+    public R<Boolean> update(@RequestBody ClientDetailsVO details) {
+        try {
+            return new R<>(clientOperateService.update(details));
+        } catch (Exception e) {
+            return new R<>(false, e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public R<Boolean> delete(@PathVariable String id) {
+        try {
+            return new R<>(clientOperateService.delete(id));
+        } catch (Exception e) {
+            return new R<>(false, e.getMessage());
+        }
     }
 
 }

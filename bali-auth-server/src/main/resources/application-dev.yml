@@ -89,3 +89,4 @@ multi-tenancy:
     tables: # 不需要租户控制的表
       - uc_tenant
       - uc_user_role
+      - uc_auth_client_details_scope

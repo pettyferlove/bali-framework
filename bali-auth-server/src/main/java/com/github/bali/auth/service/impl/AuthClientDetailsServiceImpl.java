@@ -10,6 +10,7 @@ import com.github.bali.auth.entity.AuthClientDetails;
 import com.github.bali.auth.mapper.AuthClientDetailsMapper;
 import com.github.bali.auth.service.IAuthClientDetailsService;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
+import com.github.bali.security.constants.SecurityConstant;
 import com.github.bali.security.utils.SecurityUtil;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +51,9 @@ public class AuthClientDetailsServiceImpl extends ServiceImpl<AuthClientDetailsM
     public String create(AuthClientDetails authClientDetails) {
         authClientDetails.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getId());
         authClientDetails.setCreateTime(LocalDateTime.now());
+        if(SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
+            authClientDetails.setTenantId(Objects.requireNonNull(SecurityUtil.getUser()).getTenant());
+        }
         if (this.save(authClientDetails)) {
             return authClientDetails.getId();
         } else {

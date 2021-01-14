@@ -8,6 +8,7 @@ import com.github.bali.auth.entity.AuthClientScope;
 import com.github.bali.auth.mapper.AuthClientScopeMapper;
 import com.github.bali.auth.service.IAuthClientScopeService;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
+import com.github.bali.security.constants.SecurityConstant;
 import com.github.bali.security.utils.SecurityUtil;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +45,9 @@ public class AuthClientScopeServiceImpl extends ServiceImpl<AuthClientScopeMappe
     public String create(AuthClientScope authClientScope) {
         authClientScope.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getId());
         authClientScope.setCreateTime(LocalDateTime.now());
+        if(SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
+            authClientScope.setTenantId(Objects.requireNonNull(SecurityUtil.getUser()).getTenant());
+        }
         if (this.save(authClientScope)) {
             return authClientScope.getId();
         } else {
