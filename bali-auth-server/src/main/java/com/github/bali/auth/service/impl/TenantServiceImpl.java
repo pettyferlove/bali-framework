@@ -49,6 +49,10 @@ public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> impleme
 
     @Override
     public Boolean delete(String id) {
+        Tenant tenant = Optional.ofNullable(this.get(id)).orElseGet(Tenant::new);
+        if (SecurityUtil.getUser().getTenant().equals(tenant.getTenantId())) {
+            throw new BaseRuntimeException("警告，你无法删除自己所属的租户");
+        }
         return this.removeById(id);
     }
 

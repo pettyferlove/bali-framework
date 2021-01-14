@@ -58,7 +58,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     public Boolean delete(String id) {
         Role role = Optional.ofNullable(this.get(id)).orElseGet(Role::new);
         if (SecurityConstant.SUPER_ADMIN_ROLE.equals(role.getRole())) {
-            log.error("attempts to remove the super administrator");
+            log.error("attempts to remove the super administrator role");
             throw new BaseRuntimeException("警告，你无法删除超级管理员角色");
         }
         userRoleService.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getRoleId, id));
@@ -80,7 +80,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     public Boolean update(Role role) {
         Role r = Optional.ofNullable(this.get(role.getId())).orElseGet(Role::new);
         if (SecurityConstant.SUPER_ADMIN_ROLE.equals(r.getRole())) {
-            log.error("attempts to remove the super administrator");
+            log.error("attempts to remove the super administrator role");
             throw new BaseRuntimeException("警告，你无法修改超级管理员角色");
         }
         role.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getId());

@@ -2,10 +2,7 @@ package com.github.bali.auth.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.github.bali.auth.entity.Role;
-import com.github.bali.auth.entity.User;
-import com.github.bali.auth.entity.UserInfo;
-import com.github.bali.auth.entity.UserRole;
+import com.github.bali.auth.entity.*;
 import com.github.bali.auth.service.*;
 import com.github.bali.security.userdetails.BaliUserDetails;
 import lombok.extern.slf4j.Slf4j;
@@ -34,11 +31,14 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
 
     private final IRoleService roleService;
 
-    public BaliUserDetailServiceImpl(IUserService userService, IUserInfoService userInfoService, IUserRoleService userRoleService, IRoleService roleService) {
+    private final ITenantService tenantService;
+
+    public BaliUserDetailServiceImpl(IUserService userService, IUserInfoService userInfoService, IUserRoleService userRoleService, IRoleService roleService, ITenantService tenantService) {
         this.userService = userService;
         this.userInfoService = userInfoService;
         this.userRoleService = userRoleService;
         this.roleService = roleService;
+        this.tenantService = tenantService;
     }
 
     @Override
@@ -55,8 +55,16 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
                 roles = roleList.stream().map(Role::getRole).collect(Collectors.toList());
             }
             if (StrUtil.isEmpty(user.getTenantId())) {
-                log.error("The user tries to log in, but does not belong to any tenant; login_id is {}", loginName);
                 throw new RuntimeException("用户异常，无法登录");
+            } else {
+                try {
+                    Tenant tenant = tenantService.getOne(Wrappers.<Tenant>lambdaQuery().eq(Tenant::getTenantId, user.getTenantId()));
+                    if (tenant.getStatus() == 0) {
+                        throw new RuntimeException("租户无效，禁止登录");
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException("租户异常，禁止登录");
+                }
             }
             return BaliUserDetails.builder()
                     .id(user.getId())
@@ -89,8 +97,16 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
                 roles = roleList.stream().map(Role::getRoleName).collect(Collectors.toList());
             }
             if (StrUtil.isEmpty(user.getTenantId())) {
-                log.error("The user tries to log in, but does not belong to any tenant; open_id is {}", openId);
                 throw new RuntimeException("用户异常，无法登录");
+            } else {
+                try {
+                    Tenant tenant = tenantService.getOne(Wrappers.<Tenant>lambdaQuery().eq(Tenant::getTenantId, user.getTenantId()));
+                    if (tenant.getStatus() == 0) {
+                        throw new RuntimeException("租户无效，禁止登录");
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException("租户异常，禁止登录");
+                }
             }
             return BaliUserDetails.builder()
                     .id(user.getId())
@@ -128,8 +144,16 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
                 roles = roleList.stream().map(Role::getRoleName).collect(Collectors.toList());
             }
             if (StrUtil.isEmpty(user.getTenantId())) {
-                log.error("The user tries to log in, but does not belong to any tenant; union_id is {}", unionId);
                 throw new RuntimeException("用户异常，无法登录");
+            } else {
+                try {
+                    Tenant tenant = tenantService.getOne(Wrappers.<Tenant>lambdaQuery().eq(Tenant::getTenantId, user.getTenantId()));
+                    if (tenant.getStatus() == 0) {
+                        throw new RuntimeException("租户无效，禁止登录");
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException("租户异常，禁止登录");
+                }
             }
             return BaliUserDetails.builder()
                     .id(user.getId())
