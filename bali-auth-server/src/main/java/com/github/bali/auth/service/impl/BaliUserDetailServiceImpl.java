@@ -1,11 +1,14 @@
 package com.github.bali.auth.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.bali.auth.entity.*;
 import com.github.bali.auth.service.*;
 import com.github.bali.security.userdetails.BaliUserDetails;
+import com.github.bali.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,8 @@ import java.util.stream.Collectors;
 @Service
 public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
 
+    private final IAuthClientDetailsService authClientDetailsService;
+
     private final IUserService userService;
 
     private final IUserInfoService userInfoService;
@@ -33,7 +38,8 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
 
     private final ITenantService tenantService;
 
-    public BaliUserDetailServiceImpl(IUserService userService, IUserInfoService userInfoService, IUserRoleService userRoleService, IRoleService roleService, ITenantService tenantService) {
+    public BaliUserDetailServiceImpl(IAuthClientDetailsService authClientDetailsService, IUserService userService, IUserInfoService userInfoService, IUserRoleService userRoleService, IRoleService roleService, ITenantService tenantService) {
+        this.authClientDetailsService = authClientDetailsService;
         this.userService = userService;
         this.userInfoService = userInfoService;
         this.userRoleService = userRoleService;
@@ -97,6 +103,18 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
                 throw new RuntimeException("租户异常，禁止登录");
             }
         }
+
+        // 进行了Basic认证说明是客户端再请求，这时需要验证客户端和用户是否处于同一个租户
+        Authentication authentication = SecurityUtil.getAuthentication();
+        // 不为Null则获取client_id
+        if (ObjectUtil.isNotNull(authentication)) {
+            String clientId = authentication.getName();
+            AuthClientDetails clientDetails = authClientDetailsService.getOne(Wrappers.<AuthClientDetails>lambdaQuery().eq(AuthClientDetails::getClientId, clientId));
+            if (!user.getTenantId().equals(clientDetails.getTenantId())) {
+                throw new RuntimeException("用户未注册");
+            }
+        }
+
         return BaliUserDetails.builder()
                 .id(user.getId())
                 .username(user.getLoginId())
