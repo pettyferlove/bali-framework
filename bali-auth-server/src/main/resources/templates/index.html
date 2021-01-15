@@ -15,13 +15,13 @@
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
+    <div class="layui-header header-menu">
         <div class="layui-main">
             <div class="layui-logo">
                 <img th:src="@{/static/images/logo.png}" class="layui-nav-img">Bali用户中心
             </div>
             <!-- 头部区域（可配合layui已有的水平导航） -->
-            <ul class="header-menu layui-nav layui-layout-left">
+            <ul class="layui-nav layui-layout-left">
                 <li class="layui-nav-item layui-this"><a href="javascript:;" path="home/index">仪表盘</a></li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">管理中心</a>
@@ -49,11 +49,10 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">
                         <img th:src="${userInfo.getUserAvatar()!=null?userInfo.getUserAvatar():'/static/images/user_default.png'}" class="layui-nav-img">
-                        <th:block
-                                th:text="${userInfo.getUserName()!=null?userInfo.getUserName():userInfo.getNickName()}"></th:block>
+                        <th:block th:text="${userInfo.getUserName()!=null?userInfo.getUserName():userInfo.getNickName()}"></th:block>
                     </a>
                     <dl class="layui-nav-child">
-                        <dd><a href="">个人中心</a></dd>
+                        <dd><a href="javascript:;" path="/personal/index">个人中心</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"><a href="/logout">退出登录</a></li>

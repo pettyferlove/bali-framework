@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <th:block th:replace="fragments/css/css-import::core-css"/>
+    <th:block th:replace="fragments/css/css-import::common-css"/>
+</head>
+<body class="bali-content">
+<div class="breadcrumb-wrapper">
+    <span class="layui-breadcrumb" lay-separator="—">
+      <a href="">首页</a>
+      <a><cite>个人中心</cite></a>
+    </span>
+</div>
+<div>
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <button class="layui-btn layui-btn-primary" id="upload">
+                        上传照片
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<th:block th:replace="fragments/js/js-import::core-js"/>
+<script th:src="@{/static/js/pages/personal/index.js}"></script>
+</html>
