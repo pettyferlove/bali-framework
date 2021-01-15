@@ -6,7 +6,7 @@ layui.use(['layer'], function () {
         layer.open({
             type: 2,
             title: '上传头像',
-            area: ['50%', '50%'],
+            area: ['1000px', '700px'],
             content: '/personal/avatar/'
             , yes: function (index, layero) {
                 return false;

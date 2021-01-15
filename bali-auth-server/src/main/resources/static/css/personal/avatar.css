@@ -1,0 +1,42 @@
+.img-container {
+    margin-bottom: 1rem;
+    width: 100%;
+    height: 400px;
+}
+
+.img-container, .img-preview {
+    background-color: #f7f7f7;
+    text-align: center;
+}
+
+.img-preview {
+    float: left;
+    margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
+    overflow: hidden;
+}
+
+.img-preview > img {
+    max-height: 100%;
+}
+
+.preview-lg {
+    height: 13rem;
+    width: 13rem;
+}
+
+.preview-md {
+    height: 6.5rem;
+    width: 6.5rem;
+}
+
+.preview-sm {
+    height: 3rem;
+    width: 3rem;
+}
+
+.preview-xs {
+    height: 1.125rem;
+    margin-right: 0;
+    width: 2rem;
+}
