@@ -2,6 +2,17 @@ layui.use(['form'], function(){
     let form = layui.form,layer = layui.layer
     //监听提交
     form.on('submit(form-submit)', function(data){
+        let authorizedGrantTypes = [];
+        $("input:checkbox[name='authorizedGrantTypes']:checked").each(function(){
+            authorizedGrantTypes.push($(this).val());
+        });
+        data.field.authorizedGrantTypes = authorizedGrantTypes.join(",") ;
+
+        let scope = [];
+        $("input:checkbox[name='scope']:checked").each(function(){
+            scope.push($(this).val());
+        });
+        data.field.scope = scope.join(",") ;
 
         let index = parent.layer.getFrameIndex(window.name);
         $.ajax({

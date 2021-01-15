@@ -60,6 +60,7 @@ public class ClientController {
     public String edit(@PathVariable String id, Model model) {
         model.addAttribute("client", Optional.ofNullable(authClientDetailsService.get(id)).orElseGet(AuthClientDetails::new));
         model.addAttribute("scopes", authClientScopeService.list());
+        model.addAttribute("selectedScopes", clientOperateService.selectedScope(id));
         return "client/edit";
     }
 

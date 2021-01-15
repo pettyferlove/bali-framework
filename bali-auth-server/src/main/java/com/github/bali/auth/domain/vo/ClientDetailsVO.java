@@ -19,6 +19,8 @@ import lombok.NoArgsConstructor;
 public class ClientDetailsVO implements IVO {
     private static final long serialVersionUID = -4694016865378037256L;
 
+    private String id;
+
     @ApiModelProperty(value = "应用名称名称")
     private String applicationName;
 

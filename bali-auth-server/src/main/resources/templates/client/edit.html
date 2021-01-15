@@ -11,39 +11,39 @@
     <th:block th:replace="fragments/css/css-import::common-css"/>
 </head>
 <body style="background-color: white;">
-<form class="layui-form" lay-filter="form" action="" style="padding: 20px 30px 20px 30px;background-color: white">
-    <input type="text" name="id" class="layui-hide" th:value="${tenant.getId()}">
+<form class="layui-form layui-form-pane" lay-filter="form" action="" style="padding: 20px 30px 20px 30px;background-color: white">
+    <input type="text" name="id" class="layui-hide" th:value="${client.getId()}">
     <div class="layui-form-item">
         <label class="layui-form-label">应用名称</label>
         <div class="layui-input-block">
-            <input type="text" name="applicationName" lay-verify="required" lay-reqtext="应用名称是必填项，不能为空" placeholder="请输入应用名称" autocomplete="off" class="layui-input">
+            <input type="text" name="applicationName" lay-verify="required" lay-reqtext="应用名称是必填项，不能为空" placeholder="请输入应用名称" autocomplete="off" class="layui-input" th:value="${client.getApplicationName()}">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">授权模式</label>
         <div class="layui-input-block">
-            <input type="checkbox" value="authorization_code" name="authorizedGrantTypes" title="授权码授权模式（Authorization code Grant）">
-            <input type="checkbox" value="implicit" name="authorizedGrantTypes" title="隐式授权模式（Implicit Grant）">
-            <input type="checkbox" value="client_credentials" name="authorizedGrantTypes" title="客户端凭证模式（Client Credentials Grant）">
-            <input type="checkbox" value="refresh_token" name="authorizedGrantTypes" title="凭证刷新模式（Refresh Token Grant）">
-            <input type="checkbox" value="password" name="authorizedGrantTypes" title="密码模式（Resource Owner Password Credentials Grant）">
-            <input type="checkbox" value="wechat" name="authorizedGrantTypes" title="微信OpenID模式（WeChat Grant）">
-            <input type="checkbox" value="mobile" name="authorizedGrantTypes" title="手机登录模式（Mobile Grant）">
+            <input type="checkbox" value="authorization_code" name="authorizedGrantTypes" title="授权码授权模式（Authorization code Grant）" th:checked="${client.getAuthorizedGrantTypes().contains('authorization_code')}">
+            <input type="checkbox" value="implicit" name="authorizedGrantTypes" title="隐式授权模式（Implicit Grant）" th:checked="${client.getAuthorizedGrantTypes().contains('implicit')}">
+            <input type="checkbox" value="client_credentials" name="authorizedGrantTypes" title="客户端凭证模式（Client Credentials Grant）" th:checked="${client.getAuthorizedGrantTypes().contains('client_credentials')}">
+            <input type="checkbox" value="refresh_token" name="authorizedGrantTypes" title="凭证刷新模式（Refresh Token Grant）" th:checked="${client.getAuthorizedGrantTypes().contains('refresh_token')}">
+            <input type="checkbox" value="password" name="authorizedGrantTypes" title="密码模式（Resource Owner Password Credentials Grant）" th:checked="${client.getAuthorizedGrantTypes().contains('password')}">
+            <input type="checkbox" value="wechat" name="authorizedGrantTypes" title="微信OpenID模式（WeChat Grant）" th:checked="${client.getAuthorizedGrantTypes().contains('wechat')}">
+            <input type="checkbox" value="mobile" name="authorizedGrantTypes" title="手机登录模式（Mobile Grant）" th:checked="${client.getAuthorizedGrantTypes().contains('mobile')}">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">回调地址</label>
         <div class="layui-input-block">
-            <input type="text" name="webServerRedirectUri" lay-verify="required" lay-reqtext="回调地址是必填项，不能为空" placeholder="请输入回调地址" autocomplete="off" class="layui-input">
+            <input type="text" name="webServerRedirectUri" lay-verify="required" lay-reqtext="回调地址是必填项，不能为空" placeholder="请输入回调地址" autocomplete="off" class="layui-input" th:value="${client.getWebServerRedirectUri()}">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">应用域</label>
         <div class="layui-input-block" th:each="scope:${scopes}">
-            <input type="checkbox" th:value="${scope.getId()}" name="scope" th:title="${scope.getDescription()}" />
+            <input type="checkbox" th:value="${scope.getId()}" name="scope" th:title="${scope.getDescription()}" th:checked="${selectedScopes.contains(scope.getId())}"/>
         </div>
     </div>
 
@@ -51,13 +51,13 @@
         <div class="layui-inline">
             <label class="layui-form-label" style="width: 200px">令牌有效时间（ms）</label>
             <div class="layui-input-block" style="margin-left: 200px">
-                <input type="text" name="accessTokenValidity" th:value="36000" lay-verify="required" lay-reqtext="令牌有效时间是必填项，不能为空" placeholder="请输入令牌有效时间" autocomplete="off" class="layui-input">
+                <input type="text" name="accessTokenValidity" lay-verify="required" lay-reqtext="令牌有效时间是必填项，不能为空" placeholder="请输入令牌有效时间" autocomplete="off" class="layui-input" th:value="${client.getAccessTokenValidity()==null?3600:client.getAccessTokenValidity()}">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label" style="width: 200px">刷新令牌有效时间（ms）</label>
             <div class="layui-input-block" style="margin-left: 200px">
-                <input type="text" name="refreshTokenValidity" th:value="36000" lay-verify="required" lay-reqtext="刷新令牌有效时间是必填项，不能为空" placeholder="请输入刷新令牌有效时间" autocomplete="off" class="layui-input">
+                <input type="text" name="refreshTokenValidity" lay-verify="required" lay-reqtext="刷新令牌有效时间是必填项，不能为空" placeholder="请输入刷新令牌有效时间" autocomplete="off" class="layui-input" th:value="${client.getRefreshTokenValidity()==null?3600:client.getRefreshTokenValidity()}">
             </div>
         </div>
     </div>
@@ -65,7 +65,7 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">描述信息</label>
         <div class="layui-input-block">
-            <textarea name="description" placeholder="请输入内容" class="layui-textarea"></textarea>
+            <textarea name="description" placeholder="请输入内容" class="layui-textarea" th:text="${client.getDescription()}"></textarea>
         </div>
     </div>
     <div class="layui-form-item layui-hide">

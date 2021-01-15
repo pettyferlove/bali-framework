@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Petty
@@ -35,6 +36,12 @@ public class ClientOperateServiceImpl implements IClientOperateService {
         this.passwordEncoder = passwordEncoder;
         this.authClientDetailsService = authClientDetailsService;
         this.authClientDetailsScopeService = authClientDetailsScopeService;
+    }
+
+    @Override
+    public List<String> selectedScope(String id) {
+        List<AuthClientDetailsScope> detailsScopes = authClientDetailsScopeService.list(Wrappers.<AuthClientDetailsScope>lambdaQuery().eq(AuthClientDetailsScope::getDetailsId, id));
+        return detailsScopes.stream().map(AuthClientDetailsScope::getScopeId).collect(Collectors.toList());
     }
 
     @Override
@@ -59,8 +66,20 @@ public class ClientOperateServiceImpl implements IClientOperateService {
     }
 
     @Override
+    @Transactional(rollbackFor = Throwable.class)
     public Boolean update(ClientDetailsVO details) {
         AuthClientDetails clientDetails = ConverterUtil.convert(details, new AuthClientDetails());
+        authClientDetailsScopeService.remove(Wrappers.<AuthClientDetailsScope>lambdaQuery().eq(AuthClientDetailsScope::getDetailsId, details.getId()));
+        String[] scopes = details.getScope().split(",");
+        List<AuthClientDetailsScope> authClientDetailsScopes = new ArrayList<>();
+        for (String scope : scopes) {
+            AuthClientDetailsScope authClientDetailsScope = new AuthClientDetailsScope();
+            authClientDetailsScope.setDetailsId(details.getId());
+            authClientDetailsScope.setScopeId(scope);
+            authClientDetailsScopes.add(authClientDetailsScope);
+        }
+        authClientDetailsScopeService.saveBatch(authClientDetailsScopes);
+
         return authClientDetailsService.update(clientDetails);
     }
 
