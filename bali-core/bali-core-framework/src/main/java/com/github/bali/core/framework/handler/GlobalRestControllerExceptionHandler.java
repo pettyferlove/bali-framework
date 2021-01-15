@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -108,6 +109,13 @@ public class GlobalRestControllerExceptionHandler {
         }
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         return new R<>(ex, errorMessage.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public R accessDeniedExceptionHandler(HttpServletResponse response, RuntimeException ex) {
+        log.error(ex.getMessage(), ex);
+        response.setStatus(HttpStatus.FORBIDDEN.value());
+        return new R(ex, HttpStatus.FORBIDDEN);
     }
 
 }
