@@ -36,10 +36,6 @@ spring:
     oauth2:
       client:
         registration:
-          github:
-            # http://localhost:9001/oauth2/authorization/github
-            client-id: 85be31954323df1dd95f
-            client-secret: e79350fa501cdda62efba260ffc861807ce47af0
           bali:
             provider: bali
             client-id: bali

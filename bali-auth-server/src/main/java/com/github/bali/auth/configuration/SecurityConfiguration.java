@@ -58,22 +58,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
-                // 页面
                 .loginPage("/login")
-                // 登录处理url
                 .loginProcessingUrl("/authorize")
                 .and()
                 .authorizeRequests()
                 .antMatchers("/login", "/.well-known/jwks.json").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .and()
                 .rememberMe()
                 .tokenRepository(tokenRepository)
                 .tokenValiditySeconds(604800)
                 .and()
-                .csrf().disable()
                 .httpBasic().disable()
                 .csrf().disable()
                 .headers().frameOptions().disable();
