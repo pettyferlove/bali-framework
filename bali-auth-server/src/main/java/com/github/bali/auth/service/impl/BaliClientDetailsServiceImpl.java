@@ -60,7 +60,9 @@ public class BaliClientDetailsServiceImpl implements OAuth2ClientDetailsService 
                 }
             });
         }
-
+        if (scope.isEmpty()) {
+            throw new RuntimeException("the client is not scoped,not available");
+        }
         Preconditions.checkNotNull(details, "client is not registered");
         BaseClientDetails baseClientDetails = new BaseClientDetails(details.getClientId(), details.getResourceIds(),
                 StrUtil.join(",", scope), details.getAuthorizedGrantTypes(), details.getAuthorities(), details.getWebServerRedirectUri());
