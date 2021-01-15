@@ -4,6 +4,12 @@
     height: 400px;
 }
 
+.img-container img {
+    margin-bottom: 1rem;
+    width: 100%;
+    height: 400px;
+}
+
 .img-container, .img-preview {
     background-color: #f7f7f7;
     text-align: center;

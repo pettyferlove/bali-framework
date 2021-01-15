@@ -35,7 +35,9 @@ public class BaliMethodSecurityExpressionRoot extends SecurityExpressionRoot imp
     private boolean hasAnyAuthorityName(String prefix, String... scopes) {
         for (String scope : scopes) {
             String defaultedScope = getAuthorityWithDefaultPrefix(prefix, scope);
-            return this.hasAuthority(defaultedScope);
+            if(this.hasAuthority(defaultedScope)){
+                return true;
+            }
         }
         return false;
     }

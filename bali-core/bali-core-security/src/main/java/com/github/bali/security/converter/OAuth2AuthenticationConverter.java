@@ -25,9 +25,9 @@ public class OAuth2AuthenticationConverter implements Converter<Jwt, AbstractAut
         Map<String, Object> claims = jwt.getClaims();
         Collection<SimpleGrantedAuthority> authorities = ((Collection<String>) claims.get("authorities"))
                 .stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
-        List<String> roles = authorities.stream().map(i -> {
-            return i.getAuthority().replace(SecurityConstant.ROLE_PREFIX, "");
-        }).collect(Collectors.toList());
+        Collection<SimpleGrantedAuthority> scope = ((Collection<String>) claims.get("scope")).stream().map(i -> new SimpleGrantedAuthority("SCOPE_" + i)).collect(Collectors.toList());
+        authorities.addAll(scope);
+        List<String> roles = authorities.stream().map(i -> i.getAuthority().replace(SecurityConstant.ROLE_PREFIX, "")).collect(Collectors.toList());
         BaliUserDetails userDetails = BaliUserDetails.builder()
                 .id((String) claims.get("id"))
                 .username((String) claims.get("username"))

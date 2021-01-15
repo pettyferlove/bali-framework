@@ -83,6 +83,7 @@ public class GlobalRestControllerExceptionHandler {
         return new R(ex, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+
     /**
      * 处理数据验证异常
      *

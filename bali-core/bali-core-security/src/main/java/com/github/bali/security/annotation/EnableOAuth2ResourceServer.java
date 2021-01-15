@@ -1,6 +1,7 @@
 package com.github.bali.security.annotation;
 
 import com.github.bali.core.framework.constants.ApiConstant;
+import com.github.bali.security.configuration.MethodSecurityAutoConfiguration;
 import com.github.bali.security.configuration.WebServerAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Import;
@@ -18,7 +19,7 @@ import java.lang.annotation.*;
 @Inherited
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({WebServerAutoConfiguration.class})
+@Import({WebServerAutoConfiguration.class, MethodSecurityAutoConfiguration.class})
 @ConditionalOnWebApplication
 public @interface EnableOAuth2ResourceServer {
 

@@ -52,6 +52,11 @@
         </dependency>
         <dependency>
             <groupId>com.github.bali</groupId>
+            <artifactId>bali-core-framework</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.bali</groupId>
             <artifactId>bali-core-security</artifactId>
             <version>${revision}</version>
         </dependency>
