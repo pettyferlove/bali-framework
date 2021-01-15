@@ -59,7 +59,7 @@ public class ClientController {
     @RequestMapping("/edit/{id}")
     public String edit(@PathVariable String id, Model model) {
         model.addAttribute("client", Optional.ofNullable(authClientDetailsService.get(id)).orElseGet(AuthClientDetails::new));
-        model.addAttribute("scopes", authClientScopeService.list());
+        model.addAttribute("scopes", authClientScopeService.listScopes());
         model.addAttribute("selectedScopes", clientOperateService.selectedScope(id));
         return "client/edit";
     }
@@ -75,7 +75,7 @@ public class ClientController {
         try {
             return new R<>(clientOperateService.create(details));
         } catch (Exception e) {
-            return new R<>( null, e.getMessage());
+            return new R<>(null, e.getMessage());
         }
     }
 

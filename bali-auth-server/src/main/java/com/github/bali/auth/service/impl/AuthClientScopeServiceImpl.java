@@ -1,5 +1,6 @@
 package com.github.bali.auth.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -13,6 +14,7 @@ import com.github.bali.security.utils.SecurityUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -28,7 +30,7 @@ public class AuthClientScopeServiceImpl extends ServiceImpl<AuthClientScopeMappe
 
     @Override
     public IPage<AuthClientScope> page(AuthClientScope authClientScope, Page<AuthClientScope> page) {
-        if(SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
+        if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
             authClientScope.setTenantId(Objects.requireNonNull(SecurityUtil.getUser()).getTenant());
         }
         return this.page(page, Wrappers.lambdaQuery(authClientScope).orderByDesc(AuthClientScope::getCreateTime));
@@ -48,7 +50,7 @@ public class AuthClientScopeServiceImpl extends ServiceImpl<AuthClientScopeMappe
     public String create(AuthClientScope authClientScope) {
         authClientScope.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getId());
         authClientScope.setCreateTime(LocalDateTime.now());
-        if(SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
+        if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
             authClientScope.setTenantId(Objects.requireNonNull(SecurityUtil.getUser()).getTenant());
         }
         if (this.save(authClientScope)) {
@@ -63,6 +65,15 @@ public class AuthClientScopeServiceImpl extends ServiceImpl<AuthClientScopeMappe
         authClientScope.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getId());
         authClientScope.setModifyTime(LocalDateTime.now());
         return this.updateById(authClientScope);
+    }
+
+    @Override
+    public List<AuthClientScope> listScopes() {
+        LambdaQueryWrapper<AuthClientScope> queryWrapper = Wrappers.<AuthClientScope>lambdaQuery();
+        if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
+            queryWrapper.eq(AuthClientScope::getTenantId, Objects.requireNonNull(SecurityUtil.getUser()).getTenant());
+        }
+        return this.list(queryWrapper);
     }
 
 }

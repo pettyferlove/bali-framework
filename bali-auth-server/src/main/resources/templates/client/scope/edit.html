@@ -22,7 +22,7 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">描述</label>
         <div class="layui-input-block">
-            <textarea style="height: 150px" name="description" placeholder="请输入描述" class="layui-textarea" th:text="${scope.getDescription()}"></textarea>
+            <textarea style="height: 150px" name="description" lay-verify="required" lay-reqtext="请完善描述信息，说明域的作用" placeholder="请输入描述" class="layui-textarea" th:text="${scope.getDescription()}"></textarea>
         </div>
     </div>
     <div class="layui-form-item">

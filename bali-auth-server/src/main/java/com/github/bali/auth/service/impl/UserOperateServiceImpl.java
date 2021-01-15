@@ -98,7 +98,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
                 UserRole userRole = new UserRole();
                 userRole.setUserId(userId);
                 userRole.setRoleId(role.getId());
-                userRoleService.create(userRole);
+                userRoleService.save(userRole);
             }
         }
         return userId;

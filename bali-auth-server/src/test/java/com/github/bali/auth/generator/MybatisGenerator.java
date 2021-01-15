@@ -53,14 +53,14 @@ public class MybatisGenerator {
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setSuperEntityClass("com.github.bali.persistence.entity.BaseEntity");
-        strategy.setSuperEntityColumns("id", "del_flag", "creator", "create_time", "modifier", "modify_time");
+//        strategy.setSuperEntityClass("com.github.bali.persistence.entity.BaseEntity");
+//        strategy.setSuperEntityColumns("id", "del_flag", "creator", "create_time", "modifier", "modify_time");
         // 乐观锁字段
         //strategy.setVersionFieldName("VERSION");
         strategy.setLogicDeleteFieldName("del_flag");
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         // 表名生成策略
-        strategy.setInclude("uc_auth_client_details_scope");
+        strategy.setInclude("uc_auth_client_details_scope", "uc_user_role");
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
         strategy.setEntityBuilderModel(false);

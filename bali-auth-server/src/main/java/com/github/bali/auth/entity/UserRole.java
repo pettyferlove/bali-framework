@@ -1,16 +1,15 @@
 package com.github.bali.auth.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.github.bali.persistence.entity.BaseEntity;
-import io.swagger.annotations.ApiModel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -18,19 +17,22 @@ import java.io.Serializable;
  * </p>
  *
  * @author Petty
- * @since 2021-01-09
+ * @since 2021-01-15
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @TableName("uc_user_role")
 @ApiModel(value="UserRole对象", description="用户角色关联信息")
-public class UserRole extends BaseEntity<UserRole> {
+public class UserRole extends Model<UserRole> {
 
     private static final long serialVersionUID = 1L;
+
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private String id;
 
     private String userId;
 
@@ -39,7 +41,7 @@ public class UserRole extends BaseEntity<UserRole> {
 
     @Override
     protected Serializable pkVal() {
-        return null;
+        return this.id;
     }
 
 }

@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.bali.auth.entity.AuthClientScope;
 
+import java.util.List;
+
 /**
  * <p>
  * 客户端域 服务类
@@ -55,5 +57,12 @@ public interface IAuthClientScopeService extends IService<AuthClientScope> {
      * @return Boolean
      */
     Boolean update(AuthClientScope authClientScope);
+
+
+    /**
+     * 获取应用域（重写方法适配租户）
+     * @return 集合
+     */
+    List<AuthClientScope> listScopes();
 
 }

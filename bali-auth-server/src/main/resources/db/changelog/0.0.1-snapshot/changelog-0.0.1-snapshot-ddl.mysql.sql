@@ -86,3 +86,37 @@ alter table uc_auth_client_details drop column scope;
 
 alter table uc_auth_client_details drop column auto_approve;
 
+--changeset Petty:0.0.1-snapshot-10
+
+alter table uc_auth_client_details_scope drop column creator;
+
+alter table uc_auth_client_details_scope drop column create_time;
+
+alter table uc_auth_client_details_scope drop column modifier;
+
+alter table uc_auth_client_details_scope drop column modify_time;
+
+alter table uc_auth_client_details_scope drop column del_flag;
+
+drop index uc_auth_client_details_scope_details_id_del_flag_index on uc_auth_client_details_scope;
+
+drop index uc_auth_client_details_scope_scope_id_del_flag_index on uc_auth_client_details_scope;
+
+create index uc_auth_client_details_scope_details_id_index
+    on uc_auth_client_details_scope (details_id);
+
+create index uc_auth_client_details_scope_scope_id_index
+    on uc_auth_client_details_scope (scope_id);
+
+
+--changeset Petty:0.0.1-snapshot-11
+
+alter table uc_user_role drop column del_flag;
+
+alter table uc_user_role drop column creator;
+
+alter table uc_user_role drop column create_time;
+
+alter table uc_user_role drop column modifier;
+
+alter table uc_user_role drop column modify_time;
