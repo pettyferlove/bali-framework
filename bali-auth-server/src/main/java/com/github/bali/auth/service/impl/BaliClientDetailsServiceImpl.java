@@ -18,7 +18,6 @@ import org.springframework.security.oauth2.provider.client.BaseClientDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -46,8 +45,8 @@ public class BaliClientDetailsServiceImpl implements OAuth2ClientDetailsService 
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
         AuthClientDetails details = authClientDetailsService.getOne(Wrappers.<AuthClientDetails>lambdaQuery().eq(AuthClientDetails::getClientId, clientId));
         List<AuthClientDetailsScope> list = authClientDetailsScopeService.list(Wrappers.<AuthClientDetailsScope>lambdaQuery().eq(AuthClientDetailsScope::getDetailsId, details.getId()));
-        List<String> scope = new LinkedList<>();
-        List<String> autoApproveScope = new LinkedList<>();
+        List<String> scope = new ArrayList<>();
+        List<String> autoApproveScope = new ArrayList<>();
         List<String> scopeIds = new ArrayList<>();
         for (AuthClientDetailsScope detailsScope : list) {
             scopeIds.add(detailsScope.getScopeId());
@@ -60,8 +59,6 @@ public class BaliClientDetailsServiceImpl implements OAuth2ClientDetailsService 
                     autoApproveScope.add(i.getScope());
                 }
             });
-        } else {
-            scope.add("");
         }
 
         Preconditions.checkNotNull(details, "client is not registered");

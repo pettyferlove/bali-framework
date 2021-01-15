@@ -1,6 +1,7 @@
 package com.github.bali.auth.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.bali.auth.domain.vo.ClientCreateResponseVO;
 import com.github.bali.auth.domain.vo.ClientDetailsVO;
@@ -53,15 +54,17 @@ public class ClientOperateServiceImpl implements IClientOperateService {
         clientDetails.setClientId(clientId);
         clientDetails.setClientSecret(passwordEncoder.encode(clientSecret));
         String id = authClientDetailsService.create(clientDetails);
-        String[] scopes = details.getScope().split(",");
-        List<AuthClientDetailsScope> authClientDetailsScopes = new ArrayList<>();
-        for (String scope : scopes) {
-            AuthClientDetailsScope authClientDetailsScope = new AuthClientDetailsScope();
-            authClientDetailsScope.setDetailsId(id);
-            authClientDetailsScope.setScopeId(scope);
-            authClientDetailsScopes.add(authClientDetailsScope);
+        if (StrUtil.isNotEmpty(details.getScope())) {
+            String[] scopes = details.getScope().split(",");
+            List<AuthClientDetailsScope> authClientDetailsScopes = new ArrayList<>();
+            for (String scope : scopes) {
+                AuthClientDetailsScope authClientDetailsScope = new AuthClientDetailsScope();
+                authClientDetailsScope.setDetailsId(id);
+                authClientDetailsScope.setScopeId(scope);
+                authClientDetailsScopes.add(authClientDetailsScope);
+            }
+            authClientDetailsScopeService.saveBatch(authClientDetailsScopes);
         }
-        authClientDetailsScopeService.saveBatch(authClientDetailsScopes);
         return ClientCreateResponseVO.builder().clientId(clientId).clientSecret(clientSecret).build();
     }
 
@@ -70,16 +73,17 @@ public class ClientOperateServiceImpl implements IClientOperateService {
     public Boolean update(ClientDetailsVO details) {
         AuthClientDetails clientDetails = ConverterUtil.convert(details, new AuthClientDetails());
         authClientDetailsScopeService.remove(Wrappers.<AuthClientDetailsScope>lambdaQuery().eq(AuthClientDetailsScope::getDetailsId, details.getId()));
-        String[] scopes = details.getScope().split(",");
-        List<AuthClientDetailsScope> authClientDetailsScopes = new ArrayList<>();
-        for (String scope : scopes) {
-            AuthClientDetailsScope authClientDetailsScope = new AuthClientDetailsScope();
-            authClientDetailsScope.setDetailsId(details.getId());
-            authClientDetailsScope.setScopeId(scope);
-            authClientDetailsScopes.add(authClientDetailsScope);
+        if (StrUtil.isNotEmpty(details.getScope())) {
+            String[] scopes = details.getScope().split(",");
+            List<AuthClientDetailsScope> authClientDetailsScopes = new ArrayList<>();
+            for (String scope : scopes) {
+                AuthClientDetailsScope authClientDetailsScope = new AuthClientDetailsScope();
+                authClientDetailsScope.setDetailsId(details.getId());
+                authClientDetailsScope.setScopeId(scope);
+                authClientDetailsScopes.add(authClientDetailsScope);
+            }
+            authClientDetailsScopeService.saveBatch(authClientDetailsScopes);
         }
-        authClientDetailsScopeService.saveBatch(authClientDetailsScopes);
-
         return authClientDetailsService.update(clientDetails);
     }
 
