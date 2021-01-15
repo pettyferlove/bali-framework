@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Pettyfer
  */
 @SpringBootApplication
-@EnableOAuth2ResourceServer
+@EnableOAuth2ResourceServer(ignores = {"/swagger-ui.html"})
 public class BaliResourceServerApplication {
 
     public static void main(String[] args) {
