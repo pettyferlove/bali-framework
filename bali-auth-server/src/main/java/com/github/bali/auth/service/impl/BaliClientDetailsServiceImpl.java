@@ -60,6 +60,8 @@ public class BaliClientDetailsServiceImpl implements OAuth2ClientDetailsService 
                     autoApproveScope.add(i.getScope());
                 }
             });
+        } else {
+            scope.add("");
         }
 
         Preconditions.checkNotNull(details, "client is not registered");
