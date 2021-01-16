@@ -1,6 +1,5 @@
 package com.github.bali.auth.service.impl;
 
-import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -68,7 +67,8 @@ public class UserOperateServiceImpl implements IUserOperateService {
 
     @Override
     public Page<UserInfoView> userInfoPage(UserInfoView userInfoView, Page<UserInfoView> page) {
-        LambdaQueryWrapper<UserInfoView> queryWrapper = Wrappers.<UserInfoView>lambdaQuery().orderByDesc(UserInfoView::getCreateTime);
+        LambdaQueryWrapper<UserInfoView> queryWrapper = Wrappers.<UserInfoView>lambdaQuery().orderByDesc(UserInfoView::getCreateTime)
+                .ne(UserInfoView::getId, Objects.requireNonNull(SecurityUtil.getUser()).getId());
         queryWrapper.likeRight(StrUtil.isNotEmpty(userInfoView.getUserName()), UserInfoView::getUserName, userInfoView.getUserName());
         queryWrapper.likeRight(StrUtil.isNotEmpty(userInfoView.getNickName()), UserInfoView::getNickName, userInfoView.getNickName());
         return userInfoViewService.page(page, queryWrapper);
@@ -108,15 +108,10 @@ public class UserOperateServiceImpl implements IUserOperateService {
         userInfo.setUserId(userId);
         userInfoService.create(userInfo);
         if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
-            Role role = roleService.getOne(Wrappers.<Role>lambdaQuery().eq(Role::getRole, SecurityConstant.TENANT_ADMIN_ROLE));
-            if (ObjectUtil.isNull(role)) {
-                throw new BaseRuntimeException("租户管理员角色不存在，请确保系统关键数据完整");
-            } else {
-                UserRole userRole = new UserRole();
-                userRole.setUserId(userId);
-                userRole.setRoleId(role.getId());
-                userRoleService.save(userRole);
-            }
+            UserRole userRole = new UserRole();
+            userRole.setUserId(userId);
+            userRole.setRoleId(SecurityConstant.TENANT_ADMIN_ROLE_ID);
+            userRoleService.save(userRole);
         }
         return userId;
     }
@@ -124,13 +119,10 @@ public class UserOperateServiceImpl implements IUserOperateService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public Boolean update(UserOperateVO userOperate) {
-        UserRole userRole = userRoleService.getOne(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userOperate.getId()));
-        if (ObjectUtil.isNotNull(userRole)) {
-            Role role = Optional.ofNullable(roleService.get(userRole.getRoleId())).orElseGet(Role::new);
-            if (SecurityConstant.SUPER_ADMIN_ROLE.equals(role.getRole())) {
-                log.error("attempts to remove the super administrator");
-                throw new BaseRuntimeException("警告：你无法修改系统超级管理员");
-            }
+        List<UserRole> userRoles = userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userOperate.getId()));
+        if (userRoles.stream().anyMatch(i -> i.getRoleId().equals(SecurityConstant.SUPER_ADMIN_ROLE_ID))) {
+            log.error("attempts to remove the super administrator");
+            throw new BaseRuntimeException("警告：你无法删除系统超级管理员");
         }
         User user = new User();
         user.setId(userOperate.getId());
@@ -150,13 +142,10 @@ public class UserOperateServiceImpl implements IUserOperateService {
         if (id.equals(SecurityUtil.getUser().getId())) {
             throw new BaseRuntimeException("无法删除你自己");
         }
-        UserRole userRole = userRoleService.getOne(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, id));
-        if (ObjectUtil.isNotNull(userRole)) {
-            Role role = Optional.ofNullable(roleService.get(userRole.getRoleId())).orElseGet(Role::new);
-            if (SecurityConstant.SUPER_ADMIN_ROLE.equals(role.getRole())) {
-                log.error("attempts to remove the super administrator");
-                throw new BaseRuntimeException("警告：你无法删除系统超级管理员");
-            }
+        List<UserRole> userRoles = userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, id));
+        if (userRoles.stream().anyMatch(i -> i.getRoleId().equals(SecurityConstant.SUPER_ADMIN_ROLE_ID))) {
+            log.error("attempts to remove the super administrator");
+            throw new BaseRuntimeException("警告：你无法删除系统超级管理员");
         }
         userService.delete(id);
         userInfoService.remove(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, id));
@@ -167,10 +156,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public Boolean updateUserRole(String userId, String roleIds) {
-        if (userId.equals(Objects.requireNonNull(SecurityUtil.getUser()).getId())) {
-            throw new BaseRuntimeException("警告：无法修改自己的账号；如需修改请联系管理员");
-        }
-        userRoleService.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId));
+        userRoleService.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId).ne(UserRole::getRoleId, SecurityConstant.TENANT_ADMIN_ROLE_ID));
         if (StrUtil.isNotEmpty(roleIds)) {
             String[] ids = roleIds.split(",");
             List<UserRole> userRoles = new ArrayList<>();

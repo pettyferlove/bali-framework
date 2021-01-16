@@ -57,6 +57,7 @@ public class UserController {
     }
 
     @RequestMapping("/distribution-roles/{id}")
+    @PreAuthorize("hasRole('TENANT_ADMIN')")
     public String distributionRoles(@PathVariable String id, Model model) {
         model.addAttribute("userId", id);
         return "user/distribution-roles";
@@ -64,6 +65,7 @@ public class UserController {
 
     @RequestMapping(value = "{id}/role", method = RequestMethod.GET)
     @ResponseBody
+    @PreAuthorize("hasRole('TENANT_ADMIN')")
     public R<UserRoleVO> loadUserRole(@PathVariable String id) {
         return new R<>(userOperateService.loadUserRole(id));
     }

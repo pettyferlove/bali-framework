@@ -21,9 +21,19 @@ public interface SecurityConstant {
     String SUPER_ADMIN_ROLE = "SUPER_ADMIN";
 
     /**
+     * 系统超级管理员角色ID
+     */
+    String SUPER_ADMIN_ROLE_ID = "0000000000000000001";
+
+    /**
      * 租户管理员角色
      */
     String TENANT_ADMIN_ROLE = "TENANT_ADMIN";
+
+    /**
+     * 租户管理员角色
+     */
+    String TENANT_ADMIN_ROLE_ID = "0000000000000000002";
 
     /**
      * 用户无效

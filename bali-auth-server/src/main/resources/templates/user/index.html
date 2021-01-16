@@ -2,6 +2,7 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
     <meta charset="UTF-8">
@@ -77,7 +78,7 @@
                     </table>
 
                     <script type="text/html" id="action">
-                        <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="distributionRoles">分配角色</a>
+                        <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="distributionRoles" sec:authorize="hasRole('TENANT_ADMIN')">分配角色</a>
                         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                     </script>
