@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.bali.auth.domain.vo.UserOperateVO;
+import com.github.bali.auth.domain.vo.UserRoleVO;
 import com.github.bali.auth.entity.*;
 import com.github.bali.auth.service.*;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
@@ -18,8 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Petty
@@ -47,6 +48,23 @@ public class UserOperateServiceImpl implements IUserOperateService {
         this.userInfoViewService = userInfoViewService;
         this.roleService = roleService;
         this.userRoleService = userRoleService;
+    }
+
+    @Override
+    public UserRoleVO loadUserRole(String userId) {
+        List<Role> toBeSelected = new LinkedList<>();
+        List<Role> selected = new LinkedList<>();
+        List<Role> roles = Optional.ofNullable(roleService.list()).orElseGet(ArrayList::new);
+        List<UserRole> userRoles = Optional.ofNullable(userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId))).orElseGet(ArrayList::new);
+        List<String> selectedRoleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
+        roles.forEach(i -> {
+            if (selectedRoleIds.contains(i.getId())) {
+                selected.add(i);
+            } else {
+                toBeSelected.add(i);
+            }
+        });
+        return UserRoleVO.builder().toBeSelected(toBeSelected).selected(selected).build();
     }
 
     @Override
@@ -144,6 +162,24 @@ public class UserOperateServiceImpl implements IUserOperateService {
         userService.delete(id);
         userInfoService.remove(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, id));
         userRoleService.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, id));
+        return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Throwable.class)
+    public Boolean updateUserRole(String userId, String roleIds) {
+        userRoleService.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId));
+        if (StrUtil.isNotEmpty(roleIds)) {
+            String[] ids = roleIds.split(",");
+            List<UserRole> userRoles = new ArrayList<>();
+            for (String roleId : ids) {
+                UserRole userRole = new UserRole();
+                userRole.setUserId(userId);
+                userRole.setRoleId(roleId);
+                userRoles.add(userRole);
+            }
+            userRoleService.saveBatch(userRoles);
+        }
         return true;
     }
 }

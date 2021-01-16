@@ -3,9 +3,11 @@ package com.github.bali.auth.web;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.bali.auth.domain.vo.UserOperateVO;
+import com.github.bali.auth.domain.vo.UserRoleVO;
 import com.github.bali.auth.entity.UserInfoView;
 import com.github.bali.auth.service.IUserOperateService;
 import com.github.bali.core.framework.domain.vo.R;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -54,13 +56,32 @@ public class UserController {
         return "user/view";
     }
 
+    @RequestMapping("/distribution-roles/{id}")
+    public String distributionRoles(@PathVariable String id, Model model) {
+        model.addAttribute("userId", id);
+        return "user/distribution-roles";
+    }
+
+    @RequestMapping(value = "{id}/role", method = RequestMethod.GET)
+    @ResponseBody
+    public R<UserRoleVO> loadUserRole(@PathVariable String id) {
+        return new R<>(userOperateService.loadUserRole(id));
+    }
+
+    @RequestMapping(value = "{id}/role" , method = RequestMethod.PUT)
+    @ResponseBody
+    @PreAuthorize("hasRole('TENANT_ADMIN')")
+    public R<Boolean> updateUserRole(@PathVariable String id,@RequestParam(defaultValue = "") String roleIds) {
+        return new R<>(userOperateService.updateUserRole(id, roleIds));
+    }
+
     @RequestMapping(value = "create", method = RequestMethod.POST)
     @ResponseBody
     public R<String> create(@RequestBody UserOperateVO user) {
         try {
             return new R<>(userOperateService.create(user));
         } catch (Exception e) {
-            return new R<>( null, e.getMessage());
+            return new R<>(null, e.getMessage());
         }
     }
 

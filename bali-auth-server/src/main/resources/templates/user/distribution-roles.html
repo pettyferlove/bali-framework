@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理-角色分配</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <th:block th:replace="fragments/css/css-import::core-css"/>
+    <th:block th:replace="fragments/css/css-import::common-css"/>
+
+    <link rel="stylesheet" th:href="@{/static/css/user/distribution-roles.css}">
+</head>
+<body style="background-color: white;">
+<form class="layui-form" lay-filter="form" action="" style="background-color: white">
+    <input class="layui-hide" id="userId" th:value="${userId}">
+    <div id="role_select" class="role-transfer"></div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="form-submit" id="form-submit">
+    </div>
+</form>
+</body>
+<th:block th:replace="fragments/js/js-import::core-js"/>
+<script th:src="@{/static/js/pages/user/distribution-roles.js}"></script>
+</html>

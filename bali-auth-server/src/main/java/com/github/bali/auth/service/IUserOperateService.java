@@ -2,6 +2,7 @@ package com.github.bali.auth.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.bali.auth.domain.vo.UserOperateVO;
+import com.github.bali.auth.domain.vo.UserRoleVO;
 import com.github.bali.auth.entity.User;
 import com.github.bali.auth.entity.UserInfo;
 import com.github.bali.auth.entity.UserInfoView;
@@ -10,6 +11,8 @@ import com.github.bali.auth.entity.UserInfoView;
  * @author Petty
  */
 public interface IUserOperateService {
+
+    UserRoleVO loadUserRole(String userId);
 
     /**
      * 查询用户信息视图列表
@@ -68,4 +71,12 @@ public interface IUserOperateService {
      * @return 是否成功
      */
     Boolean delete(String id);
+
+    /**
+     * 更新用户角色
+     * @param userId 用户ID
+     * @param roleIds 角色ID
+     * @return 是否成功
+     */
+    Boolean updateUserRole(String userId, String roleIds);
 }

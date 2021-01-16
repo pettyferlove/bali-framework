@@ -24,7 +24,7 @@ layui.use(['layer', 'table'], function () {
             , {field: 'userChannel', title: '用户渠道', width: 120, align: 'center', templet: '#userChannelTpl'}
             , {field: 'modifierName', title: '最后修改人', sort: true,}
             , {field: 'modifyTime', title: '最后修改时间', sort: true,}
-            , {fixed: 'right', width: 165, align: 'center', toolbar: '#action'}
+            , {fixed: 'right', width: 185, align: 'center', toolbar: '#action'}
         ]], response: {
             statusCode: 200 //重新规定成功的状态码为 200，table 组件默认为 0
         }
@@ -96,8 +96,22 @@ layui.use(['layer', 'table'], function () {
     table.on('tool(filter)', function (obj) {
         let data = obj.data
             , layEvent = obj.event;
-        if (layEvent === 'detail') {
-            layer.msg('查看操作');
+        if (layEvent === 'distributionRoles') {
+            layer.open({
+                type: 2,
+                title: '分配角色',
+                btn: ['更新', '取消'],
+                area: ['754px', '470px'],
+                content: module + '/distribution-roles/' + data.id
+                , yes: function (index, layero) {
+                    let submit = layero.find('iframe').contents().find("#form-submit");
+                    submit.click();
+                }
+                , btn2: function (index) {
+                    layer.close(index)
+                    return false;
+                }
+            });
         } else if (layEvent === 'del') {
             del(data.id);
         } else if (layEvent === 'edit') {
