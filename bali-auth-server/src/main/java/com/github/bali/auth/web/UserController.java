@@ -68,11 +68,15 @@ public class UserController {
         return new R<>(userOperateService.loadUserRole(id));
     }
 
-    @RequestMapping(value = "{id}/role" , method = RequestMethod.PUT)
+    @RequestMapping(value = "{id}/role", method = RequestMethod.PUT)
     @ResponseBody
     @PreAuthorize("hasRole('TENANT_ADMIN')")
-    public R<Boolean> updateUserRole(@PathVariable String id,@RequestParam(defaultValue = "") String roleIds) {
-        return new R<>(userOperateService.updateUserRole(id, roleIds));
+    public R<Boolean> updateUserRole(@PathVariable String id, @RequestParam(defaultValue = "") String roleIds) {
+        try {
+            return new R<>(userOperateService.updateUserRole(id, roleIds));
+        } catch (Exception e) {
+            return new R<>(null, e.getMessage());
+        }
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST)

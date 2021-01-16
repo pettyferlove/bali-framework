@@ -68,8 +68,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
 
     @Override
     public Page<UserInfoView> userInfoPage(UserInfoView userInfoView, Page<UserInfoView> page) {
-        LambdaQueryWrapper<UserInfoView> queryWrapper = Wrappers.<UserInfoView>lambdaQuery().orderByDesc(UserInfoView::getCreateTime)
-                .ne(UserInfoView::getId, Objects.requireNonNull(SecurityUtil.getUser()).getId());
+        LambdaQueryWrapper<UserInfoView> queryWrapper = Wrappers.<UserInfoView>lambdaQuery().orderByDesc(UserInfoView::getCreateTime);
         queryWrapper.likeRight(StrUtil.isNotEmpty(userInfoView.getUserName()), UserInfoView::getUserName, userInfoView.getUserName());
         queryWrapper.likeRight(StrUtil.isNotEmpty(userInfoView.getNickName()), UserInfoView::getNickName, userInfoView.getNickName());
         return userInfoViewService.page(page, queryWrapper);
@@ -168,7 +167,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public Boolean updateUserRole(String userId, String roleIds) {
-        if(userId.equals(Objects.requireNonNull(SecurityUtil.getUser()).getId())){
+        if (userId.equals(Objects.requireNonNull(SecurityUtil.getUser()).getId())) {
             throw new BaseRuntimeException("警告：无法修改自己的账号；如需修改请联系管理员");
         }
         userRoleService.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId));
