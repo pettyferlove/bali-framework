@@ -68,7 +68,8 @@ public class UserOperateServiceImpl implements IUserOperateService {
 
     @Override
     public Page<UserInfoView> userInfoPage(UserInfoView userInfoView, Page<UserInfoView> page) {
-        LambdaQueryWrapper<UserInfoView> queryWrapper = Wrappers.<UserInfoView>lambdaQuery().orderByDesc(UserInfoView::getCreateTime);
+        LambdaQueryWrapper<UserInfoView> queryWrapper = Wrappers.<UserInfoView>lambdaQuery().orderByDesc(UserInfoView::getCreateTime)
+                .ne(UserInfoView::getId, Objects.requireNonNull(SecurityUtil.getUser()).getId());
         queryWrapper.likeRight(StrUtil.isNotEmpty(userInfoView.getUserName()), UserInfoView::getUserName, userInfoView.getUserName());
         queryWrapper.likeRight(StrUtil.isNotEmpty(userInfoView.getNickName()), UserInfoView::getNickName, userInfoView.getNickName());
         return userInfoViewService.page(page, queryWrapper);
@@ -129,7 +130,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
             Role role = Optional.ofNullable(roleService.get(userRole.getRoleId())).orElseGet(Role::new);
             if (SecurityConstant.SUPER_ADMIN_ROLE.equals(role.getRole())) {
                 log.error("attempts to remove the super administrator");
-                throw new BaseRuntimeException("警告，你无法修改系统超级管理员");
+                throw new BaseRuntimeException("警告：你无法修改系统超级管理员");
             }
         }
         User user = new User();
@@ -155,7 +156,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
             Role role = Optional.ofNullable(roleService.get(userRole.getRoleId())).orElseGet(Role::new);
             if (SecurityConstant.SUPER_ADMIN_ROLE.equals(role.getRole())) {
                 log.error("attempts to remove the super administrator");
-                throw new BaseRuntimeException("警告，你无法删除系统超级管理员");
+                throw new BaseRuntimeException("警告：你无法删除系统超级管理员");
             }
         }
         userService.delete(id);
@@ -167,6 +168,9 @@ public class UserOperateServiceImpl implements IUserOperateService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public Boolean updateUserRole(String userId, String roleIds) {
+        if(userId.equals(Objects.requireNonNull(SecurityUtil.getUser()).getId())){
+            throw new BaseRuntimeException("警告：无法修改自己的账号；如需修改请联系管理员");
+        }
         userRoleService.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId));
         if (StrUtil.isNotEmpty(roleIds)) {
             String[] ids = roleIds.split(",");
