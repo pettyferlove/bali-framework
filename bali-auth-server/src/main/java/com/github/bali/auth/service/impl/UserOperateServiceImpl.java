@@ -58,10 +58,9 @@ public class UserOperateServiceImpl implements IUserOperateService {
         List<UserRole> userRoles = Optional.ofNullable(userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId))).orElseGet(ArrayList::new);
         List<String> selectedRoleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
         roles.forEach(i -> {
+            toBeSelected.add(i);
             if (selectedRoleIds.contains(i.getId())) {
                 selected.add(i);
-            } else {
-                toBeSelected.add(i);
             }
         });
         return UserRoleVO.builder().toBeSelected(toBeSelected).selected(selected).build();
