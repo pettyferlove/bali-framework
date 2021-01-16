@@ -71,6 +71,9 @@ public class UserOperateServiceImpl implements IUserOperateService {
                 .ne(UserInfoView::getId, Objects.requireNonNull(SecurityUtil.getUser()).getId());
         queryWrapper.likeRight(StrUtil.isNotEmpty(userInfoView.getUserName()), UserInfoView::getUserName, userInfoView.getUserName());
         queryWrapper.likeRight(StrUtil.isNotEmpty(userInfoView.getNickName()), UserInfoView::getNickName, userInfoView.getNickName());
+        if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
+            queryWrapper.exists("select role_id from uc_user_role where role_id = '" + SecurityConstant.TENANT_ADMIN_ROLE_ID + "' and v_user_info_view.id = uc_user_role.user_id");
+        }
         return userInfoViewService.page(page, queryWrapper);
     }
 
