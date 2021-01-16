@@ -122,7 +122,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
         List<UserRole> userRoles = userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userOperate.getId()));
         if (userRoles.stream().anyMatch(i -> i.getRoleId().equals(SecurityConstant.SUPER_ADMIN_ROLE_ID))) {
             log.error("attempts to remove the super administrator");
-            throw new BaseRuntimeException("警告：你无法删除系统超级管理员");
+            throw new BaseRuntimeException("警告：你无法修改系统超级管理员");
         }
         User user = new User();
         user.setId(userOperate.getId());
@@ -156,7 +156,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public Boolean updateUserRole(String userId, String roleIds) {
-        userRoleService.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId).ne(UserRole::getRoleId, SecurityConstant.TENANT_ADMIN_ROLE_ID));
+        userRoleService.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId).ne(UserRole::getRoleId, SecurityConstant.TENANT_ADMIN_ROLE_ID).ne(UserRole::getRoleId, SecurityConstant.SUPER_ADMIN_ROLE_ID));
         if (StrUtil.isNotEmpty(roleIds)) {
             String[] ids = roleIds.split(",");
             List<UserRole> userRoles = new ArrayList<>();

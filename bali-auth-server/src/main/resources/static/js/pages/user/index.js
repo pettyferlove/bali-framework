@@ -17,11 +17,9 @@ layui.use(['layer', 'table'], function () {
             , {type: 'id', fixed: 'left', hide: true}
             , {field: 'userName', title: '姓名', sort: true, fixed: 'left', templet: '#userNameTpl'}
             , {field: 'nickName', title: '用户昵称', sort: true}
-            , {field: 'userSex', title: '性别', align: 'center', width: 60, templet: '#userSexTpl'}
-            , {field: 'userBorn', title: '生日'}
             , {field: 'email', title: '电子邮箱'}
             , {field: 'status', title: '账号状态', width: 100, align: 'center', templet: '#tatusTpl'}
-            , {field: 'userChannel', title: '用户渠道', width: 120, align: 'center', templet: '#userChannelTpl'}
+            , {field: 'userChannel', title: '用户渠道', width: 100, align: 'center', templet: '#userChannelTpl'}
             , {field: 'modifierName', title: '最后修改人', sort: true,}
             , {field: 'modifyTime', title: '最后修改时间', sort: true,}
             , {fixed: 'right', width: 185, align: 'center', toolbar: '#action'}
