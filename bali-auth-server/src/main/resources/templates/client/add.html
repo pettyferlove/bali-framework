@@ -35,7 +35,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">回调地址</label>
         <div class="layui-input-block">
-            <input type="text" name="webServerRedirectUri" lay-verify="required" lay-reqtext="回调地址是必填项，不能为空" placeholder="请输入回调地址" autocomplete="off" class="layui-input">
+            <input type="text" name="webServerRedirectUri" lay-verify="url" placeholder="请输入回调地址" autocomplete="off" class="layui-input">
         </div>
     </div>
 
@@ -50,13 +50,13 @@
         <div class="layui-inline">
             <label class="layui-form-label" style="width: 200px">令牌有效时间（ms）</label>
             <div class="layui-input-block" style="margin-left: 200px">
-                <input type="text" name="accessTokenValidity" th:value="36000" lay-verify="required" lay-reqtext="令牌有效时间是必填项，不能为空" placeholder="请输入令牌有效时间" autocomplete="off" class="layui-input">
+                <input type="text" name="accessTokenValidity" th:value="36000" lay-verify="number" placeholder="请输入令牌有效时间" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label" style="width: 200px">刷新令牌有效时间（ms）</label>
             <div class="layui-input-block" style="margin-left: 200px">
-                <input type="text" name="refreshTokenValidity" th:value="36000" lay-verify="required" lay-reqtext="刷新令牌有效时间是必填项，不能为空" placeholder="请输入刷新令牌有效时间" autocomplete="off" class="layui-input">
+                <input type="text" name="refreshTokenValidity" th:value="36000" lay-verify="number" placeholder="请输入刷新令牌有效时间" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
