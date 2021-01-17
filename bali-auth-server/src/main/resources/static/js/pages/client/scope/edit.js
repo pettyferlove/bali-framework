@@ -1,6 +1,18 @@
 layui.use(['form'], function () {
     let form = layui.form, layer = layui.layer
-    //监听提交
+
+    form.verify({
+        scope: function (value, item) { //value：表单的值、item：表单的DOM对象
+            if (value && value.length > 0) {
+                if (!/^[a-zA-Z.]*$/.test(value)) {
+                    return "只能输入英文字符或小数点";
+                }
+            } else {
+                return "域是必填项，不能为空";
+            }
+        }
+    });
+
     form.on('submit(form-submit)', function (data) {
         if (!data.field.auto) {
             data.field.auto = 'false'
