@@ -18,8 +18,8 @@
     <div class="layui-form-item">
         <label class="layui-form-label">登录名</label>
         <div class="layui-input-block">
-            <input type="text" name="loginId" lay-verify="required" lay-reqtext="登录名是必填项，不能为空" placeholder="请输入登录名"
-                   autocomplete="off" class="layui-input" th:value="${user.getLoginId()}" disabled>
+            <input type="text" name="loginId" lay-verify="loginId" lay-reqtext="登录名是必填项，不能为空" placeholder="请输入登录名"
+                   autocomplete="off" class="layui-input" th:value="${user.getLoginId()}" disabled readonly>
         </div>
     </div>
 
@@ -70,7 +70,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">电子邮件</label>
         <div class="layui-input-block">
-            <input type="text" name="email" placeholder="请输入电子邮箱" autocomplete="off" class="layui-input"
+            <input type="text" name="email" lay-verify="email" placeholder="请输入电子邮箱" autocomplete="off" class="layui-input"
                    th:value="${userInfo.getEmail()}">
         </div>
     </div>

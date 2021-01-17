@@ -14,6 +14,7 @@ import com.github.bali.auth.service.ITenantService;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
 import com.github.bali.core.framework.utils.ConverterUtil;
 import com.github.bali.security.utils.SecurityUtil;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -58,12 +59,15 @@ public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> impleme
 
     @Override
     public String create(Tenant tenant) {
-        tenant.setTenantId(IdWorker.getIdStr());
-        tenant.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getId());
-        tenant.setCreateTime(LocalDateTime.now());
-        if (this.save(tenant)) {
+        try {
+            tenant.setTenantId(IdWorker.getIdStr());
+            tenant.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getId());
+            tenant.setCreateTime(LocalDateTime.now());
+            this.save(tenant);
             return tenant.getId();
-        } else {
+        } catch (DuplicateKeyException e) {
+            throw new BaseRuntimeException("租户已存在，请勿重复添加");
+        } catch (Exception e) {
             throw new BaseRuntimeException("新增失败");
         }
     }

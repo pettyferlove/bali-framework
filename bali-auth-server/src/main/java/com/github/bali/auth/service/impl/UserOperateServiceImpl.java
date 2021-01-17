@@ -14,6 +14,7 @@ import com.github.bali.security.constants.SecurityConstant;
 import com.github.bali.security.constants.UserChannelConstant;
 import com.github.bali.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,23 +101,29 @@ public class UserOperateServiceImpl implements IUserOperateService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public String create(UserOperateVO userOperate) {
-        User user = new User();
-        user.setLoginId(userOperate.getLoginId());
-        user.setPassword(passwordEncoder.encode(userOperate.getPassword()));
-        user.setUserChannel(UserChannelConstant.WEB);
-        user.setStatus(userOperate.getStatus());
-        user.setTenantId(userOperate.getTenantId());
-        String userId = userService.create(user);
-        UserInfo userInfo = ConverterUtil.convert(userOperate, new UserInfo());
-        userInfo.setUserId(userId);
-        userInfoService.create(userInfo);
-        if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
-            UserRole userRole = new UserRole();
-            userRole.setUserId(userId);
-            userRole.setRoleId(SecurityConstant.TENANT_ADMIN_ROLE_ID);
-            userRoleService.save(userRole);
+        try {
+            User user = new User();
+            user.setLoginId(userOperate.getLoginId());
+            user.setPassword(passwordEncoder.encode(userOperate.getPassword()));
+            user.setUserChannel(UserChannelConstant.WEB);
+            user.setStatus(userOperate.getStatus());
+            user.setTenantId(userOperate.getTenantId());
+            String userId = userService.create(user);
+            UserInfo userInfo = ConverterUtil.convert(userOperate, new UserInfo());
+            userInfo.setUserId(userId);
+            userInfoService.create(userInfo);
+            if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
+                UserRole userRole = new UserRole();
+                userRole.setUserId(userId);
+                userRole.setRoleId(SecurityConstant.TENANT_ADMIN_ROLE_ID);
+                userRoleService.save(userRole);
+            }
+            return userId;
+        } catch (DuplicateKeyException e) {
+            throw new BaseRuntimeException("登录名已存在，请勿重复添加");
+        } catch (Exception e) {
+            throw new BaseRuntimeException();
         }
-        return userId;
     }
 
     @Override
