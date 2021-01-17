@@ -20,7 +20,7 @@ layui.use(['layer', 'table'], function () {
             , {field: 'description', title: '描述'}
             , {field: 'createTime', title: '创建时间', sort: true,}
             , {field: 'modifyTime', title: '最后修改时间', sort: true,}
-            , {fixed: 'right', width: 165, align: 'center', toolbar: '#action'}
+            , {fixed: 'right', width: 125, align: 'center', toolbar: '#action'}
         ]], response: {
             statusCode: 200 //重新规定成功的状态码为 200，table 组件默认为 0
         }
