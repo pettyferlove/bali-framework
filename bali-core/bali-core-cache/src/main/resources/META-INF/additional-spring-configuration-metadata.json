@@ -1,8 +1,13 @@
 {
   "properties": [
     {
-      "name": "spring.cache.expire",
+      "name": "spring.cache.prefix",
       "type": "java.lang.String",
+      "description": "缓存前缀."
+    },
+    {
+      "name": "spring.cache.expire",
+      "type": "java.lang.Long",
       "description": "缓存过期时间."
     }
   ]

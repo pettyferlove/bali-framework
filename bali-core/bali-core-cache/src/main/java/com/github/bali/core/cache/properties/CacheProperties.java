@@ -21,6 +21,9 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "spring.cache")
 public class CacheProperties {
 
+    @Value("${spring.cache.prefix:default}")
+    private String prefix;
+
     /**
      * 缓存过期时间
      */

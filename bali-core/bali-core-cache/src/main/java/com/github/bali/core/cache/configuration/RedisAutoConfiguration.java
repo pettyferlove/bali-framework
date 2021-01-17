@@ -55,6 +55,7 @@ public class RedisAutoConfiguration extends CachingConfigurerSupport {
     public RedisCacheConfiguration redisCacheConfiguration(CacheProperties cacheProperties) {
         return RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofSeconds(cacheProperties.getExpiration()))
+                .prefixCacheNameWith(cacheProperties.getPrefix() + ":")
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(keySerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(valueSerializer()));
     }
