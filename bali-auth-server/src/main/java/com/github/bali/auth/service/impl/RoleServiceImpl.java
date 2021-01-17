@@ -41,7 +41,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     @Override
     public IPage<Role> page(Role role, Page<Role> page) {
         LambdaQueryWrapper<Role> queryWrapper = Wrappers.<Role>lambdaQuery().orderByDesc(Role::getCreateTime);
-        if(StrUtil.isNotEmpty(role.getRoleName())){
+        if (StrUtil.isNotEmpty(role.getRoleName())) {
             queryWrapper.likeRight(Role::getRoleName, role.getRoleName());
         }
         queryWrapper.ne(Role::getRole, SecurityConstant.SUPER_ADMIN_ROLE);
@@ -83,9 +83,15 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
             log.error("attempts to remove the super administrator role");
             throw new BaseRuntimeException("警告：你无法修改超级管理员角色");
         }
-        role.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getId());
-        role.setModifyTime(LocalDateTime.now());
-        return this.updateById(role);
+        Role updateRole = new Role();
+        updateRole.setId(role.getId());
+        updateRole.setRoleName(role.getRoleName());
+        updateRole.setDescription(role.getDescription());
+        updateRole.setStatus(role.getStatus());
+        updateRole.setSort(role.getSort());
+        updateRole.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getId());
+        updateRole.setModifyTime(LocalDateTime.now());
+        return this.updateById(updateRole);
     }
 
 }

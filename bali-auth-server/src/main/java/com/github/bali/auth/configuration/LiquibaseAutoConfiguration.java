@@ -17,8 +17,8 @@ public class LiquibaseAutoConfiguration {
     public SpringLiquibase authServerLiquibase(DataSource dataSource) {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setDataSource(dataSource);
-        liquibase.setDatabaseChangeLogLockTable("database_changelog_lock");
-        liquibase.setDatabaseChangeLogTable("database_changelog");
+        liquibase.setDatabaseChangeLogLockTable("uc_database_changelog_lock");
+        liquibase.setDatabaseChangeLogTable("uc_database_changelog");
         liquibase.setChangeLog("classpath:db/db.changelog-master.yml");
         liquibase.setShouldRun(true);
         return liquibase;
