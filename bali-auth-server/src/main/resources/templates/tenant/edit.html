@@ -30,14 +30,14 @@
     <div class="layui-form-item">
         <label class="layui-form-label">联系电话</label>
         <div class="layui-input-block">
-            <input type="text" name="contactNumber" lay-verify="required" lay-reqtext="联系电话是必填项，不能为空" placeholder="请输入联系电话" autocomplete="off" class="layui-input" th:value="${tenant.getContactNumber()}">
+            <input type="text" name="contactNumber" lay-verify="contactNumber" placeholder="请输入联系电话" autocomplete="off" class="layui-input" th:value="${tenant.getContactNumber()}">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">电子邮箱</label>
         <div class="layui-input-block">
-            <input type="text" name="email" lay-verify="required" lay-reqtext="电子邮箱是必填项，不能为空" placeholder="请输入电子邮箱" autocomplete="off" class="layui-input" th:value="${tenant.getEmail()}">
+            <input type="text" name="email" lay-verify="email" placeholder="请输入电子邮箱" autocomplete="off" class="layui-input" th:value="${tenant.getEmail()}">
         </div>
     </div>
 
