@@ -90,3 +90,4 @@ multi-tenancy:
       - uc_tenant
       - uc_user_role
       - uc_auth_client_details_scope
+      - v_role_view

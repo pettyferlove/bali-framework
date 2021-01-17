@@ -1,8 +1,12 @@
 package com.github.bali.auth.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.bali.auth.domain.vo.UserDetails;
 import com.github.bali.auth.entity.Role;
+import com.github.bali.auth.entity.RoleView;
 import com.github.bali.auth.service.IRoleService;
+import com.github.bali.auth.service.IRoleViewService;
 import com.github.bali.security.userdetails.BaliUserDetails;
 import com.github.bali.security.utils.SecurityUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,8 +26,11 @@ public class ResourceController {
 
     private final IRoleService roleService;
 
-    public ResourceController(IRoleService roleService) {
+    private final IRoleViewService roleViewService;
+
+    public ResourceController(IRoleService roleService, IRoleViewService roleViewService) {
         this.roleService = roleService;
+        this.roleViewService = roleViewService;
     }
 
     /**
@@ -58,5 +65,10 @@ public class ResourceController {
         return roleService.list();
     }
 
+    @PreAuthorize("hasRole('TENANT_ADMIN')&&#oauth2.hasScope('resource.read')")
+    @GetMapping("role/page")
+    public IPage<RoleView> rolePage(String role, String roleName, Page<RoleView> page) {
+        return roleViewService.page(role, roleName, page);
+    }
 
 }
