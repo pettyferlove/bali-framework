@@ -9,7 +9,7 @@ public class PasswordEncoderTests {
     @Test
     void contextLoads() {
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        String encode = passwordEncoder.encode("123456");
+        String encode = passwordEncoder.encode("SmsYZfObWkn!ys3yyqy@OKzmmdYmJg%w");
         System.out.println(encode);
         boolean matches = passwordEncoder.matches("123456", "{bcrypt}$2a$10$d8Xf0jV1ARsAMCgkjUie7.WRmc.HdQSV3OAO1QHSOHOGnJo2S0MiG");
         System.out.println(matches);

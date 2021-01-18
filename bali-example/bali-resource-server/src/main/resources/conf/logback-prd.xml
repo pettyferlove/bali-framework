@@ -104,29 +104,6 @@
         </encoder>
     </appender>
 
-    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>127.0.0.1:5002</destination>
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <timestamp/>
-                <version/>
-                <pattern>
-                    <pattern>
-                        {
-                        "group-name": "[${group}]",
-                        "service-name": "[${application_name}]",
-                        "profiles": "[${profiles}]",
-                        "logger": "%logger",
-                        "level": "%level",
-                        "thread": "%thread",
-                        "message": "%message"
-                        }
-                    </pattern>
-                </pattern>
-            </providers>
-        </encoder>
-    </appender>
-
     <root level="WARN">
         <appender-ref ref="ERROR"/>
         <appender-ref ref="WARN"/>

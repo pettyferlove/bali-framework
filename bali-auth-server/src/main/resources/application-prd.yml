@@ -32,8 +32,8 @@ spring:
       time-to-live: 1d
   redis:
     host: 127.0.0.1
-    password:
-    port: 6379
+    password: 'aadkhkjhqeq&&adad^'
+    port: 8744
     lettuce:
       shutdown-timeout: 100
       pool:
@@ -41,6 +41,7 @@ spring:
         max-idle: 8
         max-wait: 30
         min-idle: 0
+    database: 0
   liquibase:
     enabled: false
   datasource:
