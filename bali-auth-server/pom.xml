@@ -158,8 +158,8 @@
                     <propertyFile>src/main/resources/db/liquibase.properties</propertyFile>
                     <propertyFileWillOverride>true</propertyFileWillOverride>
                     <!--生成文件的路径-->
-                    <databaseChangeLogLockTableName>uc_database_changelog_lock</databaseChangeLogLockTableName>
-                    <databaseChangeLogTableName>uc_database_changelog</databaseChangeLogTableName>
+                    <databaseChangeLogLockTableName>database_changelog_lock</databaseChangeLogLockTableName>
+                    <databaseChangeLogTableName>database_changelog</databaseChangeLogTableName>
                     <changeLogFile>src/main/resources/db/db.changelog-master.yml</changeLogFile>
                     <outputChangeLogFile>changelog-init.mysql.sql</outputChangeLogFile>
                 </configuration>
