@@ -11,11 +11,14 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * RestfulApi异常拦截
@@ -35,10 +38,10 @@ public class GlobalRestControllerExceptionHandler {
      * @return data
      */
     @ExceptionHandler(BaseRuntimeException.class)
-    public R baseExceptionHandler(HttpServletResponse response, BaseRuntimeException ex) {
+    public R<?> baseExceptionHandler(HttpServletResponse response, BaseRuntimeException ex) {
         log.error(ex.getMessage(), ex);
         response.setStatus(ex.getStatus().value());
-        return new R(ex, ex.getStatus());
+        return new R<>(ex, ex.getStatus());
     }
 
     /**
@@ -49,10 +52,10 @@ public class GlobalRestControllerExceptionHandler {
      * @return data
      */
     @ExceptionHandler(RuntimeException.class)
-    public R runtimeExceptionHandler(HttpServletResponse response, RuntimeException ex) {
+    public R<?> runtimeExceptionHandler(HttpServletResponse response, RuntimeException ex) {
         log.error(ex.getMessage(), ex);
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        return new R(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new R<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -63,10 +66,10 @@ public class GlobalRestControllerExceptionHandler {
      * @return data
      */
     @ExceptionHandler(BaseException.class)
-    public R otherExceptionHandler(HttpServletResponse response, BaseException ex) {
+    public R<?> otherExceptionHandler(HttpServletResponse response, BaseException ex) {
         log.error(ex.getMessage(), ex);
         response.setStatus(ex.getStatus().value());
-        return new R(ex, ex.getStatus());
+        return new R<>(ex, ex.getStatus());
     }
 
 
@@ -78,10 +81,10 @@ public class GlobalRestControllerExceptionHandler {
      * @return data
      */
     @ExceptionHandler(Exception.class)
-    public R exceptionHandler(HttpServletResponse response, Exception ex) {
+    public R<?> exceptionHandler(HttpServletResponse response, Exception ex) {
         log.error(ex.getMessage(), ex);
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        return new R(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new R<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
@@ -112,10 +115,27 @@ public class GlobalRestControllerExceptionHandler {
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public R accessDeniedExceptionHandler(HttpServletResponse response, RuntimeException ex) {
+    public R<?> accessDeniedExceptionHandler(HttpServletResponse response, RuntimeException ex) {
         log.error(ex.getMessage(), ex);
         response.setStatus(HttpStatus.FORBIDDEN.value());
-        return new R(ex, HttpStatus.FORBIDDEN);
+        return new R<>(ex, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public R<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException methodArgumentNotValidException) {
+        StringBuilder errorMessage = new StringBuilder();
+        List<ObjectError> objectErrors = methodArgumentNotValidException.getBindingResult().getAllErrors();
+        if (!objectErrors.isEmpty()) {
+            for (int i = 0; i < objectErrors.size(); i++) {
+                if (i != 0) {
+                    errorMessage.append(",");
+                }
+                errorMessage.append(objectErrors.get(i).getDefaultMessage());
+            }
+        } else {
+            errorMessage.append("MethodArgumentNotValidException occured.");
+        }
+        return new R<>(errorMessage.toString());
     }
 
 }
