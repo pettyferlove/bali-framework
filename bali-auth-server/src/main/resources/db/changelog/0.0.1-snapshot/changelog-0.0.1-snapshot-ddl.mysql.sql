@@ -130,7 +130,7 @@ select `uc_role`.`role`        AS `role`,
        `uc_role`.`modify_time` AS `modify_time`
 from `uc_role`;
 
---changeset Petty:uc-0.0.1-snapshot-ddl-12
+--changeset Petty:uc-0.0.1-snapshot-ddl-13
 drop view v_role_view;
 create view v_role_view as
 select `uc_role`.`role`        AS `role`,
