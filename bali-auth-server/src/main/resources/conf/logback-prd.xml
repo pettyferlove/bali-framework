@@ -130,7 +130,5 @@
     <root level="WARN">
         <appender-ref ref="ERROR"/>
         <appender-ref ref="WARN"/>
-        <!-- Logstash日志收集 -->
-        <appender-ref ref="LOGSTASH"/>
     </root>
 </configuration>
