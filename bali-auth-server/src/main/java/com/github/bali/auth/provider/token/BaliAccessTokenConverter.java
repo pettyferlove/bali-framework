@@ -32,7 +32,6 @@ public class BaliAccessTokenConverter extends DefaultAccessTokenConverter {
             response.put("channel", principal.getChannel());
             response.put("authorities", AuthorityUtils.authorityListToSet(authentication.getAuthorities()));
             response.put("tenant", principal.getTenant());
-            response.put("iss", "http://127.0.0.1:9000");
             return response;
         }
     }
