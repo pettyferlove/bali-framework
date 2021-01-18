@@ -39,7 +39,7 @@ public class ResourceController {
      * @return UserDetails
      */
 
-    @PreAuthorize("hasRole('TENANT_ADMIN')&&#oauth2.hasScope('user.read')")
+    @PreAuthorize("#oauth2.hasScope('user.read')")
     @GetMapping("user-info")
     public UserDetails userInfo() {
         BaliUserDetails user = SecurityUtil.getUser();
