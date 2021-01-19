@@ -122,9 +122,10 @@ public class GlobalRestControllerExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public R<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException methodArgumentNotValidException) {
+    public R<?> handleMethodArgumentNotValidException(HttpServletResponse response, MethodArgumentNotValidException ex) {
+        log.error(ex.getMessage(), ex);
         StringBuilder errorMessage = new StringBuilder();
-        List<ObjectError> objectErrors = methodArgumentNotValidException.getBindingResult().getAllErrors();
+        List<ObjectError> objectErrors = ex.getBindingResult().getAllErrors();
         if (!objectErrors.isEmpty()) {
             for (int i = 0; i < objectErrors.size(); i++) {
                 if (i != 0) {
@@ -135,6 +136,7 @@ public class GlobalRestControllerExceptionHandler {
         } else {
             errorMessage.append("MethodArgumentNotValidException occured.");
         }
+        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         return new R<>(errorMessage.toString());
     }
 
