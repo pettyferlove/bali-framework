@@ -37,6 +37,9 @@ public class UserInfoView extends Model<UserInfoView> {
     @ApiModelProperty(value = "用户ID")
     private String id;
 
+    @ApiModelProperty(value = "登录ID")
+    private String loginId;
+
     @ApiModelProperty(value = "租户ID")
     private String tenantId;
 

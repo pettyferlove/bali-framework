@@ -5,6 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.github.bali.auth.entity.UserInfoView">
         <result column="id" property="id" />
+        <result column="login_id" property="loginId" />
         <result column="tenant_id" property="tenantId" />
         <result column="client_id" property="clientId" />
         <result column="application_name" property="applicationName" />
