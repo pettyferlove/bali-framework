@@ -7,12 +7,15 @@ import com.github.bali.auth.entity.User;
 import com.github.bali.auth.entity.UserInfo;
 import com.github.bali.auth.entity.UserInfoView;
 
+import java.util.List;
+
 /**
  * @author Petty
  */
 public interface IUserOperateService {
 
     UserRoleVO loadUserRole(String userId);
+    List<String> loadUserRoleIds(String userId);
 
     /**
      * 查询用户信息视图列表

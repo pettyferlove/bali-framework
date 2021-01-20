@@ -95,21 +95,25 @@ layui.use(['layer', 'table'], function () {
         let data = obj.data
             , layEvent = obj.event;
         if (layEvent === 'distributionRoles') {
-            layer.open({
-                type: 2,
-                title: '分配角色',
-                btn: ['更新', '取消'],
-                area: ['754px', '470px'],
-                content: module + '/distribution-roles/' + data.id
-                , yes: function (index, layero) {
-                    let submit = layero.find('iframe').contents().find("#form-submit");
-                    submit.click();
-                }
-                , btn2: function (index) {
-                    layer.close(index)
-                    return false;
-                }
-            });
+            if(data.userChannel === 'web'){
+                layer.open({
+                    type: 2,
+                    title: '分配角色',
+                    btn: ['更新', '取消'],
+                    area: ['754px', '470px'],
+                    content: module + '/distribution-roles/' + data.id
+                    , yes: function (index, layero) {
+                        let submit = layero.find('iframe').contents().find("#form-submit");
+                        submit.click();
+                    }
+                    , btn2: function (index) {
+                        layer.close(index)
+                        return false;
+                    }
+                });
+            } else {
+                layer.msg('不支持在Web端修改移动端用户信息');
+            }
         } else if (layEvent === 'del') {
             del(data.id);
         } else if (layEvent === 'edit') {

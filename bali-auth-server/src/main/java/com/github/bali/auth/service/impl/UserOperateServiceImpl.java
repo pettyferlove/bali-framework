@@ -67,6 +67,15 @@ public class UserOperateServiceImpl implements IUserOperateService {
     }
 
     @Override
+    public List<String> loadUserRoleIds(String userId) {
+        List<Role> toBeSelected = new LinkedList<>();
+        List<Role> selected = new LinkedList<>();
+        List<Role> roles = Optional.ofNullable(roleService.list()).orElseGet(ArrayList::new);
+        List<UserRole> userRoles = Optional.ofNullable(userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId))).orElseGet(ArrayList::new);
+        return userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
+    }
+
+    @Override
     public Page<UserInfoView> userInfoPage(UserInfoView userInfoView, Page<UserInfoView> page) {
         LambdaQueryWrapper<UserInfoView> queryWrapper = Wrappers.<UserInfoView>lambdaQuery().orderByDesc(UserInfoView::getCreateTime)
                 .ne(UserInfoView::getId, Objects.requireNonNull(SecurityUtil.getUser()).getId());
