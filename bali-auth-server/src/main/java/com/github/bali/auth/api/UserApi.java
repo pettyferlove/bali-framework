@@ -36,7 +36,7 @@ public class UserApi {
     }
 
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.read')")
-    @GetMapping("user/page")
+    @GetMapping("page")
     @ApiOperation(value = "分页获取用户信息", notes = "需租户管理员权限或管理员权限和user.read域", authorizations = @Authorization(value = "oauth2"))
     public R<IPage<UserInfoView>> userPage(@ApiParam("查询参数") UserInfoQueryParams params,
                                            @ApiParam("分页参数") Page<UserInfoView> page) {

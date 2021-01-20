@@ -24,7 +24,7 @@ import java.util.List;
  * @author Pettyfer
  */
 @RestController
-@RequestMapping(ApiConstant.API_V1_PREFIX + "/user")
+@RequestMapping(ApiConstant.API_V1_PREFIX + "/role")
 @Api(tags = {"角色信息维护接口"})
 public class RoleApi {
 
@@ -38,14 +38,14 @@ public class RoleApi {
     }
 
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('resource.read')")
-    @GetMapping("role/all")
+    @GetMapping("all")
     @ApiOperation(value = "获取全部角色信息", notes = "需租户管理员权限或管理员权限和resource.read域", authorizations = @Authorization(value = "oauth2"))
     public R<List<Role>> allRole() {
         return new R<>(roleService.list());
     }
 
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('resource.read')")
-    @GetMapping("role/page")
+    @GetMapping("page")
     @ApiOperation(value = "分页获取角色信息", notes = "需租户管理员权限或管理员权限和resource.read域", authorizations = @Authorization(value = "oauth2"))
     public R<IPage<RoleView>> rolePage(@ApiParam("角色") @RequestParam(required = false) String role,
                                        @ApiParam("角色名") @RequestParam(required = false) String roleName,
