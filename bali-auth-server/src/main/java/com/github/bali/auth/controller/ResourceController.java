@@ -9,6 +9,8 @@ import com.github.bali.auth.service.IRoleService;
 import com.github.bali.auth.service.IRoleViewService;
 import com.github.bali.security.userdetails.BaliUserDetails;
 import com.github.bali.security.utils.SecurityUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/resource")
+@Api(tags = {"通用资源接口"})
 public class ResourceController {
 
 
@@ -41,6 +44,7 @@ public class ResourceController {
 
     @PreAuthorize("#oauth2.hasScope('user.read')")
     @GetMapping("user-info")
+    @ApiOperation(value = "获取个人信息", notes = "需user.read域")
     public UserDetails userInfo() {
         BaliUserDetails user = SecurityUtil.getUser();
         return UserDetails.builder()
@@ -61,12 +65,14 @@ public class ResourceController {
 
     @PreAuthorize("hasRole('TENANT_ADMIN')&&#oauth2.hasScope('resource.read')")
     @GetMapping("role/all")
+    @ApiOperation(value = "获取全部角色信息", notes = "需租户管理员权限和resource.read域")
     public List<Role> allRole() {
         return roleService.list();
     }
 
     @PreAuthorize("hasRole('TENANT_ADMIN')&&#oauth2.hasScope('resource.read')")
     @GetMapping("role/page")
+    @ApiOperation(value = "分页获取角色信息", notes = "需租户管理员权限和resource.read域")
     public IPage<RoleView> rolePage(String role, String roleName, Page<RoleView> page) {
         return roleViewService.page(role, roleName, page);
     }

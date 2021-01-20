@@ -61,7 +61,9 @@ public class Swagger2Configuration {
      */
     private AuthorizationScope[] scopes() {
         return new AuthorizationScope[]{
-                new AuthorizationScope("user.read,resource.read", "application scope is trusted!")
+                new AuthorizationScope("user.read", "读取用户信息"),
+                new AuthorizationScope("resource.read", "读取资源信息"),
+                new AuthorizationScope("api.test", "Api测试"),
         };
     }
 
