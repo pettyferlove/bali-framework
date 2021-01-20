@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.bali.auth.domain.vo.UserOperateVO;
+import com.github.bali.auth.domain.vo.UserOperate;
 import com.github.bali.auth.domain.vo.UserRoleVO;
 import com.github.bali.auth.entity.*;
 import com.github.bali.auth.service.*;
@@ -100,16 +100,25 @@ public class UserOperateServiceImpl implements IUserOperateService {
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
-    public String create(UserOperateVO userOperate) {
+    public String create(UserOperate userOperate) {
         try {
             User user = new User();
             user.setLoginId(userOperate.getLoginId());
             user.setPassword(passwordEncoder.encode(userOperate.getPassword()));
             user.setUserChannel(UserChannelType.WEB.getValue());
             user.setStatus(userOperate.getStatus());
-            user.setTenantId(userOperate.getTenantId());
+            if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
+                user.setTenantId(userOperate.getTenantId());
+            } else {
+                user.setTenantId(null);
+            }
             String userId = userService.create(user);
             UserInfo userInfo = ConverterUtil.convert(userOperate, new UserInfo());
+            if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
+                userInfo.setTenantId(userOperate.getTenantId());
+            } else {
+                userInfo.setTenantId(null);
+            }
             userInfo.setUserId(userId);
             userInfoService.create(userInfo);
             if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
@@ -128,7 +137,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
-    public Boolean update(UserOperateVO userOperate) {
+    public Boolean update(UserOperate userOperate) {
         List<UserRole> userRoles = userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userOperate.getId()));
         if (userRoles.stream().anyMatch(i -> i.getRoleId().equals(SecurityConstant.SUPER_ADMIN_ROLE_ID))) {
             log.error("attempts to remove the super administrator");
@@ -137,9 +146,18 @@ public class UserOperateServiceImpl implements IUserOperateService {
         User user = new User();
         user.setId(userOperate.getId());
         user.setStatus(userOperate.getStatus());
-        user.setTenantId(userOperate.getTenantId());
+        if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
+            user.setTenantId(userOperate.getTenantId());
+        } else {
+            user.setTenantId(null);
+        }
         userService.update(user);
         UserInfo userInfo = ConverterUtil.convert(userOperate, new UserInfo());
+        if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
+            userInfo.setTenantId(userOperate.getTenantId());
+        } else {
+            userInfo.setTenantId(null);
+        }
         UserInfo info = userInfoService.getOne(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, userOperate.getId()));
         userInfo.setId(info.getId());
         userInfoService.update(userInfo);

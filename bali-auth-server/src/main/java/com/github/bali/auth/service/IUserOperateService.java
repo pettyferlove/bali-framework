@@ -1,7 +1,7 @@
 package com.github.bali.auth.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.bali.auth.domain.vo.UserOperateVO;
+import com.github.bali.auth.domain.vo.UserOperate;
 import com.github.bali.auth.domain.vo.UserRoleVO;
 import com.github.bali.auth.entity.User;
 import com.github.bali.auth.entity.UserInfo;
@@ -56,14 +56,14 @@ public interface IUserOperateService {
      * @param userOperate 用户信息
      * @return 新增之后的用户ID
      */
-    String create(UserOperateVO userOperate);
+    String create(UserOperate userOperate);
 
     /**
      * 更新用户信息
      * @param userOperate 用户信息
      * @return 是否成功
      */
-    Boolean update(UserOperateVO userOperate);
+    Boolean update(UserOperate userOperate);
 
     /**
      * 删除用户

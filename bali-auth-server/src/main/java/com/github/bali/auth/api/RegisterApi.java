@@ -1,4 +1,4 @@
-package com.github.bali.auth.controller;
+package com.github.bali.auth.api;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.ObjectUtil;
@@ -32,7 +32,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/register")
 @Api(tags = {"用户注册接口"})
-public class RegisterController {
+public class RegisterApi {
 
     private final IAuthClientDetailsService authClientDetailsService;
 
@@ -40,7 +40,7 @@ public class RegisterController {
 
     private final PasswordEncoder passwordEncoder;
 
-    public RegisterController(IAuthClientDetailsService authClientDetailsService, IRegisterService registerService, PasswordEncoder passwordEncoder) {
+    public RegisterApi(IAuthClientDetailsService authClientDetailsService, IRegisterService registerService, PasswordEncoder passwordEncoder) {
         this.authClientDetailsService = authClientDetailsService;
         this.registerService = registerService;
         this.passwordEncoder = passwordEncoder;

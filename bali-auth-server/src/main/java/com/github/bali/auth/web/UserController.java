@@ -2,7 +2,7 @@ package com.github.bali.auth.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.bali.auth.domain.vo.UserOperateVO;
+import com.github.bali.auth.domain.vo.UserOperate;
 import com.github.bali.auth.domain.vo.UserRoleVO;
 import com.github.bali.auth.entity.UserInfoView;
 import com.github.bali.auth.service.IUserOperateService;
@@ -83,7 +83,7 @@ public class UserController {
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
     @ResponseBody
-    public R<String> create(@RequestBody UserOperateVO user) {
+    public R<String> create(@RequestBody UserOperate user) {
         try {
             return new R<>(userOperateService.create(user));
         } catch (Exception e) {
@@ -93,7 +93,7 @@ public class UserController {
 
     @RequestMapping(value = "update", method = RequestMethod.PUT)
     @ResponseBody
-    public R<Boolean> update(@RequestBody UserOperateVO user) {
+    public R<Boolean> update(@RequestBody UserOperate user) {
         try {
             return new R<>(userOperateService.update(user));
         } catch (Exception e) {

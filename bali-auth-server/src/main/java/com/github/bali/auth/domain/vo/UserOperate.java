@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserOperateVO implements IVO {
+public class UserOperate implements IVO {
     private static final long serialVersionUID = 5030762540026814382L;
 
     @ApiModelProperty(value = "用户ID")
