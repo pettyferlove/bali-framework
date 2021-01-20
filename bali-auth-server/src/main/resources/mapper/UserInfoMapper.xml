@@ -32,6 +32,7 @@
         <result column="verified" property="verified" />
         <result column="region_id" property="regionId" />
         <result column="tenant_id" property="tenantId" />
+        <result column="client_id" property="clientId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -42,7 +43,7 @@
         create_time,
         modifier,
         modify_time,
-        user_id, user_name, nick_name, user_sex, user_born, user_avatar, email, user_address, mobile_tel, phone_tel, user_iden_type, user_iden, organization, education, positional_title, political_status, graduated_school, graduated_year, major, verified, region_id, tenant_id
+        user_id, user_name, nick_name, user_sex, user_born, user_avatar, email, user_address, mobile_tel, phone_tel, user_iden_type, user_iden, organization, education, positional_title, political_status, graduated_school, graduated_year, major, verified, region_id, tenant_id, client_id
     </sql>
 
 </mapper>

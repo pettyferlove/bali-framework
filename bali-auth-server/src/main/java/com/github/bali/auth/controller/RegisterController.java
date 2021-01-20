@@ -3,6 +3,7 @@ package com.github.bali.auth.controller;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.github.bali.auth.domain.dto.BasicAuth;
 import com.github.bali.auth.domain.vo.WeChatUserRegister;
 import com.github.bali.auth.domain.vo.WebUserRegister;
 import com.github.bali.auth.entity.AuthClientDetails;
@@ -48,25 +49,25 @@ public class RegisterController {
     @PostMapping("web")
     @ApiOperation(value = "Web用户注册", notes = "需客户端Basic认证")
     public R<Boolean> web(WebUserRegister register, @RequestHeader HttpHeaders headers) {
-        String tenantId = authenticate(headers);
+        BasicAuth authenticate = authenticate(headers);
         throw new BaseRuntimeException("暂不支持Web端用户注册，请联系管理员添加用户");
     }
 
     @PostMapping("mobile")
     @ApiOperation(value = "移动用户注册", notes = "需客户端Basic认证")
     public R<Boolean> mobile(@RequestHeader HttpHeaders headers) {
-        String tenantId = authenticate(headers);
+        BasicAuth authenticate = authenticate(headers);
         return null;
     }
 
     @PostMapping("wechat-mini-program")
     @ApiOperation(value = "小程序用户注册", notes = "需客户端Basic认证")
     public R<Boolean> wechatMiniProgram(WeChatUserRegister register, @RequestHeader HttpHeaders headers) {
-        String tenantId = authenticate(headers);
-        return new R<>(registerService.registerWeChat(register, tenantId, UserChannelConstant.WECHAT_MINI_PROGRAM));
+        BasicAuth authenticate = authenticate(headers);
+        return new R<>(registerService.registerWeChat(register, authenticate, UserChannelConstant.WECHAT_MINI_PROGRAM));
     }
 
-    private String authenticate(HttpHeaders headers) {
+    private BasicAuth authenticate(HttpHeaders headers) {
         List<String> authorization = Optional.ofNullable(headers.get("Authorization")).orElseGet(ArrayList::new);
         String basicAuthorization = "";
         if (!authorization.isEmpty()) {
@@ -81,7 +82,7 @@ public class RegisterController {
             AuthClientDetails authClientDetails = authClientDetailsService.getOne(Wrappers.<AuthClientDetails>lambdaQuery().eq(AuthClientDetails::getClientId, clientId));
             if (ObjectUtil.isNotNull(authClientDetails)) {
                 if (passwordEncoder.matches(clientSecret, authClientDetails.getClientSecret())) {
-                    return authClientDetails.getTenantId();
+                    return BasicAuth.builder().tenantId(authClientDetails.getTenantId()).clientId(clientId).build();
                 } else {
                     throw new BaseRuntimeException("client authentication error", HttpStatus.UNAUTHORIZED);
                 }

@@ -3,6 +3,7 @@ package com.github.bali.auth.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.github.bali.auth.domain.dto.BasicAuth;
 import com.github.bali.auth.domain.vo.WeChatUserRegister;
 import com.github.bali.auth.entity.User;
 import com.github.bali.auth.entity.UserInfo;
@@ -33,7 +34,7 @@ public class RegisterServiceImpl implements IRegisterService {
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
-    public Boolean registerWeChat(WeChatUserRegister register, String tenantId, String type) {
+    public Boolean registerWeChat(WeChatUserRegister register, BasicAuth auth, String type) {
         LambdaQueryWrapper<User> queryWrapper = Wrappers.<User>lambdaQuery();
         if (StrUtil.isNotEmpty(register.getOpenId())) {
             queryWrapper.eq(User::getOpenId, register.getOpenId());
@@ -48,13 +49,16 @@ public class RegisterServiceImpl implements IRegisterService {
             User user = new User();
             user.setOpenId(register.getOpenId());
             user.setUnionId(register.getUnionId());
-            user.setTenantId(tenantId);
+            user.setTenantId(auth.getTenantId());
+            user.setClientId(auth.getClientId());
             user.setUserChannel(type);
             user.setStatus(SecurityConstant.STATUS_NORMAL);
             userService.save(user);
             String userId = user.getId();
             UserInfo userInfo = new UserInfo();
             userInfo.setUserId(userId);
+            userInfo.setClientId(auth.getClientId());
+            userInfo.setTenantId(auth.getTenantId());
             userInfo.setUserAvatar(register.getAvatarUrl());
             userInfo.setNickName(register.getNickName());
             userInfo.setUserSex(register.getGender());

@@ -13,6 +13,7 @@
         <result column="login_id" property="loginId" />
         <result column="password" property="password" />
         <result column="tenant_id" property="tenantId" />
+        <result column="client_id" property="clientId" />
         <result column="open_id" property="openId" />
         <result column="union_id" property="unionId" />
         <result column="user_channel" property="userChannel" />
@@ -27,7 +28,7 @@
         create_time,
         modifier,
         modify_time,
-        login_id, password, tenant_id, open_id, union_id, user_channel, status
+        login_id, password, tenant_id, client_id, open_id, union_id, user_channel, status
     </sql>
 
 </mapper>

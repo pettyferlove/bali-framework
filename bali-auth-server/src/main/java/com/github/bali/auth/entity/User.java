@@ -1,16 +1,17 @@
 package com.github.bali.auth.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.github.bali.persistence.entity.BaseEntity;
-import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.github.bali.persistence.entity.BaseEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -40,6 +41,9 @@ public class User extends BaseEntity<User> {
 
     @ApiModelProperty(value = "租户ID")
     private String tenantId;
+
+    @ApiModelProperty(value = "所属客户端（仅对公开注册的用户生效）")
+    private String clientId;
 
     @ApiModelProperty(value = "第三方OpenID")
     private String openId;
