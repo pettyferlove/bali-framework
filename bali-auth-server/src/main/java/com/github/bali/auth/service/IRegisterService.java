@@ -2,6 +2,7 @@ package com.github.bali.auth.service;
 
 import com.github.bali.auth.domain.dto.BasicAuth;
 import com.github.bali.auth.domain.vo.WeChatUserRegister;
+import com.github.bali.security.constants.UserChannelType;
 
 /**
  * @author Pettyfer
@@ -16,6 +17,6 @@ public interface IRegisterService {
      * @param type     类型
      * @return 是否成功
      */
-    Boolean registerWeChat(WeChatUserRegister register, BasicAuth auth, String type);
+    Boolean registerWeChat(WeChatUserRegister register, BasicAuth auth, UserChannelType type);
 
 }

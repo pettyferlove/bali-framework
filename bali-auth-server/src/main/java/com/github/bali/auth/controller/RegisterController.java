@@ -11,7 +11,7 @@ import com.github.bali.auth.service.IAuthClientDetailsService;
 import com.github.bali.auth.service.IRegisterService;
 import com.github.bali.core.framework.domain.vo.R;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
-import com.github.bali.security.constants.UserChannelConstant;
+import com.github.bali.security.constants.UserChannelType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpHeaders;
@@ -64,7 +64,7 @@ public class RegisterController {
     @ApiOperation(value = "小程序用户注册", notes = "需客户端Basic认证")
     public R<Boolean> wechatMiniProgram(WeChatUserRegister register, @RequestHeader HttpHeaders headers) {
         BasicAuth authenticate = authenticate(headers);
-        return new R<>(registerService.registerWeChat(register, authenticate, UserChannelConstant.WECHAT_MINI_PROGRAM));
+        return new R<>(registerService.registerWeChat(register, authenticate, UserChannelType.WECHAT_MINI_PROGRAM));
     }
 
     private BasicAuth authenticate(HttpHeaders headers) {

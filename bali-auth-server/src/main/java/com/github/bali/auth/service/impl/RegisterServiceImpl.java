@@ -12,6 +12,7 @@ import com.github.bali.auth.service.IUserInfoService;
 import com.github.bali.auth.service.IUserService;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
 import com.github.bali.security.constants.SecurityConstant;
+import com.github.bali.security.constants.UserChannelType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,7 @@ public class RegisterServiceImpl implements IRegisterService {
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
-    public Boolean registerWeChat(WeChatUserRegister register, BasicAuth auth, String type) {
+    public Boolean registerWeChat(WeChatUserRegister register, BasicAuth auth, UserChannelType type) {
         LambdaQueryWrapper<User> queryWrapper = Wrappers.<User>lambdaQuery();
         if (StrUtil.isNotEmpty(register.getOpenId())) {
             queryWrapper.eq(User::getOpenId, register.getOpenId());
@@ -51,7 +52,7 @@ public class RegisterServiceImpl implements IRegisterService {
             user.setUnionId(register.getUnionId());
             user.setTenantId(auth.getTenantId());
             user.setClientId(auth.getClientId());
-            user.setUserChannel(type);
+            user.setUserChannel(type.getValue());
             user.setStatus(SecurityConstant.STATUS_NORMAL);
             userService.save(user);
             String userId = user.getId();

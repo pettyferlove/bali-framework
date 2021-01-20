@@ -44,6 +44,7 @@ public class BaliClientDetailsServiceImpl implements OAuth2ClientDetailsService 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
         AuthClientDetails details = authClientDetailsService.getOne(Wrappers.<AuthClientDetails>lambdaQuery().eq(AuthClientDetails::getClientId, clientId));
+        Preconditions.checkNotNull(details, "client is not registered");
         List<AuthClientDetailsScope> list = authClientDetailsScopeService.list(Wrappers.<AuthClientDetailsScope>lambdaQuery().eq(AuthClientDetailsScope::getDetailsId, details.getId()));
         List<String> scope = new ArrayList<>();
         List<String> autoApproveScope = new ArrayList<>();
@@ -63,7 +64,6 @@ public class BaliClientDetailsServiceImpl implements OAuth2ClientDetailsService 
         if (scope.isEmpty()) {
             throw new RuntimeException("the client is not scoped,not available");
         }
-        Preconditions.checkNotNull(details, "client is not registered");
         BaseClientDetails baseClientDetails = new BaseClientDetails(details.getClientId(), details.getResourceIds(),
                 StrUtil.join(",", scope), details.getAuthorizedGrantTypes(), details.getAuthorities(), details.getWebServerRedirectUri());
         baseClientDetails.setClientSecret(details.getClientSecret());

@@ -11,7 +11,7 @@ import com.github.bali.auth.service.*;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
 import com.github.bali.core.framework.utils.ConverterUtil;
 import com.github.bali.security.constants.SecurityConstant;
-import com.github.bali.security.constants.UserChannelConstant;
+import com.github.bali.security.constants.UserChannelType;
 import com.github.bali.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -105,7 +105,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
             User user = new User();
             user.setLoginId(userOperate.getLoginId());
             user.setPassword(passwordEncoder.encode(userOperate.getPassword()));
-            user.setUserChannel(UserChannelConstant.WEB);
+            user.setUserChannel(UserChannelType.WEB.getValue());
             user.setStatus(userOperate.getStatus());
             user.setTenantId(userOperate.getTenantId());
             String userId = userService.create(user);
