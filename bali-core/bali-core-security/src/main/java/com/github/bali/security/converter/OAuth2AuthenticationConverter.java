@@ -30,6 +30,8 @@ public class OAuth2AuthenticationConverter implements Converter<Jwt, AbstractAut
         List<String> roles = authorities.stream().map(i -> i.getAuthority().replace(SecurityConstant.ROLE_PREFIX, "")).collect(Collectors.toList());
         BaliUserDetails userDetails = BaliUserDetails.builder()
                 .id((String) claims.get("id"))
+                .openId((String) claims.get("open_id"))
+                .unionId((String) claims.get("union_id"))
                 .username((String) claims.get("username"))
                 .status(((Long) claims.get("status")).intValue())
                 .tenant((String) claims.get("tenant"))

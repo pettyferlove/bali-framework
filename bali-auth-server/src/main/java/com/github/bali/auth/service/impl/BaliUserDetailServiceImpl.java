@@ -117,6 +117,8 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
 
         return BaliUserDetails.builder()
                 .id(user.getId())
+                .openId(user.getOpenId())
+                .unionId(user.getUnionId())
                 .username(user.getLoginId())
                 .password(user.getPassword())
                 .channel(user.getUserChannel())

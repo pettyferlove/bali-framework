@@ -1,5 +1,6 @@
 package com.github.bali.auth.provider.token;
 
+import cn.hutool.core.util.StrUtil;
 import com.github.bali.security.userdetails.BaliUserDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -27,6 +28,12 @@ public class BaliAccessTokenConverter extends DefaultAccessTokenConverter {
             Map<String, Object> response = new LinkedHashMap<String, Object>();
             BaliUserDetails principal = (BaliUserDetails) authentication.getPrincipal();
             response.put("id", principal.getId());
+            if (StrUtil.isNotEmpty(principal.getOpenId())) {
+                response.put("open_id", principal.getOpenId());
+            }
+            if (StrUtil.isNotEmpty(principal.getUnionId())) {
+                response.put("union_id", principal.getUnionId());
+            }
             response.put("username", principal.getUsername());
             response.put("status", principal.getStatus());
             response.put("channel", principal.getChannel());

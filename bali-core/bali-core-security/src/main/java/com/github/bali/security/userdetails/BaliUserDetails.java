@@ -28,6 +28,17 @@ public class BaliUserDetails implements UserDetails {
      * 用户ID
      */
     private String id;
+
+    /**
+     * 第三方开放ID
+     */
+    private String openId;
+
+    /**
+     * 第三方机构ID
+     */
+    private String unionId;
+
     /**
      * 用户登录用户名
      */
