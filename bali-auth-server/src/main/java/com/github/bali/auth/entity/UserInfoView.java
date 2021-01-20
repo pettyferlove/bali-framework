@@ -40,6 +40,12 @@ public class UserInfoView extends Model<UserInfoView> {
     @ApiModelProperty(value = "租户ID")
     private String tenantId;
 
+    @ApiModelProperty(value = "所属客户端（仅对公开注册的用户生效）")
+    private String clientId;
+
+    @ApiModelProperty(value = "所属客户端名称（仅对公开注册的用户生效）")
+    private String applicationName;
+
     @ApiModelProperty(value = "用户所属渠道")
     private String userChannel;
 

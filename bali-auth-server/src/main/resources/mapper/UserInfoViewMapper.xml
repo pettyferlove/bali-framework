@@ -6,6 +6,8 @@
     <resultMap id="BaseResultMap" type="com.github.bali.auth.entity.UserInfoView">
         <result column="id" property="id" />
         <result column="tenant_id" property="tenantId" />
+        <result column="client_id" property="clientId" />
+        <result column="application_name" property="applicationName" />
         <result column="user_channel" property="userChannel" />
         <result column="status" property="status" />
         <result column="user_name" property="userName" />
@@ -38,7 +40,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, tenant_id, user_channel, status, user_name, nick_name, user_sex, user_born, user_avatar, email, user_address, mobile_tel, phone_tel, user_iden_type, user_iden, organization, education, positional_title, political_status, graduated_school, graduated_year, major, verified, region_id, creator, creator_name, create_time, modifier, modifier_name, modify_time
+        id, tenant_id, client_id, user_channel, status, user_name, nick_name, user_sex, user_born, user_avatar, email, user_address, mobile_tel, phone_tel, user_iden_type, user_iden, organization, education, positional_title, political_status, graduated_school, graduated_year, major, verified, region_id, creator, creator_name, create_time, modifier, modifier_name, modify_time
     </sql>
 
 </mapper>
