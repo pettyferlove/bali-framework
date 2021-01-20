@@ -142,3 +142,14 @@ select `uc_role`.`role`        AS `role`,
        `uc_role`.`create_time` AS `create_time`,
        `uc_role`.`modify_time` AS `modify_time`
 from `uc_role` where `del_flag` = 0;
+
+
+--changeset Petty:uc-0.0.1-snapshot-ddl-14
+alter table uc_user_info
+    add client_id varchar(128) null comment '所属客户端' after tenant_id;
+
+--changeset Petty:uc-0.0.1-snapshot-ddl-15
+alter table uc_user
+    add client_id varchar(128) null comment '所属客户端' after tenant_id;
+
+
