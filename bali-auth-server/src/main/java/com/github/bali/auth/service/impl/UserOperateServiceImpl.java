@@ -77,8 +77,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
 
     @Override
     public Page<UserInfoView> userInfoPage(UserInfoView userInfoView, Page<UserInfoView> page) {
-        LambdaQueryWrapper<UserInfoView> queryWrapper = Wrappers.<UserInfoView>lambdaQuery().orderByDesc(UserInfoView::getCreateTime)
-                .ne(UserInfoView::getId, Objects.requireNonNull(SecurityUtil.getUser()).getId());
+        LambdaQueryWrapper<UserInfoView> queryWrapper = Wrappers.<UserInfoView>lambdaQuery().orderByDesc(UserInfoView::getCreateTime);
         queryWrapper.likeRight(StrUtil.isNotEmpty(userInfoView.getUserName()), UserInfoView::getUserName, userInfoView.getUserName());
         queryWrapper.likeRight(StrUtil.isNotEmpty(userInfoView.getNickName()), UserInfoView::getNickName, userInfoView.getNickName());
         if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
