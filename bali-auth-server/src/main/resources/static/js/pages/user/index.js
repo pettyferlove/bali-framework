@@ -95,7 +95,7 @@ layui.use(['layer', 'table'], function () {
         let data = obj.data
             , layEvent = obj.event;
         if (layEvent === 'distributionRoles') {
-            if(data.userChannel === 'web'){
+            if (data.userChannel === 'web' || data.userChannel === 'maintainer') {
                 layer.open({
                     type: 2,
                     title: '分配角色',
@@ -121,7 +121,7 @@ layui.use(['layer', 'table'], function () {
         }
     });
 
-    function add(){
+    function add() {
         layer.open({
             type: 2,
             title: '添加' + moduleName,
@@ -139,13 +139,13 @@ layui.use(['layer', 'table'], function () {
         });
     }
 
-    function del(id){
+    function del(id) {
         layer.confirm('真的删除行么', function (index) {
             $.ajax({
                 type: "DELETE",
                 url: module + '/delete/' + id,
                 success: function (res) {
-                    if(res.message){
+                    if (res.message) {
                         layer.msg(res.message, {icon: 2});
                     } else {
                         layer.msg('删除成功');
@@ -161,7 +161,7 @@ layui.use(['layer', 'table'], function () {
     }
 
     function edit(id, type) {
-        if (type === 'web') {
+        if (type === 'web' || type === 'maintainer') {
             layer.open({
                 type: 2,
                 title: '编辑' + moduleName,

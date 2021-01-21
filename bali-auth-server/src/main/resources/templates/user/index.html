@@ -73,10 +73,12 @@
                             <button class="layui-btn layui-btn-xs">Web用户</button>
                             {{#  } else if(d.userChannel == 'mobile'){ }}
                             <button class="layui-btn layui-btn-xs">移动用户</button>
+                            {{#  } else if(d.userChannel == 'maintainer'){ }}
+                            <button class="layui-btn layui-btn-xs">维护人员</button>
                             {{#  } else if(d.userChannel == 'wechat_mini_program'){ }}
                             <button class="layui-btn layui-btn-xs">小程序用户</button>
                             {{#  } else { }}
-                            <button class="layui-btn layui-btn-xs"></button>
+                            <button class="layui-btn layui-btn-xs">其他用户</button>
                             {{#  } }}
                         </script>
                     </table>
