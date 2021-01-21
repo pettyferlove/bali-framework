@@ -7,6 +7,11 @@ package com.github.bali.security.constants;
 public enum UserChannelType {
 
     /**
+     * 网站维护用户
+     */
+    MAINTAINER("maintainer"),
+
+    /**
      * Web端用户
      */
     WEB("web"),

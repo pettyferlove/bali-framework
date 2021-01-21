@@ -114,7 +114,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
             User user = new User();
             user.setLoginId(userOperate.getLoginId());
             user.setPassword(passwordEncoder.encode(userOperate.getPassword()));
-            user.setUserChannel(UserChannelType.WEB.getValue());
+            user.setUserChannel(UserChannelType.MAINTAINER.getValue());
             user.setStatus(userOperate.getStatus());
             if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
                 user.setTenantId(userOperate.getTenantId());
@@ -147,6 +147,9 @@ public class UserOperateServiceImpl implements IUserOperateService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public Boolean update(UserOperate userOperate) {
+        if(!userService.get(userOperate.getId()).getUserChannel().equals(UserChannelType.MAINTAINER.getValue())) {
+            throw new BaseRuntimeException("提醒：无法修改改用户");
+        }
         List<UserRole> userRoles = userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userOperate.getId()));
         if (userRoles.stream().anyMatch(i -> i.getRoleId().equals(SecurityConstant.SUPER_ADMIN_ROLE_ID))) {
             log.error("attempts to remove the super administrator");
