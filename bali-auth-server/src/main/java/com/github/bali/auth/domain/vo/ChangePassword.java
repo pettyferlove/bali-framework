@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author Petty
  */
@@ -22,12 +24,12 @@ import lombok.NoArgsConstructor;
 public class ChangePassword implements IVO {
     private static final long serialVersionUID = 157652993416293114L;
 
-    //@NotNull(message = "原始密码不可为空")
+    @NotNull(message = "原始密码不可为空")
     private String oldPassword;
 
-    //@NotNull(message = "新密码不可为空")
+    @NotNull(message = "新密码不可为空")
     private String newPassword;
 
-    //@NotNull(message = "重复新密码不可为空")
+    @NotNull(message = "重复新密码不可为空")
     private String repeatPassword;
 }

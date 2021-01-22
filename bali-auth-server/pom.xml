@@ -61,6 +61,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.bali</groupId>
+            <artifactId>bali-core-validation</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>

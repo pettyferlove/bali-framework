@@ -20,6 +20,7 @@
         <module>bali-core-security</module>
         <module>bali-core-log</module>
         <module>bali-core-test</module>
+        <module>bali-core-validation</module>
     </modules>
 
 </project>
