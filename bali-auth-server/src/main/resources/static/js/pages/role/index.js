@@ -11,7 +11,7 @@ layui.use(['layer', 'table'], function () {
         , url: module + '/list' //数据接口
         , title: moduleName + '列表'
         , page: true //开启分页
-        , toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+        , toolbar: '#defaultToolbar' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
         , cols: [[ //表头
             {type: 'checkbox', fixed: 'left'}
             , {field: 'id', title: 'ID', sort: true, fixed: 'left'}
@@ -81,6 +81,8 @@ layui.use(['layer', 'table'], function () {
             case 'delete':
                 if (data.length === 0) {
                     layer.msg('请选择一行');
+                } else if (data.length > 1) {
+                    layer.msg('只能同时删除一行');
                 } else {
                     del(checkStatus.data[0].id);
                 }

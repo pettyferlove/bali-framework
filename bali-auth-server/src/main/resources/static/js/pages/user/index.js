@@ -11,7 +11,7 @@ layui.use(['layer', 'table'], function () {
         , url: module + '/list' //数据接口
         , title: moduleName + '列表'
         , page: true //开启分页
-        , toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+        , toolbar: '#userToolbar' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
         , cols: [[ //表头
             {type: 'checkbox', fixed: 'left'}
             , {type: 'id', fixed: 'left', hide: true}
@@ -67,6 +67,10 @@ layui.use(['layer', 'table'], function () {
     table.on('toolbar(filter)', function (obj) {
         let checkStatus = table.checkStatus(obj.config.id)
             , data = checkStatus.data; //获取选中的数据
+        let ids = [];
+        data.forEach(i => {
+            ids.push(i.id);
+        })
         switch (obj.event) {
             case 'add':
                 add();
@@ -80,9 +84,36 @@ layui.use(['layer', 'table'], function () {
                     edit(checkStatus.data[0].id, checkStatus.data[0].userChannel);
                 }
                 break;
+            case 'reset':
+                if (data.length === 0) {
+                    layer.msg('请选择一行');
+                } else {
+                    layer.confirm('是否将所选账号的用户密码重置为123456？', function (index) {
+                        $.ajax({
+                            type: "PUT",
+                            url: module + '/reset/password',
+                            data: {ids: ids.join(','), password: 123456},
+                            success: function (res) {
+                                if (res.message) {
+                                    layer.msg(res.message, {icon: 2});
+                                } else {
+                                    layer.msg('重置成功');
+                                    table.reload('table')
+                                }
+                            },
+                            error: function (err) {
+                                layer.msg('重置失败', {icon: 2});
+                            }
+                        })
+                        layer.close(index);
+                    });
+                }
+                break;
             case 'delete':
                 if (data.length === 0) {
                     layer.msg('请选择一行');
+                } else if (data.length > 1) {
+                    layer.msg('只能同时删除一行');
                 } else {
                     del(checkStatus.data[0].id);
                 }

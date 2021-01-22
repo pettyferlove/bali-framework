@@ -108,9 +108,10 @@ public class UserApi {
         }
     }
 
+    @PutMapping("reset/password")
     @PreAuthorize("hasAnyRole('TENANT_ADMIN')&&#oauth2.hasScope('user.operate')")
     @ApiOperation(value = "重置用户密码", notes = "需租户管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
-    public R<Boolean> resetPassword(@ApiParam("用户ID集合") String ids, @RequestParam(defaultValue = "") String password) {
+    public R<Boolean> resetPassword(@ApiParam("用户ID集合") @RequestParam(defaultValue = "") String ids,@ApiParam("密码") @RequestParam String password) {
         try {
             return new R<>(userOperateService.resetPassword(ids, password));
         } catch (Exception e) {

@@ -14,6 +14,7 @@ import com.github.bali.auth.service.IUserRoleService;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
 import com.github.bali.security.constants.SecurityConstant;
 import com.github.bali.security.utils.SecurityUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,7 @@ import java.util.Optional;
  * @author Petty
  * @since 2021-01-07
  */
+@Slf4j
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IRoleService {
 
@@ -58,7 +60,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     public Boolean delete(String id) {
         Role role = Optional.ofNullable(this.get(id)).orElseGet(Role::new);
         if (SecurityConstant.SUPER_ADMIN_ROLE.equals(role.getRole())) {
-            log.error("attempts to remove the super administrator role");
+            log.error("user:{},attempts to remove the super administrator role", SecurityUtil.getUser().getId());
             throw new BaseRuntimeException("警告：你无法删除超级管理员角色");
         }
         userRoleService.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getRoleId, id));
@@ -80,7 +82,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     public Boolean update(Role role) {
         Role r = Optional.ofNullable(this.get(role.getId())).orElseGet(Role::new);
         if (SecurityConstant.SUPER_ADMIN_ROLE.equals(r.getRole())) {
-            log.error("attempts to remove the super administrator role");
+            log.error("user:{},attempts to remove the super administrator role", SecurityUtil.getUser().getId());
             throw new BaseRuntimeException("警告：你无法修改超级管理员角色");
         }
         Role updateRole = new Role();

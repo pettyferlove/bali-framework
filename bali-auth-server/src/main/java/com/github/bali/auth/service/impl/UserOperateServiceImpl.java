@@ -151,7 +151,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
         }
         List<UserRole> userRoles = userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userOperate.getId()));
         if (userRoles.stream().anyMatch(i -> i.getRoleId().equals(SecurityConstant.SUPER_ADMIN_ROLE_ID))) {
-            log.error("attempts to remove the super administrator");
+            log.error("user:{},attempts to remove the super administrator", SecurityUtil.getUser().getId());
             throw new BaseRuntimeException("警告：你无法修改系统超级管理员");
         }
         User user = new User();
@@ -183,7 +183,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
         }
         List<UserRole> userRoles = userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, id));
         if (userRoles.stream().anyMatch(i -> i.getRoleId().equals(SecurityConstant.SUPER_ADMIN_ROLE_ID))) {
-            log.error("attempts to remove the super administrator");
+            log.error("user:{},attempts to remove the super administrator", SecurityUtil.getUser().getId());
             throw new BaseRuntimeException("警告：你无法删除系统超级管理员");
         }
         userService.delete(id);
@@ -211,7 +211,19 @@ public class UserOperateServiceImpl implements IUserOperateService {
     }
 
     @Override
+    @Transactional(rollbackFor = Throwable.class)
     public Boolean resetPassword(String ids, String password) {
+        String superAdminId = "";
+        try {
+            UserRole userRole = userRoleService.getOne(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getRoleId, SecurityConstant.SUPER_ADMIN_ROLE_ID));
+            superAdminId = userRole.getUserId();
+        } catch (Exception e) {
+            throw new BaseRuntimeException("警告：系统基础数据不完整，请联系管理员");
+        }
+        if (ids.contains(superAdminId)) {
+            log.error("user:{},try to modify the administrator account password", SecurityUtil.getUser().getId());
+            throw new BaseRuntimeException("警告：禁止操作管理员账号的密码");
+        }
         List<User> users = new ArrayList<>();
         List<User> updateUsers = Arrays.stream(ids.split(",")).map(i -> {
             User user = new User();

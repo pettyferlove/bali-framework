@@ -111,4 +111,15 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "reset/password", method = RequestMethod.PUT)
+    @PreAuthorize("hasAnyRole('TENANT_ADMIN', 'SUPER_ADMIN')")
+    @ResponseBody
+    public R<Boolean> resetPassword(@RequestParam(defaultValue = "") String ids, @RequestParam String password) {
+        try {
+            return new R<>(userOperateService.resetPassword(ids, password));
+        } catch (Exception e) {
+            return new R<>(null, e.getMessage());
+        }
+    }
+
 }
