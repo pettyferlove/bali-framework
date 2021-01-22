@@ -82,4 +82,12 @@ public interface IUserOperateService {
      * @return 是否成功
      */
     Boolean updateUserRole(String userId, String roleIds);
+
+    /**
+     * 批量重置用户密码
+     * @param ids 用户ID
+     * @param password 密码
+     * @return 是否成功
+     */
+    Boolean resetPassword(String ids, String password);
 }

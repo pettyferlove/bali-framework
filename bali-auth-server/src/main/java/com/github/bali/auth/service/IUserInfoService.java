@@ -2,8 +2,9 @@ package com.github.bali.auth.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.bali.auth.entity.UserInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.bali.auth.domain.vo.PersonalDetails;
+import com.github.bali.auth.entity.UserInfo;
 
 /**
  * <p>
@@ -32,28 +33,42 @@ public interface IUserInfoService extends IService<UserInfo> {
      */
     UserInfo get(String id);
 
-     /**
-      * 通过Id删除信息
-      *
-      * @param id 业务主键
-      * @return Boolean
-      */
-     Boolean delete(String id);
+    /**
+     * 通过Id删除信息
+     *
+     * @param id 业务主键
+     * @return Boolean
+     */
+    Boolean delete(String id);
 
-     /**
-      * 创建数据
-      *
-      * @param userInfo 要创建的对象
-      * @return Boolean
-      */
-     String create(UserInfo userInfo);
+    /**
+     * 创建数据
+     *
+     * @param userInfo 要创建的对象
+     * @return Boolean
+     */
+    String create(UserInfo userInfo);
 
-     /**
-      * 更新数据（必须带Id）
-      *
-      * @param userInfo 对象
-      * @return Boolean
-      */
-     Boolean update(UserInfo userInfo);
+    /**
+     * 更新数据（必须带Id）
+     *
+     * @param userInfo 对象
+     * @return Boolean
+     */
+    Boolean update(UserInfo userInfo);
 
+    /**
+     * 获取个人信息详情
+     *
+     * @return PersonalDetails
+     */
+    PersonalDetails getDetails();
+
+    /**
+     * 更新个人信息详情
+     *
+     * @param details PersonalDetails
+     * @return 是否成功
+     */
+    Boolean updateDetails(PersonalDetails details);
 }

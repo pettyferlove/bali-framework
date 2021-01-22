@@ -146,7 +146,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public Boolean update(UserOperate userOperate) {
-        if(!userService.get(userOperate.getId()).getUserChannel().equals(UserChannelType.MAINTAINER.getValue())) {
+        if (!userService.get(userOperate.getId()).getUserChannel().equals(UserChannelType.MAINTAINER.getValue())) {
             throw new BaseRuntimeException("提醒：无法修改改用户");
         }
         List<UserRole> userRoles = userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userOperate.getId()));
@@ -208,5 +208,17 @@ public class UserOperateServiceImpl implements IUserOperateService {
             userRoleService.saveBatch(userRoles);
         }
         return true;
+    }
+
+    @Override
+    public Boolean resetPassword(String ids, String password) {
+        List<User> users = new ArrayList<>();
+        List<User> updateUsers = Arrays.stream(ids.split(",")).map(i -> {
+            User user = new User();
+            user.setId(i);
+            user.setPassword(passwordEncoder.encode(password));
+            return user;
+        }).collect(Collectors.toList());
+        return userService.updateBatchById(updateUsers);
     }
 }
