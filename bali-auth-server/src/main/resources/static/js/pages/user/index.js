@@ -88,25 +88,29 @@ layui.use(['layer', 'table'], function () {
                 if (data.length === 0) {
                     layer.msg('请选择一行');
                 } else {
-                    layer.confirm('是否将所选账号的用户密码重置为123456？', function (index) {
-                        $.ajax({
-                            type: "PUT",
-                            url: module + '/reset/password',
-                            data: {ids: ids.join(','), password: 123456},
-                            success: function (res) {
-                                if (res.message) {
-                                    layer.msg(res.message, {icon: 2});
-                                } else {
-                                    layer.msg('重置成功');
-                                    table.reload('table')
+                    if (data.userChannel === 'web' || data.userChannel === 'maintainer') {
+                        layer.confirm('是否将所选账号的用户密码重置为123456？', function (index) {
+                            $.ajax({
+                                type: "PUT",
+                                url: module + '/reset/password',
+                                data: {ids: ids.join(','), password: 123456},
+                                success: function (res) {
+                                    if (res.message) {
+                                        layer.msg(res.message, {icon: 2});
+                                    } else {
+                                        layer.msg('重置成功');
+                                        table.reload('table')
+                                    }
+                                },
+                                error: function (err) {
+                                    layer.msg('重置失败', {icon: 2});
                                 }
-                            },
-                            error: function (err) {
-                                layer.msg('重置失败', {icon: 2});
-                            }
-                        })
-                        layer.close(index);
-                    });
+                            })
+                            layer.close(index);
+                        });
+                    } else {
+                        layer.msg('不支持在Web端修改移动端用户信息');
+                    }
                 }
                 break;
             case 'delete':
