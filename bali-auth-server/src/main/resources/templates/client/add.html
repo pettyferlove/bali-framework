@@ -48,13 +48,13 @@
 
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label" style="width: 200px">令牌有效时间（ms）</label>
+            <label class="layui-form-label" style="width: 200px">令牌有效时间（秒）</label>
             <div class="layui-input-block" style="margin-left: 200px">
                 <input type="text" name="accessTokenValidity" th:value="36000" lay-verify="number" placeholder="请输入令牌有效时间" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label" style="width: 200px">刷新令牌有效时间（ms）</label>
+            <label class="layui-form-label" style="width: 200px">刷新令牌有效时间（秒）</label>
             <div class="layui-input-block" style="margin-left: 200px">
                 <input type="text" name="refreshTokenValidity" th:value="36000" lay-verify="number" placeholder="请输入刷新令牌有效时间" autocomplete="off" class="layui-input">
             </div>
