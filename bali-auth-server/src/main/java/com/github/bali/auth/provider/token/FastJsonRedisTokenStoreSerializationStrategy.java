@@ -46,8 +46,7 @@ public class FastJsonRedisTokenStoreSerializationStrategy implements RedisTokenS
         }
 
         try {
-            return JSON.toJSONBytes(object, SerializerFeature.WriteClassName,
-                    SerializerFeature.DisableCircularReferenceDetect);
+            return JSON.toJSONBytes(object, SerializerFeature.WriteClassName);
         } catch (Exception ex) {
             throw new SerializationException("Could not serialize: " + ex.getMessage(), ex);
         }
