@@ -8,7 +8,7 @@
         <version>${revision}</version>
     </parent>
     <groupId>com.github.bali.extension.attachment</groupId>
-    <artifactId>bali-attachment</artifactId>
+    <artifactId>bali-extension-attachment</artifactId>
     <version>${revision}</version>
     <name>bali-extension-attachment</name>
     <description>附件扩展</description>
