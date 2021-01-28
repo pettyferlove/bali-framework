@@ -18,7 +18,7 @@
             </div>
             <div class="user-login-box user-login-body">
                 <div th:if="${param.error}" class="alert bg-red alert-dismissible" id="login_error">
-                    <blockquote class="user-login-error layui-bg-red" th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"><i onclick="closeError()" class="layui-icon layui-icon-close user-login-error-close"></i></blockquote>
+                    <blockquote class="user-login-error layui-bg-red" th:text="${session?.SPRING_SECURITY_LAST_EXCEPTION?.message}"><i onclick="closeError()" class="layui-icon layui-icon-close user-login-error-close"></i></blockquote>
                 </div>
                 <form id="sign_in" class="layui-form" method="POST" th:action="${loginProcessUrl}">
                     <div class="layui-form-item">

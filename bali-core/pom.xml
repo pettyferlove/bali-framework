@@ -7,6 +7,7 @@
         <groupId>com.github.bali</groupId>
         <version>${revision}</version>
     </parent>
+    <groupId>com.github.bali.core</groupId>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>bali-core</artifactId>
     <version>${revision}</version>

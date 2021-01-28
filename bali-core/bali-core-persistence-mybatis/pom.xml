@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>bali-core</artifactId>
-        <groupId>com.github.bali</groupId>
+        <groupId>com.github.bali.core</groupId>
         <version>${revision}</version>
     </parent>
     <artifactId>bali-core-persistence-mybatis</artifactId>
@@ -20,13 +20,13 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.github.bali</groupId>
+            <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-framework</artifactId>
             <version>${revision}</version>
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.github.bali</groupId>
+            <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-security</artifactId>
             <version>${revision}</version>
             <optional>true</optional>

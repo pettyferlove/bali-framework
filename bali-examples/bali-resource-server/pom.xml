@@ -3,11 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.github.bali</groupId>
+        <groupId>com.github.bali.examples</groupId>
         <artifactId>bali-examples</artifactId>
         <version>${revision}</version>
     </parent>
-    <groupId>com.github.bali.example</groupId>
     <artifactId>bali-resource-server</artifactId>
     <version>${revision}</version>
     <name>bali-resource-server</name>
@@ -51,17 +50,17 @@
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.bali</groupId>
+            <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-framework</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.bali</groupId>
+            <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-security</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.bali</groupId>
+            <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-test</artifactId>
             <version>${revision}</version>
         </dependency>

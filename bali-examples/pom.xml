@@ -8,6 +8,7 @@
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <groupId>com.github.bali.examples</groupId>
     <artifactId>bali-examples</artifactId>
     <version>${revision}</version>
     <name>bali-examples</name>

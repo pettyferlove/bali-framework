@@ -3,11 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.github.bali</groupId>
+        <groupId>com.github.bali.examples</groupId>
         <artifactId>bali-examples</artifactId>
         <version>${revision}</version>
     </parent>
-    <groupId>com.github.bali.example</groupId>
     <artifactId>bali-auth-client-app</artifactId>
     <version>${revision}</version>
     <name>bali-auth-client-app</name>

@@ -107,7 +107,7 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
         // 进行了Basic认证说明是客户端再请求，这时需要验证客户端和用户是否处于同一个租户
         Authentication authentication = SecurityUtil.getAuthentication();
         // 不为Null则获取client_id
-        if (ObjectUtil.isNotNull(authentication)) {
+        if (ObjectUtil.isNotNull(authentication)&&!(authentication.getPrincipal() instanceof BaliUserDetails)) {
             String clientId = authentication.getName();
             AuthClientDetails clientDetails = authClientDetailsService.getOne(Wrappers.<AuthClientDetails>lambdaQuery().eq(AuthClientDetails::getClientId, clientId));
             if (!user.getTenantId().equals(clientDetails.getTenantId())) {

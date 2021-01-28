@@ -1,0 +1,34 @@
+{
+  "properties": [
+    {
+      "name": "attachment.api",
+      "type": "java.lang.String",
+      "description": "是否开启附件Restful API，如果你需要自定义API则忽略该配置，或者使用disable关闭."
+    },
+    {
+      "name": "attachment.cloud.aliyun.root",
+      "type": "java.lang.String",
+      "description": "阿里云OSS根目录名."
+    },
+    {
+      "name": "attachment.cloud.aliyun.endpoint",
+      "type": "java.lang.String",
+      "description": "阿里云OSS ENDPOINT."
+    },
+    {
+      "name": "attachment.cloud.aliyun.access-key-id",
+      "type": "java.lang.String",
+      "description": "阿里云OSS App ID."
+    },
+    {
+      "name": "attachment.cloud.aliyun.access-key-secret",
+      "type": "java.lang.String",
+      "description": "阿里云OSS App Secret."
+    },
+    {
+      "name": "attachment.cloud.aliyun.bucket",
+      "type": "java.lang.String",
+      "description": "阿里云OSS 储存桶名称."
+    }
+  ]
+}

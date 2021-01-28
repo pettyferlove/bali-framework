@@ -91,3 +91,14 @@ multi-tenancy:
       - uc_user_role
       - uc_auth_client_details_scope
       - v_role_view
+attachment:
+  api: enable
+  cloud:
+    aliyun:
+      root: user-center
+      endpoint: oss-cn-shanghai.aliyuncs.com
+      access-key-id: LTAI4G1kFnvT6daTfikDrfKg
+      access-key-secret: wp4QnMB34nCzNxZCLlNnTO8oYkLt4N
+      bucket: user-center-attachment
+  local:
+    path: D:\\
