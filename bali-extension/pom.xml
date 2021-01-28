@@ -13,4 +13,8 @@
     <name>bali-extension</name>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>bali-extension-attachment</module>
+    </modules>
+
 </project>
