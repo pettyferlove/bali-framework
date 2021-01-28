@@ -4,6 +4,7 @@ import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.DefaultResourceLoader;
 
 import javax.sql.DataSource;
 
@@ -18,6 +19,7 @@ public class LiquibaseAttachmentServerConfigurer {
     public SpringLiquibase attachmentServerLiquibase(DataSource dataSource) {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setDataSource(dataSource);
+        liquibase.setResourceLoader(new DefaultResourceLoader());
         liquibase.setDatabaseChangeLogLockTable("database_changelog_lock");
         liquibase.setDatabaseChangeLogTable("database_changelog");
         liquibase.setChangeLog("classpath:db/db.changelog-master.yml");
