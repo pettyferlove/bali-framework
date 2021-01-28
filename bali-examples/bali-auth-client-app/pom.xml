@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.bali</groupId>
-        <artifactId>bali-example</artifactId>
+        <artifactId>bali-examples</artifactId>
         <version>${revision}</version>
     </parent>
     <groupId>com.github.bali.example</groupId>
-    <artifactId>bali-resource-server</artifactId>
+    <artifactId>bali-auth-client-app</artifactId>
     <version>${revision}</version>
-    <name>bali-resource-server</name>
+    <name>bali-auth-client-app</name>
     <description>Demo project for Spring Boot</description>
     <packaging>jar</packaging>
 
@@ -33,39 +33,43 @@
         </dependency>
 
         <!-- Spring Security 依赖 -->
-        <!--<dependency>
-            <groupId>com.nimbusds</groupId>
-            <artifactId>nimbus-jose-jwt</artifactId>
-            <version>9.4</version>
-        </dependency>-->
-        <!--<dependency>
-            <groupId>com.nimbusds</groupId>
-            <artifactId>oauth2-oidc-sdk</artifactId>
-            <version>8.29</version>
-            <scope>runtime</scope>
-        </dependency>-->
-
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.bali</groupId>
-            <artifactId>bali-core-framework</artifactId>
-            <version>${revision}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.bali</groupId>
-            <artifactId>bali-core-security</artifactId>
-            <version>${revision}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.bali</groupId>
-            <artifactId>bali-core-test</artifactId>
-            <version>${revision}</version>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <!-- Spring Security 依赖 -->
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>3.3.7-1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.4.1</version>
+        </dependency>
     </dependencies>
 
     <build>
