@@ -1,21 +1,21 @@
-package com.github.bali.auth.configuration;
+package com.github.bali.attachment.configuration;
 
 import liquibase.integration.spring.SpringLiquibase;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
 /**
- * Liquibase配置
- *
  * @author Petty
  */
 @Configuration
-public class LiquibaseAutoConfiguration {
+public class LiquibaseAttachmentServerConfigurer {
 
-    @Bean("authServerLiquibase")
-    public SpringLiquibase authServerLiquibase(DataSource dataSource) {
+    @Bean
+    @ConditionalOnBean(DataSource.class)
+    public SpringLiquibase attachmentServerLiquibase(DataSource dataSource) {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setDataSource(dataSource);
         liquibase.setDatabaseChangeLogLockTable("database_changelog_lock");
