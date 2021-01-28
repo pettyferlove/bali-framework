@@ -17,8 +17,8 @@
 
     <modules>
         <module>bali-auth-server</module>
-        <module>bali-examples</module>
         <module>bali-core</module>
+        <module>bali-examples</module>
         <module>bali-extensions</module>
     </modules>
 
