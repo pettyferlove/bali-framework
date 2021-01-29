@@ -17,5 +17,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "attachment.local")
 public class AttachmentLocalProperties {
-    String path;
+
+    private String name;
+
+    private String root;
+
 }

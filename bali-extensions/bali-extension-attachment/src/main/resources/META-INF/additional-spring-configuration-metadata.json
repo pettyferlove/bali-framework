@@ -6,6 +6,11 @@
       "description": "是否开启附件Restful API，如果你需要自定义API则忽略该配置，或者使用disable关闭."
     },
     {
+      "name": "attachment.cloud.aliyun.name",
+      "type": "java.lang.String",
+      "description": "储存名称."
+    },
+    {
       "name": "attachment.cloud.aliyun.root",
       "type": "java.lang.String",
       "description": "阿里云OSS根目录名."
@@ -29,6 +34,16 @@
       "name": "attachment.cloud.aliyun.bucket",
       "type": "java.lang.String",
       "description": "阿里云OSS 储存桶名称."
+    },
+    {
+      "name": "attachment.local.name",
+      "type": "java.lang.String",
+      "description": "储存名称."
+    },
+    {
+      "name": "attachment.local.root",
+      "type": "java.lang.String",
+      "description": "根目录."
     }
   ]
 }

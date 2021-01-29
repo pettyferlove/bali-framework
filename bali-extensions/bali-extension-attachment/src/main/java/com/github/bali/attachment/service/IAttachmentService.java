@@ -1,7 +1,7 @@
 package com.github.bali.attachment.service;
 
 import com.github.bali.attachment.constants.FileType;
-import com.github.bali.attachment.domain.dto.AliyunOSSUploadResult;
+import com.github.bali.attachment.domain.dto.FileProcessResult;
 import com.github.bali.attachment.domain.vo.Upload;
 
 import java.io.File;
@@ -20,9 +20,9 @@ public interface IAttachmentService {
      * @param file     文件对象
      * @param upload   上传文件基本信息
      * @param fileType 文件类型
-     * @return AliyunOSSUploadResult
+     * @return FileProcessResult
      */
-    AliyunOSSUploadResult upload(Upload upload, File file, FileType fileType);
+    FileProcessResult upload(Upload upload, File file, FileType fileType);
 
     /**
      * 下载

@@ -15,7 +15,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @SuppressWarnings("ALL")
-public class AliyunOSSUploadResult implements Serializable {
+public class FileProcessResult implements Serializable {
     private static final long serialVersionUID = -3962764872427466393L;
 
     private String fileId;

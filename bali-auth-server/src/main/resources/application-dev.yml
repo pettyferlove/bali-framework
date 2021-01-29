@@ -95,11 +95,12 @@ attachment:
   api: enable
   cloud:
     aliyun:
-      name: user-center
+      name: user-center-aliyun
       root: user-center
       endpoint: oss-cn-shanghai.aliyuncs.com
       access-key-id: LTAI4G1kFnvT6daTfikDrfKg
       access-key-secret: wp4QnMB34nCzNxZCLlNnTO8oYkLt4N
       bucket: user-center-attachment
   local:
-    path: D:\\
+    name: user-center-local
+    root: D:\\attachment\\

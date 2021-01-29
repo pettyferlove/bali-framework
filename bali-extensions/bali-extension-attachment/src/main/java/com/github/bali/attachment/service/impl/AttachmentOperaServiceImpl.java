@@ -4,7 +4,7 @@ import cn.hutool.core.lang.UUID;
 import com.alibaba.fastjson.JSONObject;
 import com.github.bali.attachment.constants.FileType;
 import com.github.bali.attachment.constants.StorageType;
-import com.github.bali.attachment.domain.dto.AliyunOSSUploadResult;
+import com.github.bali.attachment.domain.dto.FileProcessResult;
 import com.github.bali.attachment.domain.vo.Upload;
 import com.github.bali.attachment.domain.vo.UploadResult;
 import com.github.bali.attachment.entity.AttachmentInfo;
@@ -54,7 +54,7 @@ public class AttachmentOperaServiceImpl implements IAttachmentOperaService {
     @Override
     public UploadResult upload(String userId, Upload upload, MultipartFile file) {
         IAttachmentService attachmentService = factory.create(upload.getStorage());
-        AliyunOSSUploadResult uploadResult = null;
+        FileProcessResult uploadResult = null;
         String tempId = UUID.fastUUID().toString();
         String fileName = file.getOriginalFilename();
         FileType fileType = FileType.parse(file.getContentType());
