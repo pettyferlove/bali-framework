@@ -19,8 +19,6 @@ import com.github.bali.core.framework.exception.BaseRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.io.FileUtils;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -36,7 +34,6 @@ import java.io.*;
  */
 @Slf4j
 @Service("aliyun")
-@ConditionalOnBean(OSS.class)
 public class AttachmentAliyunServiceImpl implements IAttachmentService {
 
     private final IAttachmentInfoService attachmentInfoService;

@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.bali.attachment.properties.AttachmentAliyunProperties,\
+  com.github.bali.attachment.properties.AttachmentLocalProperties

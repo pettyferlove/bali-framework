@@ -43,13 +43,67 @@ layui.use('upload', function(){
                     cropper.destroy();
                 }
                 cropper = new Cropper(image, options);
-                //obj.resetFile(index, file, '123.jpg'); //重命名文件名，layui 2.3.0 开始新增
-
-                //这里还可以做一些 append 文件列表 DOM 的操作
-
-                //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
-                //delete files[index]; //删除列表中对应的文件，一般在某个事件中使用
             });
         }
     });
+
+    $("#left").on("click", function () {
+        cropper.rotate(-90);
+    })
+    $("#right").on("click", function () {
+        cropper.rotate(90);
+    })
+    $('#crop').on("click", function() {
+        let img = cropper.getCroppedCanvas().toDataURL("image/png");
+
+        img = img.split(',')[1];
+        img = window.atob(img);
+        let ia = new Uint8Array(img.length);
+        for (let i = 0; i < img.length; i++) {
+            ia[i] = img.charCodeAt(i);
+        }
+        let file = new Blob([ia], {
+            type: "image/png"
+        });
+
+        let formData = new FormData();
+        formData.append("file", file);
+        formData.append("security","PublicRead");
+        formData.append("group","avatar");
+        formData.append("storage","CloudAliyunOSS");
+
+
+        $.ajax({
+            url: "/personal/avatar/upload",
+            type: "POST",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (res) {
+                console.log(res)
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        });
+        /*
+        $.ajax({
+            url: "/personal/avatar/upload",
+            type: 'POST',
+            data: formData,
+            timeout : 10000, //超时时间设置，单位毫秒
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+            },
+            error: function (returndata) {
+            }
+        });
+
+
+
+        console.log(src);*/
+    })
 });

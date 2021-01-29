@@ -95,6 +95,7 @@ attachment:
   api: enable
   cloud:
     aliyun:
+      name: user-center
       root: user-center
       endpoint: oss-cn-shanghai.aliyuncs.com
       access-key-id: LTAI4G1kFnvT6daTfikDrfKg
