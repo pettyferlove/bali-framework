@@ -30,13 +30,7 @@ public class UploadResult implements Serializable {
     @ApiModelProperty(value = "附件名")
     private String fileName;
 
-    @ApiModelProperty(value = "存储类型")
-    private int storeType;
-
     @ApiModelProperty(value = "访问地址，针对可公有读")
     private String url;
-
-    @ApiModelProperty(value = "MD5")
-    private String md5;
 
 }

@@ -67,12 +67,12 @@ layui.use('upload', function(){
         });
 
         let formData = new FormData();
-        formData.append("file", file);
+        formData.append("file", file, "avatar");
         formData.append("security","PublicRead");
         formData.append("group","avatar");
         formData.append("storage","CloudAliyunOSS");
 
-
+        console.log(formData)
         $.ajax({
             url: "/personal/avatar/upload",
             type: "POST",
