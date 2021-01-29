@@ -28,9 +28,10 @@ public interface IAttachmentService {
      * 下载
      *
      * @param path         储存路径
+     * @param md5          文件MD5
      * @param outputStream 输出流
      */
-    void download(String path, OutputStream outputStream);
+    void download(String path, String md5, OutputStream outputStream);
 
 
     /**

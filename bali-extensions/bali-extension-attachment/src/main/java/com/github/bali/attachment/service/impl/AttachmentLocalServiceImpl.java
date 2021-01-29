@@ -69,17 +69,25 @@ public class AttachmentLocalServiceImpl implements IAttachmentService {
     }
 
     @Override
-    public void download(String path, OutputStream outputStream) {
+    public void download(String path, String md5, OutputStream outputStream) {
         InputStream inputStream = null;
         try {
             File file = new File(path);
+            String fileMd5 = FileUtil.md5(file);
+            if (!md5.equals(fileMd5)) {
+                throw new BaseRuntimeException("file md5 does not match");
+            }
             inputStream = new FileInputStream(file);
             int ch;
             while ((ch = inputStream.read()) != -1) {
                 outputStream.write(ch);
             }
         } catch (Exception e) {
-            throw new BaseRuntimeException("file download error");
+            if (e instanceof BaseRuntimeException) {
+                throw new BaseRuntimeException(e.getMessage());
+            } else {
+                throw new BaseRuntimeException("file download error");
+            }
         } finally {
             try {
                 if (inputStream != null) {

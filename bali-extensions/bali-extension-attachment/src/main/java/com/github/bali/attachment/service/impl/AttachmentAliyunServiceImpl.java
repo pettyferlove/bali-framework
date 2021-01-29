@@ -12,7 +12,6 @@ import com.github.bali.attachment.domain.dto.FileProcessResult;
 import com.github.bali.attachment.domain.vo.Upload;
 import com.github.bali.attachment.properties.AttachmentAliyunProperties;
 import com.github.bali.attachment.service.IAttachmentService;
-import com.github.bali.attachment.utils.FileUtil;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Hex;
@@ -85,15 +84,23 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
     }
 
     @Override
-    public void download(String path, OutputStream outputStream) {
+    public void download(String path, String md5, OutputStream outputStream) {
         try {
             OSSObject ossObject = oss.getObject(aliyunProperties.getBucket(), path);
+            String fileMd5 = new String(Hex.encodeHex(BinaryUtil.fromBase64String(ossObject.getObjectMetadata().getContentMD5())));
+            if (!md5.equals(fileMd5)) {
+                throw new BaseRuntimeException("file md5 does not match");
+            }
             int ch;
             while ((ch = ossObject.getObjectContent().read()) != -1) {
                 outputStream.write(ch);
             }
         } catch (Exception e) {
-            throw new BaseRuntimeException("file download error");
+            if(e instanceof BaseRuntimeException){
+                throw new BaseRuntimeException(e.getMessage());
+            } else {
+                throw new BaseRuntimeException("file download error");
+            }
         }
     }
 
