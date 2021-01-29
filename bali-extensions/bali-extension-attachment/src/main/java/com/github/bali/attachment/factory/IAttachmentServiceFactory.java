@@ -6,6 +6,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContextAware;
 
 /**
+ * 附件提供者工厂
  * @author Petty
  */
 public interface IAttachmentServiceFactory extends ApplicationContextAware, InitializingBean {

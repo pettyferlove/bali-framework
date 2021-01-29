@@ -40,8 +40,8 @@ public class AttachmentApi {
 
     @ApiOperation(value = "上传附件", authorizations = @Authorization(value = "oauth2"))
     @PostMapping("upload")
-    public R<UploadResult> upload(@ApiParam("附件信息") @Validated Upload upload, @ApiParam("文件") MultipartFile file) {
-        return new R<>(attachmentOperaService.upload(Objects.requireNonNull(SecurityUtil.getUser()).getId(), upload, file));
+    public R<UploadResult<?>> upload(@ApiParam("附件信息") @Validated Upload upload, @ApiParam("文件") MultipartFile file) {
+        return new R<UploadResult<?>>(attachmentOperaService.upload(Objects.requireNonNull(SecurityUtil.getUser()).getId(), upload, file));
     }
 
     @ApiOperation(value = "下载附件", authorizations = @Authorization(value = "oauth2"))

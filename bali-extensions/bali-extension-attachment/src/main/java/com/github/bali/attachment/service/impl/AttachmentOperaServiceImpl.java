@@ -1,30 +1,29 @@
 package com.github.bali.attachment.service.impl;
 
 import cn.hutool.core.lang.UUID;
+import cn.hutool.json.JSONObject;
 import com.github.bali.attachment.constants.FileType;
 import com.github.bali.attachment.constants.StorageType;
 import com.github.bali.attachment.domain.dto.AliyunOSSUploadResult;
 import com.github.bali.attachment.domain.vo.Upload;
 import com.github.bali.attachment.domain.vo.UploadResult;
 import com.github.bali.attachment.entity.AttachmentInfo;
+import com.github.bali.attachment.factory.IAttachmentPretreatmentServiceFactory;
 import com.github.bali.attachment.factory.IAttachmentServiceFactory;
 import com.github.bali.attachment.service.IAttachmentInfoService;
 import com.github.bali.attachment.service.IAttachmentOperaService;
+import com.github.bali.attachment.service.IAttachmentPretreatmentService;
 import com.github.bali.attachment.service.IAttachmentService;
-import com.github.bali.attachment.utils.FileUtil;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
 import com.github.bali.core.framework.utils.ConverterUtil;
 import lombok.extern.slf4j.Slf4j;
-import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -44,52 +43,47 @@ public class AttachmentOperaServiceImpl implements IAttachmentOperaService {
 
     private final IAttachmentInfoService attachmentInfoService;
 
-    public AttachmentOperaServiceImpl(IAttachmentServiceFactory factory, IAttachmentInfoService attachmentInfoService) {
+    private final IAttachmentPretreatmentServiceFactory pretreatmentServiceFactory;
+
+    public AttachmentOperaServiceImpl(IAttachmentServiceFactory factory, IAttachmentInfoService attachmentInfoService, IAttachmentPretreatmentServiceFactory pretreatmentServiceFactory) {
         this.factory = factory;
         this.attachmentInfoService = attachmentInfoService;
+        this.pretreatmentServiceFactory = pretreatmentServiceFactory;
     }
 
     @Override
-    public UploadResult upload(String userId, Upload upload, MultipartFile file) {
+    public UploadResult<?> upload(String userId, Upload upload, MultipartFile file) {
         IAttachmentService attachmentService = factory.create(upload.getStorage());
-        AliyunOSSUploadResult uploadResult;
+        AliyunOSSUploadResult uploadResult = null;
         String tempId = UUID.fastUUID().toString();
-        FileType parse = FileType.parse(file.getContentType());
-        String contextPath = "temp" + File.separator + tempId + parse.getExpansionName();
+        String fileName = file.getOriginalFilename();
+        FileType fileType = FileType.parse(file.getContentType());
+        String tempPath = "temp" + File.separator + tempId + fileType.getExpansionName();
         File tempFile = null;
-        File f = null;
+        long length;
         try {
-            tempFile = new File(contextPath);
+            tempFile = new File(tempPath);
             if (!tempFile.exists()) {
-                //生成图片文件
                 FileUtils.copyInputStreamToFile(file.getInputStream(), tempFile);
             }
-            if (parse.isImage() && upload.getCompress()) {
-                BufferedImage image = ImageIO.read(file.getInputStream());
-                float quality = 0.7f;
-                float scale = 0.7f;
-                if (!FileUtil.checkFileSize(file.getSize(), 30, "K")) {
-                    if (image.getWidth() > 1980) {
-                        quality = 0.4f;
-                        scale = 0.5f;
-                    }
-                }
-                Thumbnails.of(file.getInputStream()).imageType(BufferedImage.TYPE_INT_RGB).outputQuality(quality).scale(scale).toFile(contextPath);
+            List<IAttachmentPretreatmentService> pretreatmentServices = pretreatmentServiceFactory.all();
+            for (IAttachmentPretreatmentService pretreatmentService : pretreatmentServices) {
+                tempFile = pretreatmentService.process(upload, tempFile, fileType);
             }
-            f = new File(contextPath);
-            uploadResult = attachmentService.upload(upload, f, parse);
+            length = tempFile.length();
+            uploadResult = attachmentService.upload(upload, tempFile, fileType);
         } catch (IOException e) {
-            throw new BaseRuntimeException("file process error");
+            throw new BaseRuntimeException("file pretreatment process error");
         } finally {
-            if (tempFile != null) {
+            if (tempFile != null && tempFile.exists()) {
                 tempFile.delete();
             }
-            if (f != null) {
-                f.delete();
-            }
         }
-        attachmentInfoService.save(userId, uploadResult.getFileId(), file.getOriginalFilename(), uploadResult.getMd5(), uploadResult.getPath(), upload, file.getContentType(), file.getSize());
-        return Optional.ofNullable(ConverterUtil.convert(uploadResult, new UploadResult())).orElseGet(UploadResult::new);
+        attachmentInfoService.save(userId, uploadResult.getFileId(), fileName, uploadResult.getMd5(), uploadResult.getPath(), upload, fileType.getContentType(), length);
+        UploadResult<Object> result = Optional.ofNullable(ConverterUtil.convert(uploadResult, new UploadResult<>())).orElseGet(UploadResult::new);
+        result.setAdditionalData(new JSONObject());
+        result.setFileName(fileName);
+        return result;
     }
 
     @Override
