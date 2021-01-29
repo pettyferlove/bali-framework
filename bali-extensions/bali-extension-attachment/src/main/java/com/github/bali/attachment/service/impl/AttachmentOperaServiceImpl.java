@@ -113,7 +113,7 @@ public class AttachmentOperaServiceImpl implements IAttachmentOperaService {
         if (attachmentInfoOptional.isPresent()) {
             AttachmentInfo attachmentInfo = attachmentInfoOptional.get();
             String fileType = attachmentInfo.getFileType();
-            if (FileType.IMAGE_JPEG == FileType.parse(fileType) || FileType.IMAGE_JPG == FileType.parse(fileType)) {
+            if (FileType.parse(fileType).isImage()) {
                 IAttachmentService attachmentService = factory.create(StorageType.parse(attachmentInfo.getStorageType()));
                 response.setCharacterEncoding("utf-8");
                 response.setContentType(attachmentInfo.getFileType());
