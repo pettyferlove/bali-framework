@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - include:
+      file: db/attachment/changelog/init/db.changelog-init.yml

@@ -173,7 +173,7 @@
                     <!--生成文件的路径-->
                     <databaseChangeLogLockTableName>database_changelog_lock</databaseChangeLogLockTableName>
                     <databaseChangeLogTableName>database_changelog</databaseChangeLogTableName>
-                    <changeLogFile>src/main/resources/db/db.changelog-master.yml</changeLogFile>
+                    <changeLogFile>src/main/resources/db/auth/db.changelog-master.yml</changeLogFile>
                     <outputChangeLogFile>changelog-init.mysql.sql</outputChangeLogFile>
                 </configuration>
             </plugin>

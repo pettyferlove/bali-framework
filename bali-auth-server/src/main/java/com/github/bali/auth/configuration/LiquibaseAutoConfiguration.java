@@ -20,7 +20,7 @@ public class LiquibaseAutoConfiguration {
         liquibase.setDataSource(dataSource);
         liquibase.setDatabaseChangeLogLockTable("database_changelog_lock");
         liquibase.setDatabaseChangeLogTable("database_changelog");
-        liquibase.setChangeLog("classpath:db/db.changelog-master.yml");
+        liquibase.setChangeLog("classpath:db/auth/db.changelog-master.yml");
         liquibase.setShouldRun(true);
         return liquibase;
     }

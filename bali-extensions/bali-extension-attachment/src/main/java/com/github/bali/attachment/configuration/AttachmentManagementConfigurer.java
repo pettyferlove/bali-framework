@@ -3,6 +3,7 @@ package com.github.bali.attachment.configuration;
 import com.aliyun.oss.ClientConfiguration;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClient;
+import com.github.bali.attachment.api.AttachmentApi;
 import com.github.bali.attachment.factory.impl.AttachmentServiceFactoryImpl;
 import com.github.bali.attachment.properties.AttachmentAliyunProperties;
 import com.github.bali.attachment.properties.AttachmentLocalProperties;
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import({
+        AttachmentApi.class,
         AttachmentAliyunProperties.class,
         AttachmentLocalProperties.class,
         AttachmentAliyunServiceImpl.class,

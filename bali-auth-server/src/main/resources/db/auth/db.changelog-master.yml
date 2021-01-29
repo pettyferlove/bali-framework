@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: db/auth/changelog/init/db.changelog-init.yml
+  - include:
+      file: db/auth/changelog/0.0.1-snapshot/db.changelog-0.0.1-snapshot.yml
+  - include:
+      file: db/auth/changelog/0.1.0-snapshot/db.changelog-0.1.0-snapshot.yml
