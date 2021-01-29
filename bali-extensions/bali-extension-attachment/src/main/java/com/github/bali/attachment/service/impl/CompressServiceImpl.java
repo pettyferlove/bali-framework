@@ -1,5 +1,7 @@
 package com.github.bali.attachment.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.bali.attachment.constants.FileType;
 import com.github.bali.attachment.domain.vo.Upload;
 import com.github.bali.attachment.service.IAttachmentPretreatmentService;
@@ -26,8 +28,15 @@ public class CompressServiceImpl implements IAttachmentPretreatmentService {
     public File process(Upload upload, File file, FileType fileType) {
         FileInputStream stream = null;
         FileChannel channel = null;
+        boolean compress = true;
         try {
-            if (fileType.isImage() && upload.getCompress()) {
+            JSONObject params = JSON.parseObject(upload.getAdditionalParams());
+            compress = (boolean) params.get("compress");
+        } catch (Exception e) {
+            compress = false;
+        }
+        try {
+            if (fileType.isImage() && compress) {
                 stream = new FileInputStream(file);
                 channel = stream.getChannel();
                 BufferedImage image = ImageIO.read(stream);

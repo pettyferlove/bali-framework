@@ -40,7 +40,8 @@ public class Upload implements Serializable {
     @ApiModelProperty("储存方式")
     private StorageType storage;
 
-    @ApiModelProperty("是否开启图片压缩")
-    private Boolean compress = true;
+    @ApiModelProperty(value = "附加参数（JSON字符串）", example = "{}")
+    private String additionalParams = "{\"compress\":true}";
+
 
 }
