@@ -1,7 +1,7 @@
 package com.github.bali.attachment.service.impl;
 
 import cn.hutool.core.lang.UUID;
-import cn.hutool.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 import com.github.bali.attachment.constants.FileType;
 import com.github.bali.attachment.constants.StorageType;
 import com.github.bali.attachment.domain.dto.AliyunOSSUploadResult;
@@ -52,7 +52,7 @@ public class AttachmentOperaServiceImpl implements IAttachmentOperaService {
     }
 
     @Override
-    public UploadResult<?> upload(String userId, Upload upload, MultipartFile file) {
+    public UploadResult upload(String userId, Upload upload, MultipartFile file) {
         IAttachmentService attachmentService = factory.create(upload.getStorage());
         AliyunOSSUploadResult uploadResult = null;
         String tempId = UUID.fastUUID().toString();
@@ -80,8 +80,8 @@ public class AttachmentOperaServiceImpl implements IAttachmentOperaService {
             }
         }
         attachmentInfoService.save(userId, uploadResult.getFileId(), fileName, uploadResult.getMd5(), uploadResult.getPath(), upload, fileType.getContentType(), length);
-        UploadResult<Object> result = Optional.ofNullable(ConverterUtil.convert(uploadResult, new UploadResult<>())).orElseGet(UploadResult::new);
-        result.setAdditionalData(new JSONObject());
+        UploadResult result = Optional.ofNullable(ConverterUtil.convert(uploadResult, new UploadResult())).orElseGet(UploadResult::new);
+        result.setAdditionalData(new JSONObject().toJSONString());
         result.setFileName(fileName);
         return result;
     }
