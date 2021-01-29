@@ -6,6 +6,7 @@ import com.github.bali.attachment.domain.dto.FileProcessResult;
 import com.github.bali.attachment.domain.vo.Upload;
 import com.github.bali.attachment.properties.AttachmentLocalProperties;
 import com.github.bali.attachment.service.IAttachmentService;
+import com.github.bali.attachment.utils.FileUtil;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -32,18 +33,24 @@ public class AttachmentLocalServiceImpl implements IAttachmentService {
             String fileId = IdUtil.simpleUUID();
             StringBuilder filePath = new StringBuilder();
             filePath.append(properties.getRoot());
-            filePath.append("/");
+            filePath.append(File.separator);
             filePath.append(upload.getGroup());
-            filePath.append("/");
+            inputStream = new FileInputStream(file);
+            File path = new File(filePath.toString());
+            if (path.isDirectory() && !path.exists()) {
+                path.mkdir();
+            }
+            filePath.append(File.separator);
             filePath.append(fileId);
             filePath.append(fileType.getExpansionName());
-            inputStream = new FileInputStream(file);
             File localFile = new File(filePath.toString());
-            if(!localFile.exists()){
-                localFile.mkdir();
+            if (path.isFile() && !path.exists()) {
+                path.mkdir();
             }
+            String md5 = FileUtil.md5(file);
             FileUtils.copyInputStreamToFile(inputStream, localFile);
 
+            result.setMd5(md5);
             result.setPath(filePath.toString());
             result.setFileId(fileId);
             result.setStoreType(upload.getStorage().getValue());
@@ -88,7 +95,7 @@ public class AttachmentLocalServiceImpl implements IAttachmentService {
     public Boolean delete(String path) {
         try {
             File file = new File(path);
-            if(file.exists()){
+            if (file.exists()) {
                 file.delete();
             }
             return true;

@@ -44,8 +44,8 @@ public class CompressServiceImpl implements IAttachmentPretreatmentService {
                 float scale = 0.7f;
                 if (!FileUtil.checkFileSize(channel.size(), 30, "K")) {
                     if (image.getWidth() > 1980) {
-                        quality = 0.4f;
-                        scale = 0.5f;
+                        quality = 0.35f;
+                        scale = 0.35f;
                     }
                 }
                 Thumbnails.of(file).imageType(BufferedImage.TYPE_INT_RGB).outputQuality(quality).scale(scale).toFile(file);

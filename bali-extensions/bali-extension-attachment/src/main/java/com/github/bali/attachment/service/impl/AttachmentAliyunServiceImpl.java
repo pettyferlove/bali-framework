@@ -12,8 +12,10 @@ import com.github.bali.attachment.domain.dto.FileProcessResult;
 import com.github.bali.attachment.domain.vo.Upload;
 import com.github.bali.attachment.properties.AttachmentAliyunProperties;
 import com.github.bali.attachment.service.IAttachmentService;
+import com.github.bali.attachment.utils.FileUtil;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileUtils;
 
 import javax.validation.constraints.NotNull;
@@ -53,7 +55,8 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
             filePath.append(fileType.getExpansionName());
             inputStream = new FileInputStream(file);
             ObjectMetadata meta = new ObjectMetadata();
-            String md5 = BinaryUtil.toBase64String(BinaryUtil.calculateMd5(FileUtils.readFileToByteArray(file)));
+            byte[] calculateMd5 = BinaryUtil.calculateMd5(FileUtils.readFileToByteArray(file));
+            String md5 = BinaryUtil.toBase64String(calculateMd5);
             meta.setContentMD5(md5);
             @NotNull SecurityType security = upload.getSecurity();
             if (security == SecurityType.Private) {
@@ -63,7 +66,7 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
                 meta.setObjectAcl(CannedAccessControlList.PublicRead);
             }
             oss.putObject(aliyunProperties.getBucket(), filePath.toString(), inputStream, meta);
-            result.setMd5(md5);
+            result.setMd5(new String(Hex.encodeHex(calculateMd5)));
             result.setPath(filePath.toString());
             result.setFileId(fileId);
             result.setStoreType(upload.getStorage().getValue());

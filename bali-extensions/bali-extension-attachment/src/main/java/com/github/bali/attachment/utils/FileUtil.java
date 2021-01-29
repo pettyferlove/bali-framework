@@ -5,11 +5,14 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.codec.binary.Hex;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +26,8 @@ public class FileUtil {
 
     /**
      * 检查文件大小
-     * @param len 文件实际大小
+     *
+     * @param len  文件实际大小
      * @param size 预期大小
      * @param unit 预期单位
      * @return True符合要求 False超过大小
@@ -50,6 +54,31 @@ public class FileUtil {
             return false;
         }
         return true;
+    }
+
+    public static String md5(File file) {
+        FileInputStream fileInputStream = null;
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            fileInputStream = new FileInputStream(file);
+            byte[] buffer = new byte[8192];
+            int length;
+            while ((length = fileInputStream.read(buffer)) != -1) {
+                md5.update(buffer, 0, length);
+            }
+            return new String(Hex.encodeHex(md5.digest()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                if (fileInputStream != null) {
+                    fileInputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void downloadExcel(List<Map<String, Object>> list, HttpServletResponse response) throws IOException {

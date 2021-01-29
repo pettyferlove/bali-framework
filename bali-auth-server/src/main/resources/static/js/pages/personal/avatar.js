@@ -70,7 +70,7 @@ layui.use('upload', function(){
         formData.append("file", file, "avatar");
         formData.append("security","PublicRead");
         formData.append("group","avatar");
-        formData.append("storage","FileLocal");
+        formData.append("storage","CloudAliyunOSS");
 
         console.log(formData)
         $.ajax({
