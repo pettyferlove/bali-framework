@@ -54,8 +54,15 @@ public class UserOperateServiceImpl implements IUserOperateService {
     public UserRoleVO loadUserRole(String userId) {
         List<Role> toBeSelected = new LinkedList<>();
         List<Role> selected = new LinkedList<>();
-        List<Role> roles = Optional.ofNullable(roleService.list()).orElseGet(ArrayList::new);
-        List<UserRole> userRoles = Optional.ofNullable(userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId))).orElseGet(ArrayList::new);
+        List<Role> roles = Optional.ofNullable(roleService.list(Wrappers.<Role>lambdaQuery()
+                .ne(Role::getId, SecurityConstant.SUPER_ADMIN_ROLE_ID)
+                .ne(Role::getId, SecurityConstant.TENANT_ADMIN_ROLE_ID)
+        )).orElseGet(ArrayList::new);
+        List<UserRole> userRoles = Optional.ofNullable(userRoleService.list(Wrappers.<UserRole>lambdaQuery()
+                .eq(UserRole::getUserId, userId)
+                .ne(UserRole::getRoleId, SecurityConstant.SUPER_ADMIN_ROLE_ID)
+                .ne(UserRole::getRoleId, SecurityConstant.TENANT_ADMIN_ROLE_ID)
+        )).orElseGet(ArrayList::new);
         List<String> selectedRoleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
         roles.forEach(i -> {
             toBeSelected.add(i);
@@ -68,10 +75,11 @@ public class UserOperateServiceImpl implements IUserOperateService {
 
     @Override
     public List<String> loadUserRoleIds(String userId) {
-        List<Role> toBeSelected = new LinkedList<>();
-        List<Role> selected = new LinkedList<>();
-        List<Role> roles = Optional.ofNullable(roleService.list()).orElseGet(ArrayList::new);
-        List<UserRole> userRoles = Optional.ofNullable(userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId))).orElseGet(ArrayList::new);
+        List<UserRole> userRoles = Optional.ofNullable(userRoleService.list(Wrappers.<UserRole>lambdaQuery()
+                .eq(UserRole::getUserId, userId)
+                .ne(UserRole::getRoleId, SecurityConstant.SUPER_ADMIN_ROLE_ID)
+                .ne(UserRole::getRoleId, SecurityConstant.TENANT_ADMIN_ROLE_ID)
+        )).orElseGet(ArrayList::new);
         return userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
     }
 
