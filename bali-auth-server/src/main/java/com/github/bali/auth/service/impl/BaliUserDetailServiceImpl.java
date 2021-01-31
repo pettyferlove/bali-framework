@@ -4,6 +4,8 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.bali.auth.entity.*;
+import com.github.bali.auth.provider.error.TenantException;
+import com.github.bali.auth.provider.error.UserTenantException;
 import com.github.bali.auth.service.*;
 import com.github.bali.security.userdetails.BaliUserDetails;
 import com.github.bali.security.utils.SecurityUtil;
@@ -53,7 +55,7 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
         if (userOptional.isPresent()) {
             return transform(userOptional.get());
         } else {
-            throw new RuntimeException("用户未注册");
+            throw new UsernameNotFoundException("用户未注册");
         }
     }
 
@@ -63,7 +65,7 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
         if (userOptional.isPresent()) {
             return transform(userOptional.get());
         } else {
-            throw new RuntimeException("用户未注册");
+            throw new UsernameNotFoundException("用户未注册");
         }
     }
 
@@ -78,7 +80,7 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
         if (userOptional.isPresent()) {
             return transform(userOptional.get());
         } else {
-            throw new RuntimeException("用户未注册");
+            throw new UsernameNotFoundException("用户未注册");
         }
     }
 
@@ -92,26 +94,26 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
             roles = roleList.stream().map(Role::getRole).collect(Collectors.toList());
         }
         if (StrUtil.isEmpty(user.getTenantId())) {
-            throw new RuntimeException("用户异常，无法登录");
+            throw new UserTenantException("用户不属于任何租户，无法登录");
         } else {
             try {
                 Tenant tenant = tenantService.getOne(Wrappers.<Tenant>lambdaQuery().eq(Tenant::getTenantId, user.getTenantId()));
                 if (tenant.getStatus() == 0) {
-                    throw new RuntimeException("租户无效，禁止登录");
+                    throw new TenantException("租户无效，禁止登录");
                 }
             } catch (Exception e) {
-                throw new RuntimeException("租户异常，禁止登录");
+                throw new TenantException("租户异常，禁止登录");
             }
         }
 
         // 进行了Basic认证说明是客户端再请求，这时需要验证客户端和用户是否处于同一个租户
         Authentication authentication = SecurityUtil.getAuthentication();
         // 不为Null则获取client_id
-        if (ObjectUtil.isNotNull(authentication)&&!(authentication.getPrincipal() instanceof BaliUserDetails)) {
+        if (ObjectUtil.isNotNull(authentication) && !(authentication.getPrincipal() instanceof BaliUserDetails)) {
             String clientId = authentication.getName();
             AuthClientDetails clientDetails = authClientDetailsService.getOne(Wrappers.<AuthClientDetails>lambdaQuery().eq(AuthClientDetails::getClientId, clientId));
             if (!user.getTenantId().equals(clientDetails.getTenantId())) {
-                throw new RuntimeException("用户未注册");
+                throw new UsernameNotFoundException("用户未注册");
             }
         }
 
