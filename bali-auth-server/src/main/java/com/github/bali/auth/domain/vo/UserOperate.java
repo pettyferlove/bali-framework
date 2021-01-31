@@ -24,6 +24,9 @@ public class UserOperate implements IVO {
     @ApiModelProperty(value = "用户ID")
     private String id;
 
+    @ApiModelProperty(value = "角色IDs，可指定多个（可选）")
+    private String roleIds;
+
     @ApiModelProperty(value = "用户登录名")
     private String loginId;
 

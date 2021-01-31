@@ -39,10 +39,20 @@ public class UserApi {
 
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.read')")
     @GetMapping("page")
-    @ApiOperation(value = "分页获取用户信息", notes = "需租户管理员权限或管理员权限和user.read域", authorizations = @Authorization(value = "oauth2"))
+    @ApiOperation(value = "分页获取用户列表", notes = "需租户管理员权限或管理员权限和user.read域", authorizations = @Authorization(value = "oauth2"))
     public R<IPage<UserInfoView>> userPage(@ApiParam("查询参数") UserInfoQueryParams params,
                                            @ApiParam("分页参数") Page<UserInfoView> page) {
         return new R<>(userInfoViewService.page(params, page));
+    }
+
+    @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.read')")
+    @GetMapping("page/role/{role}")
+    @ApiOperation(value = "分页获取绑定指定角色的用户列表", notes = "需租户管理员权限或管理员权限和user.read域", authorizations = @Authorization(value = "oauth2"))
+    public R<IPage<UserInfoView>> userPageByRole(@ApiParam("查询参数") UserInfoQueryParams params,
+                                                 @ApiParam("分页参数") Page<UserInfoView> page,
+                                                 @ApiParam("角色名") @PathVariable String role,
+                                                 @ApiParam("需要排除的用户ID集合") String excludeUserIds) {
+        return new R<>(userInfoViewService.pageByRole(params, page, role, excludeUserIds));
     }
 
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.read')")
@@ -111,7 +121,7 @@ public class UserApi {
     @PutMapping("reset/password")
     @PreAuthorize("hasAnyRole('TENANT_ADMIN')&&#oauth2.hasScope('user.operate')")
     @ApiOperation(value = "重置用户密码", notes = "需租户管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
-    public R<Boolean> resetPassword(@ApiParam("用户ID集合") @RequestParam(defaultValue = "") String ids,@ApiParam("密码") @RequestParam String password) {
+    public R<Boolean> resetPassword(@ApiParam("用户ID集合") @RequestParam(defaultValue = "") String ids, @ApiParam("密码") @RequestParam String password) {
         try {
             return new R<>(userOperateService.resetPassword(ids, password));
         } catch (Exception e) {

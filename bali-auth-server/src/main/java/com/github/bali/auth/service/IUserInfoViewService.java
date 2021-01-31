@@ -23,4 +23,14 @@ public interface IUserInfoViewService extends IService<UserInfoView> {
      * @return 结果
      */
     IPage<UserInfoView> page(UserInfoQueryParams params, Page<UserInfoView> page);
+
+    /**
+     * 根据角色获取已绑定该角色的用户
+     * @param params 查询参数
+     * @param page 分页参数
+     * @param role 角色名
+     * @param excludeUserIds 需要排除的用户ID集合
+     * @return 结果
+     */
+    IPage<UserInfoView> pageByRole(UserInfoQueryParams params, Page<UserInfoView> page, String role, String excludeUserIds);
 }

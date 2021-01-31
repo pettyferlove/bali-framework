@@ -143,6 +143,10 @@ public class UserOperateServiceImpl implements IUserOperateService {
                 userRole.setRoleId(SecurityConstant.TENANT_ADMIN_ROLE_ID);
                 userRoleService.save(userRole);
             }
+            // 如果创建用户指定了角色则创建用户-角色关联
+            if (StrUtil.isNotEmpty(userOperate.getRoleIds())) {
+                this.updateUserRole(userId, userOperate.getRoleIds());
+            }
             return userId;
         } catch (DuplicateKeyException e) {
             throw new BaseRuntimeException("登录名已存在，请勿重复添加");
@@ -154,6 +158,9 @@ public class UserOperateServiceImpl implements IUserOperateService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public Boolean update(UserOperate userOperate) {
+        if (StrUtil.isEmpty(userOperate.getId())) {
+            throw new BaseRuntimeException("提醒：修改用户必须指定用户ID");
+        }
         if (!userService.get(userOperate.getId()).getUserChannel().equals(UserChannelType.MAINTAINER.getValue())) {
             throw new BaseRuntimeException("提醒：无法修改改用户");
         }
@@ -180,6 +187,10 @@ public class UserOperateServiceImpl implements IUserOperateService {
         UserInfo info = userInfoService.getOne(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, userOperate.getId()));
         userInfo.setId(info.getId());
         userInfoService.update(userInfo);
+        // 如果创建用户指定了角色则创建用户-角色关联
+        if (StrUtil.isNotEmpty(userOperate.getRoleIds())) {
+            this.updateUserRole(userOperate.getId(), userOperate.getRoleIds());
+        }
         return true;
     }
 
