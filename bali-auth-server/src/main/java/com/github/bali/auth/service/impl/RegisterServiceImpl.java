@@ -17,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 /**
  * @author Pettyfer
  */
@@ -54,6 +56,8 @@ public class RegisterServiceImpl implements IRegisterService {
             user.setClientId(auth.getClientId());
             user.setUserChannel(type.getValue());
             user.setStatus(SecurityConstant.STATUS_NORMAL);
+            user.setCreator("anonymous");
+            user.setCreateTime(LocalDateTime.now());
             userService.save(user);
             String userId = user.getId();
             UserInfo userInfo = new UserInfo();
@@ -63,6 +67,8 @@ public class RegisterServiceImpl implements IRegisterService {
             userInfo.setUserAvatar(register.getAvatarUrl());
             userInfo.setNickName(register.getNickName());
             userInfo.setUserSex(register.getGender());
+            userInfo.setCreator("anonymous");
+            userInfo.setCreateTime(LocalDateTime.now());
             userInfoService.save(userInfo);
         }
         return true;
