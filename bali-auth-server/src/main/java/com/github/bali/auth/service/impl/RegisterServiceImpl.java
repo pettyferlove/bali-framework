@@ -1,5 +1,6 @@
 package com.github.bali.auth.service.impl;
 
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -50,6 +51,7 @@ public class RegisterServiceImpl implements IRegisterService {
             throw new BaseRuntimeException("存在同样的数据，请检查后提交");
         } else {
             User user = new User();
+            user.setLoginId("we_chat_" + IdUtil.simpleUUID());
             user.setOpenId(register.getOpenId());
             user.setUnionId(register.getUnionId());
             user.setTenantId(auth.getTenantId());

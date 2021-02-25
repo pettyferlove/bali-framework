@@ -63,7 +63,8 @@ public class WeChatTokenGranter extends AbstractTokenGranter {
         AbstractAuthenticationToken userAuth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         userAuth.setDetails(parameters);
         OAuth2Request authRequest = getRequestFactory().createOAuth2Request(client, tokenRequest);
-        return new OAuth2Authentication(authRequest, userAuth);
+        OAuth2Authentication authentication = new OAuth2Authentication(authRequest, userAuth);
+        return authentication;
     }
 
 }
