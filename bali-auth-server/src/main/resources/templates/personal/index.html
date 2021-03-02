@@ -24,7 +24,7 @@
     <div class="layui-card">
         <div class="layui-card-header">设置我的资料</div>
         <div class="layui-card-body" pad15>
-            <div class="layui-row layui-col-space15">
+            <div class="layui-row">
                 <div class="layui-col-md4">
                     <form class="layui-form" lay-filter="form" action="">
                         <div class="layui-form-item">
@@ -94,8 +94,10 @@
                     </form>
                 </div>
                 <div class="layui-col-md5 layui-col-md-offset1" style="position: relative;">
-                    <img th:src="${details.getUserAvatar()}" class="user-avatar">
-                    <a id="upload" class="user-avatar-cover">更换头像</a>
+                    <div class="user-avatar">
+                        <img id="avatar" th:src="${details.getUserAvatar()}" >
+                        <a id="upload" class="user-avatar-cover">更换头像</a>
+                    </div>
                 </div>
             </div>
 

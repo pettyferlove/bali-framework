@@ -6,6 +6,11 @@
     overflow: hidden;
 }
 
+.user-avatar img {
+    width: 200px;
+    height: 200px;
+}
+
 .user-avatar:hover .user-avatar-cover {
     opacity: 1
 }

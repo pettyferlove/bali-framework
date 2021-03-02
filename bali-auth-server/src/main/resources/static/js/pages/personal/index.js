@@ -25,7 +25,7 @@ layui.use(['form', 'laydate'], function () {
             type: 2,
             title: '上传头像',
             area: ['1000px', '700px'],
-            content: '/personal/avatar/'
+            content: '/personal/avatar'
             , yes: function (index, layero) {
                 return false;
             }
