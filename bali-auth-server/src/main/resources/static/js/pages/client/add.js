@@ -13,7 +13,6 @@ layui.use(['form'], function () {
             scope.push($(this).val());
         });
         data.field.scope = scope.join(",") ;
-
         let index = parent.layer.getFrameIndex(window.name);
         $.ajax({
             type: "POST",
@@ -25,9 +24,39 @@ layui.use(['form'], function () {
                 if (res.message) {
                     layer.msg(res.message, {icon: 2});
                 } else {
-                    layer.msg('新增成功');
-                    parent.layui.table.reload('table');
                     parent.layer.close(index);
+                    parent.layer.open({
+                        type: 1,
+                        anim: 2,
+                        area: ['520', '250'],
+                        title: '客户端令牌',
+                        shadeClose: false,
+                        content: '<div style="padding: 10px">\n' +
+                            '    <blockquote class="layui-elem-quote">请妥善保存，关闭后无法再次获取以下信息</blockquote>\n' +
+                            '    <table class="layui-table" lay-even="" lay-skin="nob">\n' +
+                            '        <colgroup>\n' +
+                            '            <col width="250">\n' +
+                            '            <col width="250">\n' +
+                            '            <col>\n' +
+                            '        </colgroup>\n' +
+                            '        <thead>\n' +
+                            '        <tr>\n' +
+                            '            <th>Client ID</th>\n' +
+                            '            <th>'+res.data.clientId+'</th>\n' +
+                            '        </tr>\n' +
+                            '        </thead>\n' +
+                            '        <tbody>\n' +
+                            '        <tr>\n' +
+                            '            <td>Client Secret</td>\n' +
+                            '            <td>'+res.data.clientSecret+'</td>\n' +
+                            '        </tr>\n' +
+                            '        </tbody>\n' +
+                            '    </table>\n' +
+                            '</div>'
+                        , yes: function (index) {
+                            layer.close(index);
+                        }
+                    });
                 }
             },
             error: function (err) {
