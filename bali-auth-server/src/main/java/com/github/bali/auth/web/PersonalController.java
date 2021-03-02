@@ -3,6 +3,8 @@ package com.github.bali.auth.web;
 import com.github.bali.attachment.domain.vo.Upload;
 import com.github.bali.attachment.domain.vo.UploadResult;
 import com.github.bali.attachment.service.IAttachmentOperaService;
+import com.github.bali.auth.domain.vo.PersonalDetails;
+import com.github.bali.auth.service.IUserInfoService;
 import com.github.bali.core.framework.domain.vo.R;
 import com.github.bali.security.utils.SecurityUtil;
 import org.springframework.stereotype.Controller;
@@ -24,15 +26,19 @@ public class PersonalController {
 
     private final IAttachmentOperaService attachmentOperaService;
 
-    public PersonalController(IAttachmentOperaService attachmentOperaService) {
+    private final IUserInfoService userInfoService;
+
+    public PersonalController(IAttachmentOperaService attachmentOperaService, IUserInfoService userInfoService) {
         this.attachmentOperaService = attachmentOperaService;
+        this.userInfoService = userInfoService;
     }
 
     @RequestMapping("/index")
     public String index(Model model) {
+        PersonalDetails details = userInfoService.getDetails();
+        model.addAttribute("details", details);
         return "personal/index";
     }
-
 
 
     @RequestMapping("/avatar")

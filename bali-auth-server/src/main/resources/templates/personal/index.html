@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <th:block th:replace="fragments/css/css-import::core-css"/>
     <th:block th:replace="fragments/css/css-import::common-css"/>
+    <link rel="stylesheet" th:href="@{/static/css/personal/personal.css}">
 </head>
 <body class="bali-content">
 <div class="breadcrumb-wrapper">
@@ -19,17 +20,90 @@
     </span>
 </div>
 <div>
-    <div class="layui-row layui-col-space15">
-        <div class="layui-col-md12">
-            <div class="layui-card">
-                <div class="layui-card-body">
-                    <button class="layui-btn layui-btn-primary" id="upload">
-                        上传照片
-                    </button>
+
+    <div class="layui-card">
+        <div class="layui-card-header">设置我的资料</div>
+        <div class="layui-card-body" pad15>
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md4">
+                    <form class="layui-form" lay-filter="form" action="">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">用户名</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="userName" lay-verify="required" lay-reqtext="姓名是必填项，不能为空" placeholder="请输入姓名"
+                                       autocomplete="off" class="layui-input" th:value="${details.getUserName()}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">昵称</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="nickName" placeholder="请输入用户昵称" autocomplete="off" class="layui-input"
+                                       th:value="${details.getNickName()}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">性别</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="userSex" value="1" title="男" th:checked="${details.getUserSex()==1}">
+                                <input type="radio" name="userSex" value="0" title="女" th:checked="${details.getUserSex()==0}">
+                                <input type="radio" name="userSex" value="" title="无" th:checked="${details.getUserSex()==null}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">邮箱</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="email" value="" lay-verify="email" placeholder="请输入电子邮箱" autocomplete="off" class="layui-input"
+                                       th:value="${details.getEmail()}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">联系地址</label>
+                            <div class="layui-input-block">
+                                <textarea name="userAddress" placeholder="请输入地址" class="layui-textarea"
+                                          th:text="${details.getUserAddress()}"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">生日</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="userBorn" name="userBorn" placeholder="选择日期" autocomplete="off"
+                                       class="layui-input date-select"
+                                       th:value="${#temporals.format(details.getUserBorn(), 'yyyy-MM-dd HH:mm:ss')}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">联系电话</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="phoneTel" placeholder="请输入联系电话" autocomplete="off" class="layui-input"
+                                       th:value="${details.getPhoneTel()}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">移动电话</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="mobileTel" placeholder="请输入移动电话" autocomplete="off" class="layui-input"
+                                       th:value="${details.getMobileTel()}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit lay-filter="setmyinfo">确认修改</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="layui-col-md5 layui-col-md-offset1" style="position: relative;">
+                    <img th:src="${details.getUserAvatar()}" class="user-avatar">
+                    <a id="upload" class="user-avatar-cover">更换头像</a>
                 </div>
             </div>
+
+
         </div>
     </div>
+
+
 </div>
 </body>
 <th:block th:replace="fragments/js/js-import::core-js"/>

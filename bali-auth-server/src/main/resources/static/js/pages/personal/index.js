@@ -1,6 +1,24 @@
-layui.use(['layer'], function () {
-    let layer = layui.layer;
+layui.use(['form', 'laydate'], function () {
+    let form = layui.form, layer = layui.layer, laydate = layui.laydate;
 
+    form.verify({
+        email: function (value, item) {
+            if (value !== "") {
+                if (!/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(value)) {
+                    return '不是有效的email地址';
+                }
+            }
+        }
+    });
+
+    lay('.date-select').each(function () {
+        laydate.render({
+            elem: this
+            , format: 'yyyy-MM-dd HH:mm:ss'
+            , type: 'datetime'
+            , trigger: 'click'
+        });
+    });
 
     $("#upload").on("click", function (){
         layer.open({
