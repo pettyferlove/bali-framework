@@ -1,3 +1,16 @@
+function dataURLtoBlob(dataUrl) {
+    let arr = dataUrl.split(',')
+    let mime = arr[0].match(/:(.*?);/)[1]
+
+    let b = atob(arr[1])
+    let n = b.length
+    let u8arr = new Uint8Array(n)
+    while (n--) {
+        u8arr[n] = b.charCodeAt(n)
+    }
+    return new Blob([u8arr], { type: mime })
+}
+
 layui.use('upload', function(){
     let layer = layui.layer
     let upload = layui.upload;
@@ -49,19 +62,10 @@ layui.use('upload', function(){
         cropper.rotate(90);
     })
     let index = parent.layer.getFrameIndex(window.name);
-    console.log(index)
     $('#crop').on("click", function() {
-        let img = cropper.getCroppedCanvas().toDataURL("image/png");
-
-        img = img.split(',')[1];
-        img = window.atob(img);
-        let ia = new Uint8Array(img.length);
-        for (let i = 0; i < img.length; i++) {
-            ia[i] = img.charCodeAt(i);
-        }
-        let file = new Blob([ia], {
-            type: "image/png"
-        });
+        let img = cropper.getCroppedCanvas().toDataURL("image/jpeg", 0.1);
+        console.log(img)
+        let file = dataURLtoBlob(img)
 
         let formData = new FormData();
         formData.append("file", file, "avatar");
@@ -80,7 +84,7 @@ layui.use('upload', function(){
                 parent.layer.close(index);
             },
             error: function (err) {
-                console.log(err)
+                layer.msg('头像保存失败', {icon: 2});
             }
         });
     })

@@ -41,21 +41,13 @@ public class PersonalApi {
     @ApiOperation(value = "更新个人详细信息", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @PutMapping("/info")
     public R<Boolean> update(PersonalDetails details) {
-        try {
-            return new R<>(userInfoService.updateDetails(details));
-        } catch (Exception e) {
-            return new R<>(null, e.getMessage());
-        }
+        return new R<>(userInfoService.updateDetails(details));
     }
 
     @ApiOperation(value = "更新密码", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @PutMapping("/change/password")
     public R<Boolean> changePassword(@Validated ChangePassword changePassword) {
-        try {
-            return new R<>(userService.changePassword(changePassword));
-        } catch (Exception e) {
-            return new R<>(null, e.getMessage());
-        }
+        return new R<>(userService.changePassword(changePassword));
     }
 
 

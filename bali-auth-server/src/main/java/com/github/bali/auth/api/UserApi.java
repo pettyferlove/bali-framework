@@ -67,66 +67,42 @@ public class UserApi {
     @PostMapping
     @ApiOperation(value = "创建用户", notes = "需租户管理员权限或管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
     public R<String> create(@ApiParam("用户信息") @RequestBody @Validated UserOperate user) {
-        try {
-            return new R<>(userOperateService.create(user));
-        } catch (Exception e) {
-            return new R<>(null, e.getMessage());
-        }
+        return new R<>(userOperateService.create(user));
     }
 
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.operate')")
     @PutMapping
     @ApiOperation(value = "更新用户", notes = "需租户管理员权限或管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
     public R<Boolean> update(@ApiParam("用户信息") @RequestBody @Validated UserOperate user) {
-        try {
-            return new R<>(userOperateService.update(user));
-        } catch (Exception e) {
-            return new R<>(null, e.getMessage());
-        }
+        return new R<>(userOperateService.update(user));
     }
 
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.operate')")
     @DeleteMapping("{id}")
     @ApiOperation(value = "删除用户", notes = "需租户管理员权限或管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
     public R<Boolean> delete(@ApiParam("用户ID") @PathVariable String id) {
-        try {
-            return new R<>(userOperateService.delete(id));
-        } catch (Exception e) {
-            return new R<>(null, e.getMessage());
-        }
+        return new R<>(userOperateService.delete(id));
     }
 
     @GetMapping(value = "{id}/role")
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.read')")
     @ApiOperation(value = "加载用户已选角色", notes = "需租户管理员权限或管理员权限和user.read域", authorizations = @Authorization(value = "oauth2"))
     public R<List<String>> loadUserRole(@PathVariable String id) {
-        try {
-            return new R<>(userOperateService.loadUserRoleIds(id));
-        } catch (Exception e) {
-            return new R<>(null, e.getMessage());
-        }
+        return new R<>(userOperateService.loadUserRoleIds(id));
     }
 
     @PutMapping(value = "{id}/role")
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.operate')")
     @ApiOperation(value = "更新用户", notes = "需租户管理员权限或管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
     public R<Boolean> updateUserRole(@PathVariable String id, @RequestParam(defaultValue = "") String roleIds) {
-        try {
-            return new R<>(userOperateService.updateUserRole(id, roleIds));
-        } catch (Exception e) {
-            return new R<>(null, e.getMessage());
-        }
+        return new R<>(userOperateService.updateUserRole(id, roleIds));
     }
 
     @PutMapping("reset/password")
     @PreAuthorize("hasAnyRole('TENANT_ADMIN')&&#oauth2.hasScope('user.operate')")
     @ApiOperation(value = "重置用户密码", notes = "需租户管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
     public R<Boolean> resetPassword(@ApiParam("用户ID集合") @RequestParam(defaultValue = "") String ids, @ApiParam("密码") @RequestParam String password) {
-        try {
-            return new R<>(userOperateService.resetPassword(ids, password));
-        } catch (Exception e) {
-            return new R<>(null, e.getMessage());
-        }
+        return new R<>(userOperateService.resetPassword(ids, password));
     }
 
 }

@@ -36,7 +36,24 @@ layui.use(['form', 'laydate'], function () {
     })
 
     form.on('submit(form-submit)', function (data) {
-        console.log(data)
+        data.field.userAvatar = $('#avatar').attr("src");
+        $.ajax({
+            type: "PUT",
+            url: "/personal/info",
+            data: JSON.stringify(data.field),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (res) {
+                if (res.message) {
+                    layer.msg(res.message, {icon: 2});
+                } else {
+                    layer.msg('更新成功');
+                }
+            },
+            error: function (err) {
+                layer.msg('更新失败', {icon: 2});
+            }
+        })
     })
 
 })

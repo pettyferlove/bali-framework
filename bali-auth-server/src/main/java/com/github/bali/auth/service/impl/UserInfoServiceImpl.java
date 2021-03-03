@@ -71,9 +71,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     @Override
     public Boolean updateDetails(PersonalDetails details) {
         UserInfo userInfo = Optional.ofNullable(ConverterUtil.convert(details, new UserInfo())).orElseGet(UserInfo::new);
-        LambdaUpdateWrapper<UserInfo> updateWrapper = Wrappers.lambdaUpdate(userInfo);
+        LambdaUpdateWrapper<UserInfo> updateWrapper = Wrappers.<UserInfo>lambdaUpdate();
         updateWrapper.eq(UserInfo::getUserId, SecurityUtil.getUser().getId());
-        return this.update(updateWrapper);
+        return this.update(userInfo, updateWrapper);
     }
 
 }
