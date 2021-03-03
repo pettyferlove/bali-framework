@@ -1,4 +1,5 @@
 layui.use('upload', function(){
+    let layer = layui.layer
     let upload = layui.upload;
     let container = document.querySelector('.img-container');
     let image = container.getElementsByTagName('img').item(0);
@@ -6,22 +7,16 @@ layui.use('upload', function(){
         aspectRatio: 1,
         preview: '.img-preview',
         ready: function (e) {
-            console.log(e.type);
         },
         cropstart: function (e) {
-            console.log(e.type, e.detail.action);
         },
         cropmove: function (e) {
-            console.log(e.type, e.detail.action);
         },
         cropend: function (e) {
-            console.log(e.type, e.detail.action);
         },
         crop: function (e) {
-            console.log(e);
         },
         zoom: function (e) {
-            console.log(e.type, e.detail.ratio);
         }
     };
     let cropper = new Cropper(image, options);
@@ -53,6 +48,8 @@ layui.use('upload', function(){
     $("#right").on("click", function () {
         cropper.rotate(90);
     })
+    let index = parent.layer.getFrameIndex(window.name);
+    console.log(index)
     $('#crop').on("click", function() {
         let img = cropper.getCroppedCanvas().toDataURL("image/png");
 
@@ -72,7 +69,6 @@ layui.use('upload', function(){
         formData.append("group","avatar");
         formData.append("storage","CloudAliyunOSS");
 
-        console.log(formData)
         $.ajax({
             url: "/personal/avatar/upload",
             type: "POST",
@@ -80,30 +76,12 @@ layui.use('upload', function(){
             processData: false,
             data: formData,
             success: function (res) {
-                console.log(res)
+                parent.$('#avatar').attr("src", res.data.url);
+                parent.layer.close(index);
             },
             error: function (err) {
                 console.log(err)
             }
         });
-        /*
-        $.ajax({
-            url: "/personal/avatar/upload",
-            type: 'POST',
-            data: formData,
-            timeout : 10000, //超时时间设置，单位毫秒
-            async: true,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (result) {
-            },
-            error: function (returndata) {
-            }
-        });
-
-
-
-        console.log(src);*/
     })
 });

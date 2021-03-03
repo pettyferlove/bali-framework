@@ -35,4 +35,8 @@ layui.use(['form', 'laydate'], function () {
         });
     })
 
+    form.on('submit(form-submit)', function (data) {
+        console.log(data)
+    })
+
 })
