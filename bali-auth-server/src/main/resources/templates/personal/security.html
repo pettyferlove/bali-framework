@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <title>安全设置</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <th:block th:replace="fragments/css/css-import::core-css"/>
+    <th:block th:replace="fragments/css/css-import::common-css"/>
+    <link rel="stylesheet" th:href="@{/static/css/personal/personal.css}">
+</head>
+<body class="bali-content">
+<div class="breadcrumb-wrapper">
+    <span class="layui-breadcrumb" lay-separator="—">
+      <a href="">首页</a>
+      <a><cite>安全设置</cite></a>
+    </span>
+</div>
+<div>
+    <div class="layui-card">
+        <div class="layui-card-body" pad15>
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">密码修改</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-row" style="margin-top: 10px">
+                        <div class="layui-col-md4">
+                            <form class="layui-form" lay-filter="password-form" action="">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">原始密码</label>
+                                    <div class="layui-input-block">
+                                        <input type="password" name="oldPassword" lay-verify="required" lay-reqtext="原始密码是必填项，不能为空" placeholder="请输入原始密码"
+                                               autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">新密码</label>
+                                    <div class="layui-input-block">
+                                        <input type="password" name="newPassword" lay-verify="required" lay-reqtext="密码是必填项，不能为空" placeholder="请输入新的密码"
+                                               autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">重复新密码</label>
+                                    <div class="layui-input-block">
+                                        <input type="password" name="repeatPassword" lay-verify="required" lay-reqtext="密码是必填项，不能为空" placeholder="请再次输入新的密码"
+                                               autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <input type="button" class="layui-btn" lay-submit lay-filter="password-form-submit" id="password-form-submit" value="更新用户密码"></input>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+<th:block th:replace="fragments/js/js-import::core-js"/>
+<script th:src="@{/static/js/pages/personal/security.js}"></script>
+</html>

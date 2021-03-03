@@ -40,6 +40,11 @@ public class PersonalController {
         return "personal/index";
     }
 
+    @RequestMapping("/security")
+    public String security() {
+        return "personal/security";
+    }
+
 
     @RequestMapping("/avatar")
     public String avatar(Model model) {
