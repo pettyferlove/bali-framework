@@ -64,7 +64,6 @@ layui.use('upload', function(){
     let index = parent.layer.getFrameIndex(window.name);
     $('#crop').on("click", function() {
         let img = cropper.getCroppedCanvas().toDataURL("image/jpeg", 0.1);
-        console.log(img)
         let file = dataURLtoBlob(img)
 
         let formData = new FormData();
@@ -81,6 +80,7 @@ layui.use('upload', function(){
             data: formData,
             success: function (res) {
                 parent.$('#avatar').attr("src", res.data.url);
+                parent.updateAvatar();
                 parent.layer.close(index);
             },
             error: function (err) {
