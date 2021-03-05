@@ -84,6 +84,14 @@ public class UserApi {
         return new R<>(userOperateService.delete(id));
     }
 
+    @Deprecated
+    @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.operate')")
+    @DeleteMapping("batch/{ids}")
+    @ApiOperation(value = "批量删除用户", notes = "需租户管理员权限或管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
+    public R<Boolean> batchDelete(@ApiParam("用户ID集合") @PathVariable String ids) {
+        return new R<>(userOperateService.batchDelete(ids));
+    }
+
     @GetMapping(value = "{id}/role")
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.read')")
     @ApiOperation(value = "加载用户已选角色", notes = "需租户管理员权限或管理员权限和user.read域", authorizations = @Authorization(value = "oauth2"))

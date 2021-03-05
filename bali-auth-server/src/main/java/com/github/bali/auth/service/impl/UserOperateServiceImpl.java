@@ -252,4 +252,14 @@ public class UserOperateServiceImpl implements IUserOperateService {
         }).collect(Collectors.toList());
         return userService.updateBatchById(updateUsers);
     }
+
+    @Override
+    @Transactional(rollbackFor = Throwable.class)
+    public Boolean batchDelete(String ids) {
+        String[] split = ids.split(",");
+        for (String id : split) {
+            this.delete(id);
+        }
+        return true;
+    }
 }

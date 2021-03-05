@@ -90,4 +90,11 @@ public interface IUserOperateService {
      * @return 是否成功
      */
     Boolean resetPassword(String ids, String password);
+
+    /**
+     * 批量删除用户
+     * @param ids ID集合
+     * @return 是否成功
+     */
+    Boolean batchDelete(String ids);
 }
