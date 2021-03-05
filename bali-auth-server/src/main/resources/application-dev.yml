@@ -99,7 +99,7 @@ attachment:
       root: user-center
       endpoint: oss-cn-shanghai.aliyuncs.com
       access-key-id: LTAI4G1kFnvT6daTfikDrfKg
-      access-key-secret: wp4QnMB34nCzNxZCLlNnTO8oYkLt4N
+      access-key-secret: ENC('ofEZthKQW99EUt5RCrFVwfwVnURNFkfA/snUYybmjZZTp5aElpU2mQ==')
       bucket: user-center-attachment
   local:
     name: user-center-local
