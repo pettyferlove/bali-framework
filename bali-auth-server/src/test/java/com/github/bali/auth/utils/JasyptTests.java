@@ -52,7 +52,7 @@ public class JasyptTests {
     @Test
     public void contextLoads (){
         // 加密
-        String encPwd = encryptPwd("bali-auth-server", "@adadYY&&*^daa");
+        String encPwd = encryptPwd("bali-auth-server", "wp4QnMB34nCzNxZCLlNnTO8oYkLt4N");
         // 解密
         String decPwd = decryptPwd("bali-auth-server", encPwd);
         System.out.println(encPwd);

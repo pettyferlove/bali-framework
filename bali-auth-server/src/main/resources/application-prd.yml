@@ -22,6 +22,7 @@ spring:
     multipart:
       max-file-size: 10MB # 最大附件大小
       max-request-size: 10MB
+      location: /data/tmp/application
   main:
     allow-bean-definition-overriding: true
   mvc:
@@ -90,3 +91,16 @@ multi-tenancy:
       - uc_user_role
       - uc_auth_client_details_scope
       - v_role_view
+attachment:
+  api: enable
+  cloud:
+    aliyun:
+      name: user-center-aliyun
+      root: user-center
+      endpoint: oss-cn-shanghai.aliyuncs.com
+      access-key-id: LTAI4G1kFnvT6daTfikDrfKg
+      access-key-secret: ENC('ofEZthKQW99EUt5RCrFVwfwVnURNFkfA/snUYybmjZZTp5aElpU2mQ==')
+      bucket: user-center-attachment
+  local:
+    name: user-center-local
+    root: file/
