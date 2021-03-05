@@ -6,6 +6,7 @@ set -e
 
 APP_NAME="bali-auth-server"
 APP_VERSION="0.3.0-SNAPSHOT"
+JASYPT_PASSWORD="bali-auth-server"
 SERVER_PORT=9090
 PROFILE_NAME=prd
 JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Xmn128m -Xms512m -Xmx512m -Dfile.encoding=UTF-8 -Dloader.path=."
@@ -20,7 +21,7 @@ start() {
 }
 
 startup() {
-	nohup java -jar $JAVA_OPTS  "${APP_NAME}-${APP_VERSION}.jar" --server.port=$SERVER_PORT --spring.profiles.active=$PROFILE_NAME  >/dev/null 2>&1 &
+	nohup java -jar $JAVA_OPTS  "${APP_NAME}-${APP_VERSION}.jar" --server.port=$SERVER_PORT --spring.profiles.active=$PROFILE_NAME --jasypt.encryptor.password=$JASYPT_PASSWORD  >/dev/null 2>&1 &
 }
 stop() {
 	PID=$(ps -ef | grep ${APP_NAME}-${APP_VERSION}.jar | grep -v grep | awk '{ print $2 }')
