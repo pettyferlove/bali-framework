@@ -89,11 +89,11 @@ public class ClientController {
         }
     }
 
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "delete/{ids}", method = RequestMethod.DELETE)
     @ResponseBody
-    public R<Boolean> delete(@PathVariable String id) {
+    public R<Boolean> delete(@PathVariable String ids) {
         try {
-            return new R<>(clientOperateService.delete(id));
+            return new R<>(clientOperateService.batchDelete(ids));
         } catch (Exception e) {
             return new R<>(false, e.getMessage());
         }

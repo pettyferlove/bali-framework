@@ -178,7 +178,7 @@ layui.use(['layer', 'table'], function () {
     }
 
     function del(ids) {
-        layer.confirm('是否确认删除所选用户', function (index) {
+        layer.confirm('确认删除所选用户？', function (index) {
             $.ajax({
                 type: "DELETE",
                 url: module + '/delete/' + ids,
