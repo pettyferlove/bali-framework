@@ -4,3 +4,7 @@ spring:
     name: bali-auth-server
   profiles:
     active: dev
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator

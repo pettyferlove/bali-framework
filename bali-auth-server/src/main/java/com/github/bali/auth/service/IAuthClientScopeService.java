@@ -65,4 +65,10 @@ public interface IAuthClientScopeService extends IService<AuthClientScope> {
      */
     List<AuthClientScope> listScopes();
 
+    /**
+     * 批量删除客户端域
+     * @param ids ID集合
+     * @return 是否成功
+     */
+    Boolean batchDelete(String ids);
 }

@@ -57,4 +57,10 @@ public interface IRoleService extends IService<Role> {
     Boolean update(Role role);
 
 
+    /**
+     * 批量删除角色
+     * @param ids ID集合
+     * @return Boolean
+     */
+    Boolean batchDelete(String ids);
 }

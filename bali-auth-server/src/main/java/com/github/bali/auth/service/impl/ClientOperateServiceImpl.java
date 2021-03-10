@@ -94,4 +94,14 @@ public class ClientOperateServiceImpl implements IClientOperateService {
         authClientDetailsScopeService.remove(Wrappers.<AuthClientDetailsScope>lambdaQuery().eq(AuthClientDetailsScope::getDetailsId, id));
         return true;
     }
+
+    @Override
+    @Transactional(rollbackFor = Throwable.class)
+    public Boolean batchDelete(String ids) {
+        String[] split = ids.split(",");
+        for (String id : split) {
+            this.delete(id);
+        }
+        return true;
+    }
 }

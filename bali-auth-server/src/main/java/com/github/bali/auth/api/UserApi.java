@@ -3,6 +3,7 @@ package com.github.bali.auth.api;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.bali.auth.domain.vo.ChangePasswordVO;
 import com.github.bali.auth.domain.vo.UserInfoQueryParams;
 import com.github.bali.auth.domain.vo.UserOperate;
 import com.github.bali.auth.entity.UserInfoView;
@@ -10,6 +11,7 @@ import com.github.bali.auth.service.IUserInfoViewService;
 import com.github.bali.auth.service.IUserOperateService;
 import com.github.bali.core.framework.constants.ApiConstant;
 import com.github.bali.core.framework.domain.vo.R;
+import com.github.bali.security.utils.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -84,6 +86,14 @@ public class UserApi {
         return new R<>(userOperateService.delete(id));
     }
 
+    @Deprecated
+    @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.operate')")
+    @DeleteMapping("batch/{ids}")
+    @ApiOperation(value = "批量删除用户", notes = "需租户管理员权限或管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
+    public R<Boolean> batchDelete(@ApiParam("用户ID集合") @PathVariable String ids) {
+        return new R<>(userOperateService.batchDelete(ids));
+    }
+
     @GetMapping(value = "{id}/role")
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.read')")
     @ApiOperation(value = "加载用户已选角色", notes = "需租户管理员权限或管理员权限和user.read域", authorizations = @Authorization(value = "oauth2"))
@@ -103,6 +113,14 @@ public class UserApi {
     @ApiOperation(value = "重置用户密码", notes = "需租户管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
     public R<Boolean> resetPassword(@ApiParam("用户ID集合") @RequestParam(defaultValue = "") String ids, @ApiParam("密码") @RequestParam String password) {
         return new R<>(userOperateService.resetPassword(ids, password));
+    }
+
+    @RequestMapping(value = "change/password", method = RequestMethod.POST)
+    @ResponseBody
+    @PreAuthorize("#oauth2.hasScope('user.operate')")
+    @ApiOperation(value = "修改密码", notes = "需user.operate域", authorizations = @Authorization(value = "oauth2"))
+    public R<Boolean> changePassword(@RequestBody ChangePasswordVO changePassword) {
+        return new R<>(userOperateService.changePassword(SecurityUtil.getUser().getId(), changePassword));
     }
 
 }

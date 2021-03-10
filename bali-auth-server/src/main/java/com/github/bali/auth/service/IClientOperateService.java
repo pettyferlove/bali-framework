@@ -38,4 +38,11 @@ public interface IClientOperateService {
      * @return Boolean
      */
     Boolean delete(String id);
+
+    /**
+     * 批量删除客户端
+     * @param ids ID集合
+     * @return 是否成功
+     */
+    Boolean batchDelete(String ids);
 }

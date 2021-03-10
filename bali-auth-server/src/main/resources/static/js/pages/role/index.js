@@ -71,20 +71,21 @@ layui.use(['layer', 'table'], function () {
                 break;
             case 'update':
                 if (data.length === 0) {
-                    layer.msg('请选择一行');
+                    layer.msg('请选择一个角色');
                 } else if (data.length > 1) {
-                    layer.msg('只能同时编辑一个');
+                    layer.msg('只能同时编辑一个角色');
                 } else {
                     edit(checkStatus.data[0].id);
                 }
                 break;
             case 'delete':
                 if (data.length === 0) {
-                    layer.msg('请选择一行');
-                } else if (data.length > 1) {
-                    layer.msg('只能同时删除一行');
+                    layer.msg('请选择一个角色');
                 } else {
-                    del(checkStatus.data[0].id);
+                    let ids = $.map(data, function(item){
+                        return item.id;
+                    }).join(',');
+                    del(ids);
                 }
                 break;
         }
@@ -122,11 +123,11 @@ layui.use(['layer', 'table'], function () {
         });
     }
 
-    function del(id){
-        layer.confirm('真的删除行么', function (index) {
+    function del(ids){
+        layer.confirm('确认删除所选角色？', function (index) {
             $.ajax({
                 type: "DELETE",
-                url: module + '/delete/' + id,
+                url: module + '/delete/' + ids,
                 success: function (res) {
                     if(res.message){
                         layer.msg(res.message, {icon: 2});

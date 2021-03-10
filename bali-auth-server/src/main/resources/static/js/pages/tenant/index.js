@@ -124,7 +124,7 @@ layui.use(['layer', 'table'], function () {
     }
 
     function del(id){
-        layer.confirm('真的删除行么', function (index) {
+        layer.confirm('确认删除所选租户？', function (index) {
             $.ajax({
                 type: "DELETE",
                 url: module + '/delete/' + id,

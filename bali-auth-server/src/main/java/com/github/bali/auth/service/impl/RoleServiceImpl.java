@@ -96,4 +96,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
         return this.updateById(updateRole);
     }
 
+    @Override
+    @Transactional(rollbackFor = Throwable.class)
+    public Boolean batchDelete(String ids) {
+        String[] split = ids.split(",");
+        for (String id : split) {
+            this.delete(id);
+        }
+        return true;
+    }
+
 }

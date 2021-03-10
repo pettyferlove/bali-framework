@@ -22,6 +22,7 @@ spring:
     multipart:
       max-file-size: 10MB # 最大附件大小
       max-request-size: 10MB
+      location: /data/tmp/application
   main:
     allow-bean-definition-overriding: true
   mvc:
@@ -32,7 +33,7 @@ spring:
       time-to-live: 1d
   redis:
     host: 127.0.0.1
-    password: 'aadkhkjhqeq&&adad^'
+    password: ENC('S3M2OhbqqBoqgqj3J3Fyvfa94Ww4aw0+51d8JNUZjoA=')
     port: 8744
     lettuce:
       shutdown-timeout: 100
@@ -48,7 +49,7 @@ spring:
     name: bali-user-center
     url: jdbc:mysql://127.0.0.1:5506/bali_user_center?characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
-    password: '@adadYY&&*^daa'
+    password: ENC('rmBLEs9PGATv8ai+hurRVraFUajJPIHh')
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
@@ -90,3 +91,16 @@ multi-tenancy:
       - uc_user_role
       - uc_auth_client_details_scope
       - v_role_view
+attachment:
+  api: enable
+  cloud:
+    aliyun:
+      name: user-center-aliyun
+      root: user-center
+      endpoint: oss-cn-shanghai.aliyuncs.com
+      access-key-id: LTAI4G1kFnvT6daTfikDrfKg
+      access-key-secret: ENC('ofEZthKQW99EUt5RCrFVwfwVnURNFkfA/snUYybmjZZTp5aElpU2mQ==')
+      bucket: user-center-attachment
+  local:
+    name: user-center-local
+    root: file/
