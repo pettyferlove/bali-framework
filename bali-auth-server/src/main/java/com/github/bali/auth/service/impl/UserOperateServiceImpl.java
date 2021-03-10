@@ -2,16 +2,20 @@ package com.github.bali.auth.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.bali.auth.domain.vo.ChangePasswordVO;
 import com.github.bali.auth.domain.vo.UserOperate;
 import com.github.bali.auth.domain.vo.UserRoleVO;
 import com.github.bali.auth.entity.*;
 import com.github.bali.auth.service.*;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
 import com.github.bali.core.framework.utils.ConverterUtil;
+import com.github.bali.security.constants.EncryptionConstant;
 import com.github.bali.security.constants.SecurityConstant;
 import com.github.bali.security.constants.UserChannelType;
+import com.github.bali.security.userdetails.BaliUserDetails;
 import com.github.bali.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -19,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -251,5 +256,41 @@ public class UserOperateServiceImpl implements IUserOperateService {
             return user;
         }).collect(Collectors.toList());
         return userService.updateBatchById(updateUsers);
+    }
+
+    @Override
+    public Boolean changePassword(String id, ChangePasswordVO changePassword) {
+        if (!changePassword.getNewPassword().equals(changePassword.getRepeatPassword())) {
+            throw new BaseRuntimeException("新密码和重复密码不一致");
+        } else {
+            Optional<User> userOptional = Optional.ofNullable(userService.getById(id));
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                if (!passwordEncoder.matches(changePassword.getOldPassword(), user.getPassword())) {
+                    throw new BaseRuntimeException("账号原始密码错误");
+                } else {
+                    LambdaUpdateWrapper<User> updateWrapper = Wrappers.<User>lambdaUpdate();
+                    updateWrapper.eq(User::getId, id);
+                    updateWrapper.set(User::getPassword, passwordEncoder.encode(changePassword.getNewPassword()));
+                    updateWrapper.set(User::getModifier, id);
+                    updateWrapper.set(User::getModifyTime, LocalDateTime.now());
+                    userService.update(updateWrapper);
+                    return true;
+                }
+            } else {
+                throw new BaseRuntimeException("用户不存在");
+            }
+        }
+    }
+
+
+    @Override
+    @Transactional(rollbackFor = Throwable.class)
+    public Boolean batchDelete(String ids) {
+        String[] split = ids.split(",");
+        for (String id : split) {
+            this.delete(id);
+        }
+        return true;
     }
 }

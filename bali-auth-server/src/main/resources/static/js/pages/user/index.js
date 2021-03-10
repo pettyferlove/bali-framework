@@ -77,17 +77,19 @@ layui.use(['layer', 'table'], function () {
                 break;
             case 'update':
                 if (data.length === 0) {
-                    layer.msg('请选择一行');
+                    layer.msg('请选择一个用户');
                 } else if (data.length > 1) {
-                    layer.msg('只能同时编辑一个');
+                    layer.msg('只能同时编辑一个用户');
                 } else {
                     edit(checkStatus.data[0].id, checkStatus.data[0].userChannel);
                 }
                 break;
             case 'reset':
                 if (data.length === 0) {
-                    layer.msg('请选择一行');
-                } else {
+                    layer.msg('请选择一个用户');
+                } else if (data.length > 1) {
+                    layer.msg('只能同时重置一个用户');
+                }  else {
                     if (data.userChannel === 'web' || data.userChannel === 'maintainer') {
                         layer.confirm('是否将所选账号的用户密码重置为123456？', function (index) {
                             $.ajax({
@@ -115,11 +117,12 @@ layui.use(['layer', 'table'], function () {
                 break;
             case 'delete':
                 if (data.length === 0) {
-                    layer.msg('请选择一行');
-                } else if (data.length > 1) {
-                    layer.msg('只能同时删除一行');
+                    layer.msg('请选择一个用户');
                 } else {
-                    del(checkStatus.data[0].id);
+                    let ids = $.map(data, function(item){
+                        return item.id;
+                    }).join(',');
+                    del(ids);
                 }
                 break;
         }
@@ -174,11 +177,11 @@ layui.use(['layer', 'table'], function () {
         });
     }
 
-    function del(id) {
-        layer.confirm('真的删除行么', function (index) {
+    function del(ids) {
+        layer.confirm('确认删除所选用户？', function (index) {
             $.ajax({
                 type: "DELETE",
-                url: module + '/delete/' + id,
+                url: module + '/delete/' + ids,
                 success: function (res) {
                     if (res.message) {
                         layer.msg(res.message, {icon: 2});
