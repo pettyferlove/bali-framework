@@ -2,11 +2,13 @@ package com.github.bali.auth.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.bali.auth.domain.vo.ChangePasswordVO;
 import com.github.bali.auth.domain.vo.UserOperate;
 import com.github.bali.auth.domain.vo.UserRoleVO;
 import com.github.bali.auth.entity.UserInfoView;
 import com.github.bali.auth.service.IUserOperateService;
 import com.github.bali.core.framework.domain.vo.R;
+import com.github.bali.security.utils.SecurityUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -106,6 +108,16 @@ public class UserController {
     public R<Boolean> delete(@PathVariable String ids) {
         try {
             return new R<>(userOperateService.batchDelete(ids));
+        } catch (Exception e) {
+            return new R<>(false, e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "change/password", method = RequestMethod.POST)
+    @ResponseBody
+    public R<Boolean> changePassword(@RequestBody ChangePasswordVO changePassword) {
+        try {
+            return new R<>(userOperateService.changePassword(SecurityUtil.getUser().getId(), changePassword));
         } catch (Exception e) {
             return new R<>(false, e.getMessage());
         }

@@ -1,6 +1,7 @@
 package com.github.bali.auth.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.bali.auth.domain.vo.ChangePasswordVO;
 import com.github.bali.auth.domain.vo.UserOperate;
 import com.github.bali.auth.domain.vo.UserRoleVO;
 import com.github.bali.auth.entity.User;
@@ -90,6 +91,14 @@ public interface IUserOperateService {
      * @return 是否成功
      */
     Boolean resetPassword(String ids, String password);
+
+    /**
+     * 修改密码
+     * @param id 用户ID
+     * @param changePassword 密码信息
+     * @return 是否成功
+     */
+    Boolean changePassword(String id, ChangePasswordVO changePassword);
 
     /**
      * 批量删除用户
