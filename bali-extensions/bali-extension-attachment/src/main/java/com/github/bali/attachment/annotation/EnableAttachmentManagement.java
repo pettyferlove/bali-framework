@@ -1,8 +1,8 @@
 package com.github.bali.attachment.annotation;
 
 import com.github.bali.attachment.configuration.*;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
 
@@ -14,7 +14,7 @@ import java.lang.annotation.*;
 @Inherited
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({MybatisPlusConfigurer.class,
+@ImportAutoConfiguration({MybatisPlusConfigurer.class,
         LiquibaseAttachmentServerConfigurer.class,
         AttachmentAliyunConfigurer.class,
         AttachmentLocalConfigurer.class,
