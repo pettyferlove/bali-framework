@@ -2,10 +2,14 @@
 # shellcheck disable=SC2086
 # shellcheck disable=SC2009
 set -e
+# 设置环境变量
+export JAVA_HOME=$JAVA_HOME
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 
 
 APP_NAME="bali-auth-server"
-APP_VERSION="0.3.0-SNAPSHOT"
+APP_VERSION="0.4.0-SNAPSHOT"
 JASYPT_PASSWORD="bali-auth-server"
 SERVER_PORT=9090
 PROFILE_NAME=prd
