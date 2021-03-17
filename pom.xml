@@ -20,6 +20,7 @@
         <module>bali-core</module>
         <module>bali-examples</module>
         <module>bali-extensions</module>
+        <module>bali-framework-starters</module>
     </modules>
 
     <properties>
