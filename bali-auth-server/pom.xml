@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.bali</groupId>
-        <artifactId>bali-framework</artifactId>
+        <artifactId>bali-framework-parent</artifactId>
         <version>${revision}</version>
     </parent>
     <groupId>com.github.bali.auth</groupId>
