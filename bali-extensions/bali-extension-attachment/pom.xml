@@ -22,7 +22,6 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>${liquibase.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -36,27 +35,22 @@
         <dependency>
             <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-security</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-validation</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-persistence-mybatis</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
-            <version>2.8.3</version>
         </dependency>
         <dependency>
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
-            <version>0.4.11</version>
         </dependency>
     </dependencies>
 
