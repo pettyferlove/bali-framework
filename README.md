@@ -103,5 +103,6 @@ bali-framework
 2 | 0.2.0-SNAPSHOT | 2020-01-20 | Petty | 初版
 3 | 0.3.0-SNAPSHOT | 2021-01-31 | Petty | 初版
 4 | 0.4.0-SNAPSHOT | 2021-03-10 | Petty | 增加配置文件加密功能；修复微信登录user_id混乱的问题
+5 | 0.5.0-SNAPSHOT | 2021-03-18 | Petty | 将依赖管理单独拆分出模块，同时新增starter便于子项目依赖
 
 
