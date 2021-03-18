@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.github.bali</groupId>
+        <artifactId>bali-framework-dependencies</artifactId>
+        <version>${revision}</version>
+        <relativePath>../../bali-framework-dependencies/pom.xml</relativePath>
+    </parent>
+    <groupId>com.github.bali.starter</groupId>
+    <artifactId>bali-spring-boot-starter-parent</artifactId>
+    <version>${revision}</version>
+    <name>bali-spring-boot-starter-parent</name>
+    <packaging>pom</packaging>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.github.bali.core</groupId>
+                <artifactId>bali-core-cache</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.bali.core</groupId>
+                <artifactId>bali-core-framework</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.bali.core</groupId>
+                <artifactId>bali-core-security</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.bali.core</groupId>
+                <artifactId>bali-core-validation</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.bali.core</groupId>
+                <artifactId>bali-core-log</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.bali.core</groupId>
+                <artifactId>bali-core-persistence-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.bali.core</groupId>
+                <artifactId>bali-core-test</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.bali.extension</groupId>
+                <artifactId>bali-extension-attachment</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- Starter版本统一管理 -->
+            <dependency>
+                <groupId>com.github.bali.starter</groupId>
+                <artifactId>bali-spring-boot-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

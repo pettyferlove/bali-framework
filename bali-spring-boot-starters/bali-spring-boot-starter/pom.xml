@@ -3,57 +3,44 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.github.bali.extension</groupId>
-        <artifactId>bali-extensions</artifactId>
+        <groupId>com.github.bali.starter</groupId>
+        <artifactId>bali-spring-boot-starter-parent</artifactId>
         <version>${revision}</version>
+        <relativePath>../bali-spring-boot-starter-parent/pom.xml</relativePath>
     </parent>
-    <artifactId>bali-extension-attachment</artifactId>
+    <artifactId>bali-spring-boot-starter</artifactId>
     <version>${revision}</version>
-    <name>bali-extension-attachment</name>
-    <description>附件扩展</description>
+    <name>bali-spring-boot-starter</name>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
+            <groupId>com.github.bali.core</groupId>
+            <artifactId>bali-core-cache</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-framework</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-security</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-validation</artifactId>
-            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.bali.core</groupId>
+            <artifactId>bali-core-log</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-persistence-mybatis</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>com.aliyun.oss</groupId>
-            <artifactId>aliyun-sdk-oss</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.coobird</groupId>
-            <artifactId>thumbnailator</artifactId>
+            <groupId>com.github.bali.core</groupId>
+            <artifactId>bali-core-test</artifactId>
         </dependency>
     </dependencies>
 

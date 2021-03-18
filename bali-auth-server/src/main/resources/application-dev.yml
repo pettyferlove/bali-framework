@@ -98,7 +98,7 @@ attachment:
       name: user-center-aliyun
       root: user-center
       endpoint: oss-cn-shanghai.aliyuncs.com
-      access-key-id: LTAI4G1kFnvT6daTfikDrfKg
+      access-key-id: ENC('nRiiCp6nIIe1ZDtlpnmHSf6ZSFYAKYQDIE2E5U1xCcNrcVIMwmxjvg==')
       access-key-secret: ENC('ofEZthKQW99EUt5RCrFVwfwVnURNFkfA/snUYybmjZZTp5aElpU2mQ==')
       bucket: user-center-attachment
   local:
