@@ -51,6 +51,11 @@
                 <artifactId>bali-core-test</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>com.github.bali.extension</groupId>
+                <artifactId>bali-extension-attachment</artifactId>
+                <version>${revision}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
