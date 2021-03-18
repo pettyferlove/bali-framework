@@ -11,7 +11,7 @@
     <artifactId>bali-spring-boot-starter</artifactId>
     <version>${revision}</version>
     <name>bali-spring-boot-starter</name>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
