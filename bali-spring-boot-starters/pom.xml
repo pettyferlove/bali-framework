@@ -8,14 +8,14 @@
         <version>${revision}</version>
     </parent>
     <groupId>com.github.bali.starter</groupId>
-    <artifactId>bali-framework-starters</artifactId>
+    <artifactId>bali-spring-boot-starters</artifactId>
     <version>${revision}</version>
-    <name>bali-framework-starters</name>
+    <name>bali-spring-boot-starters</name>
     <packaging>pom</packaging>
 
     <modules>
-        <module>bali-framework-starter-parent</module>
-        <module>bali-framework-starter</module>
+        <module>bali-spring-boot-starter-parent</module>
+        <module>bali-spring-boot-starter</module>
     </modules>
 
 </project>

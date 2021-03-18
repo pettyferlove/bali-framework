@@ -9,9 +9,9 @@
         <relativePath>../../bali-framework-dependencies/pom.xml</relativePath>
     </parent>
     <groupId>com.github.bali.starter</groupId>
-    <artifactId>bali-framework-starter-parent</artifactId>
+    <artifactId>bali-spring-boot-starter-parent</artifactId>
     <version>${revision}</version>
-    <name>bali-framework-starter-parent</name>
+    <name>bali-spring-boot-starter-parent</name>
     <packaging>pom</packaging>
 
     <dependencyManagement>

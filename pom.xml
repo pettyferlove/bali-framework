@@ -19,7 +19,7 @@
         <module>bali-core</module>
         <module>bali-examples</module>
         <module>bali-extensions</module>
-        <module>bali-framework-starters</module>
+        <module>bali-spring-boot-starters</module>
         <module>bali-framework-dependencies</module>
     </modules>
 
