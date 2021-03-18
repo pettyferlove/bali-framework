@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.github.bali.starter</groupId>
+        <artifactId>bali-framework-starter-parent</artifactId>
+        <version>${revision}</version>
+        <relativePath>../bali-framework-starter-parent/pom.xml</relativePath>
+    </parent>
+    <artifactId>bali-framework-starter</artifactId>
+    <version>${revision}</version>
+    <name>bali-framework-starter</name>
+    <packaging>pom</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.bali.core</groupId>
+            <artifactId>bali-core-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.bali.core</groupId>
+            <artifactId>bali-core-framework</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.bali.core</groupId>
+            <artifactId>bali-core-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.bali.core</groupId>
+            <artifactId>bali-core-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.bali.core</groupId>
+            <artifactId>bali-core-log</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.bali.core</groupId>
+            <artifactId>bali-core-persistence-mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.bali.core</groupId>
+            <artifactId>bali-core-test</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

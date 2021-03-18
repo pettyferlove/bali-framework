@@ -22,6 +22,7 @@
         <dependency>
             <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-framework</artifactId>
+            <version>${revision}</version>
             <optional>true</optional>
         </dependency>
         <dependency>

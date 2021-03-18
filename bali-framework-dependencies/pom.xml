@@ -23,6 +23,10 @@
         <jdk.compile.target.version>1.8</jdk.compile.target.version>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>2.3.0.RELEASE</spring-boot.version>
+        <oauth.version>2.5.0.RELEASE</oauth.version>
+        <oauth.jwt.version>1.1.1.RELEASE</oauth.jwt.version>
+        <oauth.jwt.nimbus.version>9.4</oauth.jwt.nimbus.version>
+        <oauth.autoconfigure.version>2.4.0</oauth.autoconfigure.version>
         <spring-platform.version>Cairo-SR8</spring-platform.version>
         <mybatis-plus.version>3.3.0</mybatis-plus.version>
         <druid.version>1.2.4</druid.version>
@@ -30,13 +34,12 @@
         <aliyun.oss.sdk.version>2.8.3</aliyun.oss.sdk.version>
         <thumbnailator.version>0.4.11</thumbnailator.version>
         <kaptcha.version>2.3.2</kaptcha.version>
-        <swagger2.version>2.9.2</swagger2.version>
+        <swagger2.version>3.0.0</swagger2.version>
         <hutool.version>4.5.1</hutool.version>
         <mysql.version>8.0.9-rc</mysql.version>
         <liquibase.version>3.8.7</liquibase.version>
         <jasypt.version>3.0.3</jasypt.version>
         <guava.version>30.1-jre</guava.version>
-        <swagger.version>3.0.0</swagger.version>
         <commons-io.version>2.6</commons-io.version>
         <cglib.version>3.2.10</cglib.version>
         <asm.version>7.1</asm.version>
@@ -47,29 +50,70 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${jasypt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
                 <version>${liquibase.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.bali.core</groupId>
-                <artifactId>bali-core-framework</artifactId>
-                <version>${revision}</version>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+                <scope>runtime</scope>
             </dependency>
             <dependency>
-                <groupId>com.github.bali.core</groupId>
-                <artifactId>bali-core-security</artifactId>
-                <version>${revision}</version>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>${oauth.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.bali.core</groupId>
-                <artifactId>bali-core-validation</artifactId>
-                <version>${revision}</version>
+                <groupId>org.springframework.security.oauth.boot</groupId>
+                <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+                <version>${oauth.autoconfigure.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.bali.core</groupId>
-                <artifactId>bali-core-persistence-mybatis</artifactId>
-                <version>${revision}</version>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-jwt</artifactId>
+                <version>${oauth.jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>${oauth.jwt.nimbus.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.aliyun.oss</groupId>
@@ -80,6 +124,47 @@
                 <groupId>net.coobird</groupId>
                 <artifactId>thumbnailator</artifactId>
                 <version>${thumbnailator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>${cglib.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm</artifactId>
+                <version>${asm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-extension</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

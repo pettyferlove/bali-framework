@@ -35,14 +35,17 @@
         <dependency>
             <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-security</artifactId>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-validation</artifactId>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-persistence-mybatis</artifactId>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.aliyun.oss</groupId>

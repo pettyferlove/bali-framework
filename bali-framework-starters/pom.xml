@@ -15,6 +15,7 @@
 
     <modules>
         <module>bali-framework-starter-parent</module>
+        <module>bali-framework-starter</module>
     </modules>
 
 </project>
