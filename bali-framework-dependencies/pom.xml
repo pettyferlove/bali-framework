@@ -16,7 +16,7 @@
     <description>Bali Framework依赖管理根模块</description>
 
     <properties>
-        <revision>0.5.0-SNAPSHOT</revision>
+        <revision>0.5.1-SNAPSHOT</revision>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.compile.source.version>1.8</jdk.compile.source.version>
@@ -25,7 +25,7 @@
         <spring-boot.version>2.3.0.RELEASE</spring-boot.version>
         <oauth.version>2.5.0.RELEASE</oauth.version>
         <oauth.jwt.version>1.1.1.RELEASE</oauth.jwt.version>
-        <oauth.jwt.nimbus.version>9.4</oauth.jwt.nimbus.version>
+        <oauth.jwt.nimbus.version>8.20.2</oauth.jwt.nimbus.version>
         <oauth.autoconfigure.version>2.4.0</oauth.autoconfigure.version>
         <spring-platform.version>Cairo-SR8</spring-platform.version>
         <mybatis-plus.version>3.3.0</mybatis-plus.version>
