@@ -101,7 +101,7 @@ public class AttachmentOperaServiceImpl implements IAttachmentOperaService {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
+            response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
         } else {
             throw new BaseRuntimeException("not found file", HttpStatus.NOT_FOUND);
         }
