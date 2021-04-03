@@ -1,6 +1,7 @@
 package com.github.bali.attachment.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.github.bali.attachment.constants.FileType;
 import com.github.bali.attachment.domain.dto.FileProcessResult;
 import com.github.bali.attachment.domain.vo.Upload;
@@ -30,7 +31,7 @@ public class AttachmentLocalServiceImpl implements IAttachmentService {
         FileProcessResult result = new FileProcessResult();
         InputStream inputStream = null;
         try {
-            String fileId = IdUtil.simpleUUID();
+            String fileId = IdWorker.getIdStr();
             StringBuilder filePath = new StringBuilder();
             filePath.append(properties.getRoot());
             filePath.append(File.separator);

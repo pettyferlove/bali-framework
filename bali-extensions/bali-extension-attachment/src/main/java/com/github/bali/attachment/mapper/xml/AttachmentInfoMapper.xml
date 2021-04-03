@@ -10,7 +10,6 @@
     <result column="create_time" property="createTime" />
     <result column="modifier" property="modifier" />
     <result column="modify_time" property="modifyTime" />
-        <result column="file_id" property="fileId" />
         <result column="file_name" property="fileName" />
         <result column="file_type" property="fileType" />
         <result column="size" property="size" />
@@ -28,7 +27,7 @@
         create_time,
         modifier,
         modify_time,
-        file_id, file_name, file_type, size, storage_type, md5, path, tenant_id
+        file_name, file_type, size, storage_type, md5, path, tenant_id
     </sql>
 
 </mapper>

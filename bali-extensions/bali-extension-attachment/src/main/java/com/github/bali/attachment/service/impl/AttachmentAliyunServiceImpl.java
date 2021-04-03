@@ -1,11 +1,11 @@
 package com.github.bali.attachment.service.impl;
 
-import cn.hutool.core.util.IdUtil;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.ObjectMetadata;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.github.bali.attachment.constants.FileType;
 import com.github.bali.attachment.constants.SecurityType;
 import com.github.bali.attachment.domain.dto.FileProcessResult;
@@ -44,7 +44,7 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
         FileProcessResult result = new FileProcessResult();
         InputStream inputStream = null;
         try {
-            String fileId = IdUtil.simpleUUID();
+            String fileId = IdWorker.getIdStr();
             StringBuilder filePath = new StringBuilder();
             filePath.append(aliyunProperties.getRoot());
             filePath.append("/");
@@ -96,7 +96,7 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
                 outputStream.write(ch);
             }
         } catch (Exception e) {
-            if(e instanceof BaseRuntimeException){
+            if (e instanceof BaseRuntimeException) {
                 throw new BaseRuntimeException(e.getMessage());
             } else {
                 throw new BaseRuntimeException("file download error");

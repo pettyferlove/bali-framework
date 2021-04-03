@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/attachment/changelog/init/db.changelog-init.yml
+  - include:
+      file: db/attachment/changelog/0.6.0-snapshot/db.changelog-0.6.0-snapshot.yml
