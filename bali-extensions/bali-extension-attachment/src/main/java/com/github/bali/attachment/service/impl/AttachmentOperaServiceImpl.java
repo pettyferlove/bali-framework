@@ -92,7 +92,6 @@ public class AttachmentOperaServiceImpl implements IAttachmentOperaService {
         if (attachmentInfoOptional.isPresent()) {
             AttachmentInfo attachmentInfo = attachmentInfoOptional.get();
             IAttachmentService attachmentService = factory.create(StorageType.parse(attachmentInfo.getStorageType()));
-            attachmentService.download(attachmentInfo.getPath(), attachmentInfo.getMd5(), response.getOutputStream());
             response.setCharacterEncoding("utf-8");
             response.setContentType(attachmentInfo.getFileType());
             String fileName = null;
@@ -102,6 +101,7 @@ public class AttachmentOperaServiceImpl implements IAttachmentOperaService {
                 e.printStackTrace();
             }
             response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+            attachmentService.download(attachmentInfo.getPath(), attachmentInfo.getMd5(), response.getOutputStream());
         } else {
             throw new BaseRuntimeException("not found file", HttpStatus.NOT_FOUND);
         }
