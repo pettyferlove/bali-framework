@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Petty
@@ -28,12 +28,10 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @TableName("extension_attachment_info")
-@ApiModel(value="AttachmentInfo对象", description="")
+@ApiModel(value = "AttachmentInfo对象", description = "")
 public class AttachmentInfo extends BaseEntity<AttachmentInfo> {
 
     private static final long serialVersionUID = 1L;
-
-    private String fileId;
 
     @ApiModelProperty(value = "文件名")
     private String fileName;

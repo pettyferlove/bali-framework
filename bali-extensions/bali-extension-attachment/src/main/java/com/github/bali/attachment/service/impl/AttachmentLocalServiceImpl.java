@@ -1,6 +1,7 @@
 package com.github.bali.attachment.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.github.bali.attachment.constants.FileType;
 import com.github.bali.attachment.domain.dto.FileProcessResult;
 import com.github.bali.attachment.domain.vo.Upload;
@@ -10,6 +11,7 @@ import com.github.bali.attachment.utils.FileUtil;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.springframework.util.FileCopyUtils;
 
 import java.io.*;
 
@@ -30,7 +32,7 @@ public class AttachmentLocalServiceImpl implements IAttachmentService {
         FileProcessResult result = new FileProcessResult();
         InputStream inputStream = null;
         try {
-            String fileId = IdUtil.simpleUUID();
+            String fileId = IdWorker.getIdStr();
             StringBuilder filePath = new StringBuilder();
             filePath.append(properties.getRoot());
             filePath.append(File.separator);
@@ -71,6 +73,8 @@ public class AttachmentLocalServiceImpl implements IAttachmentService {
     @Override
     public void download(String path, String md5, OutputStream outputStream) {
         InputStream inputStream = null;
+        BufferedInputStream bufferedInputStream = null;
+        BufferedOutputStream bufferedOutputStream = null;
         try {
             File file = new File(path);
             String fileMd5 = FileUtil.md5(file);
@@ -78,10 +82,9 @@ public class AttachmentLocalServiceImpl implements IAttachmentService {
                 throw new BaseRuntimeException("file md5 does not match");
             }
             inputStream = new FileInputStream(file);
-            int ch;
-            while ((ch = inputStream.read()) != -1) {
-                outputStream.write(ch);
-            }
+            bufferedInputStream = new BufferedInputStream(inputStream);
+            bufferedOutputStream = new BufferedOutputStream(outputStream);
+            FileCopyUtils.copy(bufferedInputStream, bufferedOutputStream);
         } catch (Exception e) {
             if (e instanceof BaseRuntimeException) {
                 throw new BaseRuntimeException(e.getMessage());
@@ -92,6 +95,12 @@ public class AttachmentLocalServiceImpl implements IAttachmentService {
             try {
                 if (inputStream != null) {
                     inputStream.close();
+                }
+                if (bufferedInputStream != null) {
+                    bufferedInputStream.close();
+                }
+                if (bufferedOutputStream != null) {
+                    bufferedOutputStream.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();

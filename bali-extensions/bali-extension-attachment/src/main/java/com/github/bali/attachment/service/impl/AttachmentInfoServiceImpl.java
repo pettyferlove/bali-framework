@@ -1,6 +1,8 @@
 package com.github.bali.attachment.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -63,7 +65,7 @@ public class AttachmentInfoServiceImpl extends ServiceImpl<AttachmentInfoMapper,
     @Override
     public Boolean save(String userId, String fileId, String fileName, String md5, String filePath, Upload upload, String contentType, Long fileSize) {
         AttachmentInfo attachmentInfo = new AttachmentInfo();
-        attachmentInfo.setFileId(fileId);
+        attachmentInfo.setId(StrUtil.isEmpty(fileId) ? IdWorker.getIdStr() : fileId);
         attachmentInfo.setMd5(md5);
         attachmentInfo.setCreator(userId);
         attachmentInfo.setCreateTime(LocalDateTime.now());
@@ -77,7 +79,7 @@ public class AttachmentInfoServiceImpl extends ServiceImpl<AttachmentInfoMapper,
 
     @Override
     public AttachmentInfo getAttachmentInfoById(String id) {
-        return this.getOne(Wrappers.<AttachmentInfo>lambdaQuery().eq(AttachmentInfo::getFileId, id));
+        return this.getOne(Wrappers.<AttachmentInfo>lambdaQuery().eq(AttachmentInfo::getId, id));
     }
 
 }

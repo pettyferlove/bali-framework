@@ -1,11 +1,11 @@
 package com.github.bali.attachment.service.impl;
 
-import cn.hutool.core.util.IdUtil;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.ObjectMetadata;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.github.bali.attachment.constants.FileType;
 import com.github.bali.attachment.constants.SecurityType;
 import com.github.bali.attachment.domain.dto.FileProcessResult;
@@ -16,6 +16,7 @@ import com.github.bali.core.framework.exception.BaseRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileUtils;
+import org.springframework.util.FileCopyUtils;
 
 import javax.validation.constraints.NotNull;
 import java.io.*;
@@ -44,7 +45,7 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
         FileProcessResult result = new FileProcessResult();
         InputStream inputStream = null;
         try {
-            String fileId = IdUtil.simpleUUID();
+            String fileId = IdWorker.getIdStr();
             StringBuilder filePath = new StringBuilder();
             filePath.append(aliyunProperties.getRoot());
             filePath.append("/");
@@ -85,18 +86,19 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
 
     @Override
     public void download(String path, String md5, OutputStream outputStream) {
+        BufferedInputStream bufferedInputStream = null;
+        BufferedOutputStream bufferedOutputStream = null;
         try {
             OSSObject ossObject = oss.getObject(aliyunProperties.getBucket(), path);
             String fileMd5 = new String(Hex.encodeHex(BinaryUtil.fromBase64String(ossObject.getObjectMetadata().getContentMD5())));
             if (!md5.equals(fileMd5)) {
                 throw new BaseRuntimeException("file md5 does not match");
             }
-            int ch;
-            while ((ch = ossObject.getObjectContent().read()) != -1) {
-                outputStream.write(ch);
-            }
+            bufferedInputStream = new BufferedInputStream(ossObject.getObjectContent());
+            bufferedOutputStream = new BufferedOutputStream(outputStream);
+            FileCopyUtils.copy(bufferedInputStream, bufferedOutputStream);
         } catch (Exception e) {
-            if(e instanceof BaseRuntimeException){
+            if (e instanceof BaseRuntimeException) {
                 throw new BaseRuntimeException(e.getMessage());
             } else {
                 throw new BaseRuntimeException("file download error");

@@ -62,7 +62,7 @@ public interface IAttachmentInfoService extends IService<AttachmentInfo> {
      * 保存文件上传记录
      *
      * @param userId      UserId
-     * @param fileId      FileID
+     * @param fileId      文件ID，如果为Null则自动生成
      * @param fileName    FileName
      * @param md5         MD5
      * @param filePath    文件相对地址
