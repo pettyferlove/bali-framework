@@ -9,6 +9,7 @@ import org.springframework.web.filter.CorsFilter;
 
 /**
  * 跨域处理
+ *
  * @author Petty
  */
 @Configuration
@@ -21,21 +22,14 @@ public class CorsFilterAutoConfiguration {
      */
     @Bean
     public CorsFilter corsFilter() {
+        final CorsConfiguration corsConfiguration = new CorsConfiguration();
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        final CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOriginPattern("*");
-        config.addAllowedHeader("*");
-        config.setMaxAge(18000L);
-        config.addAllowedMethod("OPTIONS");
-        config.addAllowedMethod("HEAD");
-        // 允许Get的请求方法
-        config.addAllowedMethod("GET");
-        config.addAllowedMethod("PUT");
-        config.addAllowedMethod("POST");
-        config.addAllowedMethod("DELETE");
-        config.addAllowedMethod("PATCH");
-        source.registerCorsConfiguration("/**", config);
+        corsConfiguration.addAllowedOriginPattern(CorsConfiguration.ALL);
+        corsConfiguration.addAllowedHeader(CorsConfiguration.ALL);
+        corsConfiguration.addAllowedMethod(CorsConfiguration.ALL);
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setMaxAge(18000L);
+        source.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(source);
     }
 }
