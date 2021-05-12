@@ -2,6 +2,7 @@ package com.github.bali.auth.api;
 
 import com.github.bali.auth.domain.vo.ChangePassword;
 import com.github.bali.auth.domain.vo.PersonalDetails;
+import com.github.bali.auth.domain.vo.PersonalRole;
 import com.github.bali.auth.service.IUserInfoService;
 import com.github.bali.auth.service.IUserService;
 import com.github.bali.core.framework.constants.ApiConstant;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author Petty
