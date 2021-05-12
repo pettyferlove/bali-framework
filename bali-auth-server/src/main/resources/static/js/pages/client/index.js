@@ -20,7 +20,7 @@ layui.use(['layer', 'table'], function () {
             , {field: 'accessTokenValidity', title: 'Token有效时间', width: 100, sort: true, totalRow: true}
             , {field: 'createTime', title: '创建时间', sort: true,}
             , {field: 'modifyTime', title: '最后修改时间', sort: true,}
-            , {fixed: 'right', width: 125, align: 'center', toolbar: '#action'}
+            , {fixed: 'right', width: 200, align: 'center', toolbar: '#action'}
         ]], response: {
             statusCode: 200 //重新规定成功的状态码为 200，table 组件默认为 0
         }
@@ -102,6 +102,8 @@ layui.use(['layer', 'table'], function () {
             del(data.id);
         } else if (layEvent === 'edit') {
             edit(data.id);
+        } else if (layEvent === 'viewSecret') {
+            viewSecret(data.id);
         }
     });
 
@@ -160,6 +162,55 @@ layui.use(['layer', 'table'], function () {
                 return false;
             }
         });
+    }
+
+    function viewSecret(id) {
+        $.ajax({
+            type: "GET",
+            url: "/client/view-secret/" + id,
+            dataType: "json",
+            success: function (res) {
+                if (res.message) {
+                    layer.msg(res.message, {icon: 2});
+                } else {
+                    layer.open({
+                        type: 1,
+                        anim: 2,
+                        area: ['520', '250'],
+                        title: '客户端令牌',
+                        shadeClose: false,
+                        content: '<div style="padding: 10px">\n' +
+                            '    <blockquote class="layui-elem-quote">旧版本生成的Client不支持查看ClientSecret</blockquote>\n' +
+                            '    <table class="layui-table" lay-even="" lay-skin="nob">\n' +
+                            '        <colgroup>\n' +
+                            '            <col width="250">\n' +
+                            '            <col width="250">\n' +
+                            '            <col>\n' +
+                            '        </colgroup>\n' +
+                            '        <thead>\n' +
+                            '        <tr>\n' +
+                            '            <th>Client ID</th>\n' +
+                            '            <th>'+res.data.clientId+'</th>\n' +
+                            '        </tr>\n' +
+                            '        </thead>\n' +
+                            '        <tbody>\n' +
+                            '        <tr>\n' +
+                            '            <td>Client Secret</td>\n' +
+                            '            <td>'+res.data.clientSecret+'</td>\n' +
+                            '        </tr>\n' +
+                            '        </tbody>\n' +
+                            '    </table>\n' +
+                            '</div>'
+                        , yes: function (index) {
+                            layer.close(index);
+                        }
+                    });
+                }
+            },
+            error: function (err) {
+                layer.msg('获取客户端信息失败', {icon: 2});
+            }
+        })
     }
 
 });

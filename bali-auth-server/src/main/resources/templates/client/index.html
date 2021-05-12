@@ -41,6 +41,7 @@
                     <script type="text/html" id="action">
                         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="viewSecret"  sec:authorize="hasAnyRole('SUPER_ADMIN','TENANT_ADMIN')">查看密钥</a>
                     </script>
                 </div>
             </div>

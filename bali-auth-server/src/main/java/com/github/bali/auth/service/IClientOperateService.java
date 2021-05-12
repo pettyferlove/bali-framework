@@ -2,6 +2,7 @@ package com.github.bali.auth.service;
 
 import com.github.bali.auth.domain.vo.ClientCreateResponseVO;
 import com.github.bali.auth.domain.vo.ClientDetailsVO;
+import com.github.bali.auth.entity.AuthClientDetails;
 
 import java.util.List;
 
@@ -45,4 +46,6 @@ public interface IClientOperateService {
      * @return 是否成功
      */
     Boolean batchDelete(String ids);
+
+    AuthClientDetails viewSecret(String id);
 }
