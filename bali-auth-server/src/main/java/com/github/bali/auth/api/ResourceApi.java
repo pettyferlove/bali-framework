@@ -26,7 +26,7 @@ public class ResourceApi {
 
     @PreAuthorize("#oauth2.hasScope('user.read')")
     @GetMapping("user-info")
-    @ApiOperation(value = "获取个人信息", notes = "需user.read域", authorizations = @Authorization(value = "oauth2"))
+    @ApiOperation(value = "获取个人基础信息", notes = "需user.read域", authorizations = @Authorization(value = "oauth2"))
     public UserDetails userInfo() {
         BaliUserDetails user = SecurityUtil.getUser();
         return UserDetails.builder()

@@ -10,6 +10,7 @@ import com.github.bali.core.framework.domain.vo.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,8 +36,9 @@ public class PersonalApi {
         this.userService = userService;
     }
 
-    @ApiOperation(value = "获取个人详细信息", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiOperation(value = "获取个人详细信息", notes = "需user.read域", authorizations = @Authorization(value = "oauth2"))
     @GetMapping("/info")
+    @PreAuthorize("#oauth2.hasScope('user.read')")
     public R<PersonalDetails> get() {
         return new R<>(userInfoService.getDetails());
     }
