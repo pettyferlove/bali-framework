@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author Petty
@@ -80,5 +81,11 @@ public class PersonalDetails implements IVO {
 
     @ApiModelProperty(value = "行政区划CODE")
     private String regionId;
+
+    @ApiModelProperty(value = "所属租户")
+    private String tenantName;
+
+    @ApiModelProperty(value = "拥有角色")
+    private List<PersonalRole> roles;
 
 }

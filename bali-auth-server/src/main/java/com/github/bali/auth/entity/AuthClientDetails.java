@@ -48,6 +48,9 @@ public class AuthClientDetails extends BaseEntity<AuthClientDetails> {
     @ApiModelProperty(value = "客户端密钥")
     private String clientSecret;
 
+    @ApiModelProperty(value = "客户端密钥原文")
+    private String clientSecretOriginal;
+
     @ApiModelProperty(value = "授权模式")
     private String authorizedGrantTypes;
 

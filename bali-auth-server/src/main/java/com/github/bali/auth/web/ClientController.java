@@ -69,6 +69,16 @@ public class ClientController {
         return "client/view";
     }
 
+    @RequestMapping(value = "view-secret/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public R<AuthClientDetails> viewSecret(@PathVariable String id) {
+        try {
+            return new R<AuthClientDetails>(clientOperateService.viewSecret(id));
+        } catch (Exception e) {
+            return new R<>(null, e.getMessage());
+        }
+    }
+
     @RequestMapping(value = "create", method = RequestMethod.POST)
     @ResponseBody
     public R<ClientCreateResponseVO> create(@RequestBody ClientDetailsVO details) {

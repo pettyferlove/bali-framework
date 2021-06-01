@@ -53,6 +53,7 @@ public class ClientOperateServiceImpl implements IClientOperateService {
         String clientSecret = IdUtil.simpleUUID();
         clientDetails.setClientId(clientId);
         clientDetails.setClientSecret(passwordEncoder.encode(clientSecret));
+        clientDetails.setClientSecretOriginal(clientSecret);
         String id = authClientDetailsService.create(clientDetails);
         if (StrUtil.isNotEmpty(details.getScope())) {
             String[] scopes = details.getScope().split(",");
@@ -103,5 +104,14 @@ public class ClientOperateServiceImpl implements IClientOperateService {
             this.delete(id);
         }
         return true;
+    }
+
+    @Override
+    public AuthClientDetails viewSecret(String id) {
+        AuthClientDetails details = authClientDetailsService.get(id);
+        AuthClientDetails secretDetails = new AuthClientDetails();
+        secretDetails.setClientId(details.getClientId());
+        secretDetails.setClientSecret(StrUtil.isNotEmpty(details.getClientSecretOriginal())?details.getClientSecretOriginal():"");
+        return secretDetails;
     }
 }

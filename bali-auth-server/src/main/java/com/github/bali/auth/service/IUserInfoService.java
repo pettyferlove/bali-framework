@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.bali.auth.domain.vo.PersonalDetails;
+import com.github.bali.auth.domain.vo.PersonalRole;
 import com.github.bali.auth.entity.UserInfo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -71,4 +74,5 @@ public interface IUserInfoService extends IService<UserInfo> {
      * @return 是否成功
      */
     Boolean updateDetails(PersonalDetails details);
+
 }

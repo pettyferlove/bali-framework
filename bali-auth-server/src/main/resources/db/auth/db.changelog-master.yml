@@ -7,3 +7,5 @@ databaseChangeLog:
       file: db/auth/changelog/0.1.0-snapshot/db.changelog-0.1.0-snapshot.yml
   - include:
       file: db/auth/changelog/0.4.0-snapshot/db.changelog-0.4.0-snapshot.yml
+  - include:
+      file: db/auth/changelog/1.0.1-release/db.changelog-1.0.1-release.yml

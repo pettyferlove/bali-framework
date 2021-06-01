@@ -32,7 +32,7 @@ layui.use(['form'], function () {
                         title: '客户端令牌',
                         shadeClose: false,
                         content: '<div style="padding: 10px">\n' +
-                            '    <blockquote class="layui-elem-quote">请妥善保存，关闭后无法再次获取以下信息</blockquote>\n' +
+                            '    <blockquote class="layui-elem-quote">请妥善保存</blockquote>\n' +
                             '    <table class="layui-table" lay-even="" lay-skin="nob">\n' +
                             '        <colgroup>\n' +
                             '            <col width="250">\n' +
