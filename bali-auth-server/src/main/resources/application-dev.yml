@@ -49,7 +49,7 @@ spring:
     name: bali-user-center
     url: jdbc:mysql://127.0.0.1:3306/bali_user_center?characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
-    password: ENC('ySC+gwaW3+Hq84TtNq7gdw==')
+    password: ENC('BsrmpgRdXOscqRNKO0tEQw==')
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
@@ -99,8 +99,8 @@ attachment:
       name: user-center-aliyun
       root: user-center
       endpoint: oss-cn-shanghai.aliyuncs.com
-      access-key-id: ENC('nRiiCp6nIIe1ZDtlpnmHSf6ZSFYAKYQDIE2E5U1xCcNrcVIMwmxjvg==')
-      access-key-secret: ENC('ofEZthKQW99EUt5RCrFVwfwVnURNFkfA/snUYybmjZZTp5aElpU2mQ==')
+      access-key-id: ENC('5YHpnBeUFMA9g50jT9Ng2o8mfoCx4Z3W6n4hEYOS8iZjv/JY0swpBg==')
+      access-key-secret: ENC('R+4aRIrz0CpSvUHtyW+DZNY33PE/+Ce5Ep26JMS1xq2WmzBcqVlyAw==')
       bucket: user-center-attachment
   local:
     name: user-center-local
