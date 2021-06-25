@@ -63,6 +63,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
             log.error("user:{},attempts to remove the super administrator role", SecurityUtil.getUser().getId());
             throw new BaseRuntimeException("警告：你无法删除超级管理员角色");
         }
+        if (SecurityConstant.TENANT_ADMIN_ROLE.equals(role.getRole())) {
+            log.error("user:{},attempts to remove the tenant administrator role", SecurityUtil.getUser().getId());
+            throw new BaseRuntimeException("警告：你无法删除租户管理员角色");
+        }
         userRoleService.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getRoleId, id));
         return this.removeById(id);
     }
