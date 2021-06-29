@@ -86,8 +86,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     public Boolean update(Role role) {
         Role r = Optional.ofNullable(this.get(role.getId())).orElseGet(Role::new);
         if (SecurityConstant.SUPER_ADMIN_ROLE.equals(r.getRole())) {
-            log.error("user:{},attempts to remove the super administrator role", SecurityUtil.getUser().getId());
+            log.error("user:{},attempts to update the super administrator role", SecurityUtil.getUser().getId());
             throw new BaseRuntimeException("警告：你无法修改超级管理员角色");
+        }
+        if (SecurityConstant.TENANT_ADMIN_ROLE.equals(r.getRole())) {
+            log.error("user:{},attempts to update the tenant administrator role", SecurityUtil.getUser().getId());
+            throw new BaseRuntimeException("警告：你无法修改租户管理员角色");
         }
         Role updateRole = new Role();
         updateRole.setId(role.getId());

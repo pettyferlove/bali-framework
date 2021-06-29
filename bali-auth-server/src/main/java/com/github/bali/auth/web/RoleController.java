@@ -8,6 +8,7 @@ import com.github.bali.core.framework.domain.vo.R;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -61,7 +62,7 @@ public class RoleController {
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
     @ResponseBody
-    public R<String> create(@RequestBody Role role) {
+    public R<String> create(@RequestBody @Validated Role role) {
         try {
             return new R<>(roleService.create(role));
         } catch (Exception e) {
@@ -71,7 +72,7 @@ public class RoleController {
 
     @RequestMapping(value = "update", method = RequestMethod.PUT)
     @ResponseBody
-    public R<Boolean> update(@RequestBody Role role) {
+    public R<Boolean> update(@RequestBody @Validated Role role) {
         try {
             return new R<>(roleService.update(role));
         } catch (Exception e) {
