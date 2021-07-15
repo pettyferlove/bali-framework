@@ -16,6 +16,7 @@
 
     <modules>
         <module>bali-extension-attachment</module>
+        <module>bali-extension-message</module>
     </modules>
 
 </project>

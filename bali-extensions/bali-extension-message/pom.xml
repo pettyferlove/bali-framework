@@ -7,10 +7,10 @@
         <artifactId>bali-extensions</artifactId>
         <version>${revision}</version>
     </parent>
-    <artifactId>bali-extension-attachment</artifactId>
+    <artifactId>bali-extension-message</artifactId>
     <version>${revision}</version>
-    <name>bali-extension-attachment</name>
-    <description>附件扩展</description>
+    <name>bali-extension-message</name>
+    <description>短信和邮件扩展</description>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -24,36 +24,26 @@
             <artifactId>liquibase-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.github.bali.core</groupId>
             <artifactId>bali-core-framework</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.bali.core</groupId>
-            <artifactId>bali-core-security</artifactId>
-            <version>${revision}</version>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>4.1.0</version>
         </dependency>
         <dependency>
-            <groupId>com.github.bali.core</groupId>
-            <artifactId>bali-core-validation</artifactId>
-            <version>${revision}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.bali.core</groupId>
-            <artifactId>bali-core-persistence-mybatis</artifactId>
-            <version>${revision}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.aliyun.oss</groupId>
-            <artifactId>aliyun-sdk-oss</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.coobird</groupId>
-            <artifactId>thumbnailator</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
 
