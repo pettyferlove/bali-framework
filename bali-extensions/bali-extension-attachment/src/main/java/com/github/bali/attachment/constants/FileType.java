@@ -8,7 +8,11 @@ public enum FileType {
     IMAGE_JPEG("image/jpeg", "image", ".jpeg"),
     IMAGE_JPG("image/jpg", "image", ".jpg"),
     IMAGE_PNG("image/png", "image", ".png"),
-    EXCEL_XLSX("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "documentation", ".xlsx");
+    APPLICATION_PDF("application/pdf", "pdf", ".pdf"),
+    EXCEL_XLSX("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "documentation", ".xlsx"),
+    DOCUMENT_DOCX("application/vnd.openxmlformats-officedocument.wordprocessingml.document", "documentation", ".docs"),
+    DOCUMENT_DOC("application/msword", "documentation", ".doc"),
+    DOCUMENT_XLS("application/vnd.ms-excel", "documentation", ".xls");
     private String contentType;
 
     private String type;
