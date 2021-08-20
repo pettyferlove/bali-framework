@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Slf4j
 @Configuration
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 public class MultiTenancyAutoConfiguration {
 
     @Autowired
