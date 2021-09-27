@@ -1,6 +1,8 @@
 package com.github.bali.persistence.configuration;
 
-import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import com.github.bali.persistence.properties.MultiTenancyProperties;
 import com.github.bali.persistence.provider.tenant.DefaultTenantHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +24,11 @@ public class MultiTenancyAutoConfiguration {
 
     @Bean
     @ConditionalOnBean(MultiTenancyProperties.class)
-    public TenantSqlParser tenantSqlParser() {
-        return new TenantSqlParser()
-                .setTenantHandler(new DefaultTenantHandler(multiTenancyProperties) {
-                });
+    public MybatisPlusInterceptor tenantSqlParser() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new DefaultTenantHandler(multiTenancyProperties)));
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+        return interceptor;
     }
 
 }

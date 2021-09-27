@@ -2,6 +2,7 @@ package com.github.bali.persistence.provider.tenant;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
 import com.github.bali.persistence.properties.MultiTenancyProperties;
 import com.github.bali.security.utils.SecurityUtil;
@@ -17,7 +18,7 @@ import java.util.Objects;
  * @author Petty
  */
 @Slf4j
-public class DefaultTenantHandler implements com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler {
+public class DefaultTenantHandler implements TenantLineHandler {
 
     private final MultiTenancyProperties multiTenancyProperties;
 
@@ -26,7 +27,7 @@ public class DefaultTenantHandler implements com.baomidou.mybatisplus.extension.
     }
 
     @Override
-    public Expression getTenantId(boolean where) {
+    public Expression getTenantId() {
         // 从当前系统上下文中取出当前请求的服务商ID，通过解析器注入到SQL中。
         String tenantId = Objects.requireNonNull(SecurityUtil.getUser(), "multi_tenancy #50003 get user error.").getTenant();
         if (StrUtil.isEmpty(tenantId)) {
@@ -41,10 +42,7 @@ public class DefaultTenantHandler implements com.baomidou.mybatisplus.extension.
     }
 
     @Override
-    public boolean doTableFilter(String tableName) {
-        /*
-                        匿名用户无法拿到租户ID，忽略处理
-                         */
+    public boolean ignoreTable(String tableName) {
         if (ObjectUtil.isNull(SecurityUtil.getUser())) {
             if (log.isDebugEnabled()) {
                 log.debug("multi_tenancy #50004 ignore tenant control");

@@ -1,9 +1,10 @@
 package com.github.bali.attachment.configuration;
 
-import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
-import com.google.common.collect.Lists;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
+import com.github.bali.persistence.properties.MultiTenancyProperties;
+import com.github.bali.persistence.provider.tenant.DefaultTenantHandler;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -25,28 +26,19 @@ public class MybatisPlusConfigurer {
      * @return PaginationInterceptor
      */
     @Bean
-    @ConditionalOnMissingBean(TenantSqlParser.class)
-    public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
+    @ConditionalOnMissingBean(MultiTenancyProperties.class)
+    public MybatisPlusInterceptor paginationInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+        return interceptor;
     }
 
     @Bean
-    @ConditionalOnBean(TenantSqlParser.class)
-    public PaginationInterceptor paginationInterceptor(TenantSqlParser tenantSqlParser) {
-        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        paginationInterceptor.setSqlParserList(Lists.newArrayList(tenantSqlParser));
-        return paginationInterceptor;
+    @ConditionalOnBean(MultiTenancyProperties.class)
+    public MybatisPlusInterceptor paginationInterceptor(MultiTenancyProperties multiTenancyProperties) {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new DefaultTenantHandler(multiTenancyProperties)));
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+        return interceptor;
     }
-
-    /**
-     * 乐观锁插件
-     *
-     * @return OptimisticLockerInterceptor
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public OptimisticLockerInterceptor optimisticLockerInterceptor() {
-        return new OptimisticLockerInterceptor();
-    }
-
 }

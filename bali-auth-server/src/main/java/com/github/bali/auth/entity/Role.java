@@ -54,10 +54,4 @@ public class Role extends BaseEntity<Role> {
     @ApiModelProperty(value = "租户ID")
     private String tenantId;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return null;
-    }
-
 }

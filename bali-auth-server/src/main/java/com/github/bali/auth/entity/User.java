@@ -57,10 +57,4 @@ public class User extends BaseEntity<User> {
     @ApiModelProperty(value = "是否有效 0：无效 1：有效 8：凭证无效 9：锁定")
     private Integer status;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return null;
-    }
-
 }

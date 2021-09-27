@@ -45,10 +45,4 @@ public class AuthClientScope extends BaseEntity<AuthClientScope> {
     @ApiModelProperty(value = "租户ID")
     private String tenantId;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return null;
-    }
-
 }

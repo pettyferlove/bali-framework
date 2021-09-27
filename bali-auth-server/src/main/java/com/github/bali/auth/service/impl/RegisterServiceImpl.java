@@ -46,7 +46,7 @@ public class RegisterServiceImpl implements IRegisterService {
         if (StrUtil.isNotEmpty(register.getUnionId())) {
             queryWrapper.eq(User::getUnionId, register.getUnionId());
         }
-        int count = userService.count(queryWrapper);
+        long count = userService.count(queryWrapper);
         if (count > 0) {
             throw new BaseRuntimeException("存在同样的数据，请检查后提交");
         } else {

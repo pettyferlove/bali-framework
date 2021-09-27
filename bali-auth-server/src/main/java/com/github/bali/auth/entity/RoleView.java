@@ -58,10 +58,4 @@ public class RoleView extends Model<RoleView> {
     @ApiModelProperty(value = "修改时间")
     private LocalDateTime modifyTime;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return null;
-    }
-
 }

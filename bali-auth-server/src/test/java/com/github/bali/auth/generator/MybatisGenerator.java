@@ -15,63 +15,56 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 public class MybatisGenerator {
     public static void main(String[] args) {
         String outputDir = "D:/Generator";
-        AutoGenerator mpg = new AutoGenerator();
-        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         // 全局配置
-        GlobalConfig gc = new GlobalConfig();
-        gc.setSwagger2(true);
-        gc.setOutputDir(outputDir);
-        gc.setFileOverride(true);
-        gc.setActiveRecord(true);
-        gc.setIdType(IdType.ASSIGN_ID);
-        gc.setDateType(DateType.TIME_PACK);
-        // XML 二级缓存
-        gc.setEnableCache(false);
-        // XML ResultMap
-        gc.setBaseResultMap(true);
-        // XML columList
-        gc.setBaseColumnList(true);
-        gc.setAuthor("Petty");
-        mpg.setGlobalConfig(gc);
+        GlobalConfig gc = new GlobalConfig.Builder()
+                .author("Petty")
+                .enableSwagger()
+                .fileOverride()
+                .outputDir(outputDir)
+                .fileOverride()
+                .dateType(DateType.TIME_PACK)
+                .build();
 
         // 数据源配置
-        DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setDbType(DbType.MYSQL);
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/bali_user_center?characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true");
-        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("root");
-        mpg.setDataSource(dsc);
+        DataSourceConfig dsc = new DataSourceConfig.Builder(
+                "jdbc:mysql://127.0.0.1:3306/bali_user_center?characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true",
+                "root",
+                "root"
+        ).build();
 
 
-        TemplateConfig tc = new TemplateConfig();
-        tc.setController("/templates/controller.java");
-        tc.setEntity("/templates/entity.java");
-        tc.setService("/templates/service.java");
-        tc.setServiceImpl("/templates/serviceImpl.java");
-        mpg.setTemplate(tc);
+        TemplateConfig tc = new TemplateConfig.Builder()
+                .controller("/templates/controller.java")
+                .entity("/templates/entity.java")
+                .service("/templates/service.java")
+                .serviceImpl("/templates/serviceImpl.java")
+                .build();
 
         // 策略配置
-        StrategyConfig strategy = new StrategyConfig();
-//        strategy.setSuperEntityClass("com.github.bali.persistence.entity.BaseEntity");
-//        strategy.setSuperEntityColumns("id", "del_flag", "creator", "create_time", "modifier", "modify_time");
-        // 乐观锁字段
-        //strategy.setVersionFieldName("VERSION");
-        strategy.setLogicDeleteFieldName("del_flag");
-        // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
-        // 表名生成策略
-        strategy.setInclude("uc_auth_client_details_scope", "uc_user_role");
-        strategy.setEntityLombokModel(true);
-        strategy.setRestControllerStyle(true);
-        strategy.setEntityBuilderModel(false);
-        strategy.setNaming(NamingStrategy.underline_to_camel);
-        strategy.setTablePrefix("uc_");
-        mpg.setStrategy(strategy);
+        StrategyConfig strategy = new StrategyConfig.Builder()
+                .addInclude("")
+                .addTablePrefix("uc_")
+                .entityBuilder()
+                .logicDeleteColumnName("del_flag")
+                .enableLombok()
+                .naming(NamingStrategy.underline_to_camel)
+                .superClass("com.github.bali.persistence.entity.BaseEntity")
+                //.addSuperEntityColumns("id", "del_flag", "creator", "create_time", "modifier", "modify_time")
+                .enableActiveRecord()
+                .idType(IdType.ASSIGN_ID)
+                .entityBuilder()
+                .controllerBuilder()
+                .enableRestStyle()
+                .mapperBuilder()
+                .enableBaseResultMap()
+                .enableBaseColumnList()
+                .build();
+
         // 配置包路径
-        PackageConfig pc = new PackageConfig();
-        pc.setParent("com.github.bali.auth");
-        mpg.setPackageInfo(pc);
-        mpg.execute();
+        PackageConfig pc = new PackageConfig.Builder().parent("com.github.bali.auth").build();
+
+        AutoGenerator mpg = new AutoGenerator(dsc).global(gc).strategy(strategy).packageInfo(pc).template(tc);
+        mpg.execute(new FreemarkerTemplateEngine());
     }
 }
 

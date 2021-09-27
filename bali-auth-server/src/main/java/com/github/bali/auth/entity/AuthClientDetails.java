@@ -72,10 +72,4 @@ public class AuthClientDetails extends BaseEntity<AuthClientDetails> {
     @ApiModelProperty(value = "租户ID")
     private String tenantId;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return null;
-    }
-
 }

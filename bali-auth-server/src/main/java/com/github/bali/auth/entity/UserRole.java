@@ -38,10 +38,4 @@ public class UserRole extends Model<UserRole> {
 
     private String roleId;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
-
 }

@@ -131,10 +131,4 @@ public class UserInfoView extends Model<UserInfoView> {
     @ApiModelProperty(value = "修改时间")
     private LocalDateTime modifyTime;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return null;
-    }
-
 }

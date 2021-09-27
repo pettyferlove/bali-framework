@@ -56,10 +56,4 @@ public class Tenant extends BaseEntity<Tenant> {
     @ApiModelProperty(value = "是否有效 0 无效 1 有效")
     private Integer status;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return null;
-    }
-
 }
