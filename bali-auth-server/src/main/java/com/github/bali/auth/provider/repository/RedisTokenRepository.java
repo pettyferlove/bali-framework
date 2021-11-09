@@ -90,7 +90,7 @@ public class RedisTokenRepository implements PersistentTokenRepository {
                     return;
                 }
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             log.warn("token remove exception", ex);
         }
     }

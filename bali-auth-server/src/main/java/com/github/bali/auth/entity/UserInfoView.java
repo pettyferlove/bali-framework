@@ -1,5 +1,7 @@
 package com.github.bali.auth.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -35,6 +37,7 @@ public class UserInfoView extends Model<UserInfoView> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "用户ID")
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
     @ApiModelProperty(value = "登录ID")

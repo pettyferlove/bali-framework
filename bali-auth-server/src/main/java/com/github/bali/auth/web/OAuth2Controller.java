@@ -1,6 +1,8 @@
 package com.github.bali.auth.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
+import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.security.oauth2.common.util.OAuth2Utils;
 import org.springframework.security.oauth2.provider.AuthorizationRequest;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -12,9 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -34,10 +40,13 @@ public class OAuth2Controller {
 
     private final ApprovalStore approvalStore;
 
+    private final ErrorAttributes errorAttributes;
+
     @Autowired
-    public OAuth2Controller(ClientDetailsService clientDetailsService, ApprovalStore approvalStore) {
+    public OAuth2Controller(ClientDetailsService clientDetailsService, ApprovalStore approvalStore, ErrorAttributes errorAttributes) {
         this.clientDetailsService = clientDetailsService;
         this.approvalStore = approvalStore;
+        this.errorAttributes = errorAttributes;
     }
 
     @GetMapping("/confirm_access")
@@ -61,9 +70,17 @@ public class OAuth2Controller {
     }
 
     @RequestMapping("/error")
-    public String handleError(Map<String, Object> model) {
-        model.put("message", "There was a problem with the OAuth2 protocol");
-        return "oauth/oauth_error";
+    public ModelAndView handleError(HttpServletRequest request) {
+        Map<String, Object> model = Collections.unmodifiableMap(getErrorAttributes(request));
+        return new ModelAndView("oauth/oauth_error", model);
+    }
+
+    private Map<String, Object> getErrorAttributes(HttpServletRequest request) {
+        WebRequest webRequest = new ServletWebRequest(request);
+        return this.errorAttributes.getErrorAttributes(webRequest, ErrorAttributeOptions.of(ErrorAttributeOptions.Include.EXCEPTION,
+                ErrorAttributeOptions.Include.STACK_TRACE,
+                ErrorAttributeOptions.Include.MESSAGE,
+                ErrorAttributeOptions.Include.BINDING_ERRORS));
     }
 
 }

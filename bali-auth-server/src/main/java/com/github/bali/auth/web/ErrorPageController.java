@@ -1,6 +1,7 @@
 package com.github.bali.auth.web;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
@@ -48,7 +49,10 @@ public class ErrorPageController implements ErrorController {
 
     private Map<String, Object> getErrorAttributes(HttpServletRequest request) {
         WebRequest webRequest = new ServletWebRequest(request);
-        return this.errorAttributes.getErrorAttributes(webRequest, true);
+        return this.errorAttributes.getErrorAttributes(webRequest, ErrorAttributeOptions.of(ErrorAttributeOptions.Include.EXCEPTION,
+                ErrorAttributeOptions.Include.STACK_TRACE,
+                ErrorAttributeOptions.Include.MESSAGE,
+                ErrorAttributeOptions.Include.BINDING_ERRORS));
     }
 
     private HttpStatus getStatus(HttpServletRequest request) {
@@ -64,13 +68,4 @@ public class ErrorPageController implements ErrorController {
         }
     }
 
-    /**
-     * Returns the path of the error page.
-     *
-     * @return the error path
-     */
-    @Override
-    public String getErrorPath() {
-        return ERROR_PATH;
-    }
 }
