@@ -32,7 +32,7 @@ public class RedisSessionConfiguration {
 
     @Bean
     @Primary
-    public RedisIndexedSessionRepository sessionRepository(RedisConnectionFactory connectionFactory) {
+    public RedisIndexedSessionRepository redisIndexedSessionRepository(RedisConnectionFactory connectionFactory) {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());

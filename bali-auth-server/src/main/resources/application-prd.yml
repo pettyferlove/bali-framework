@@ -23,8 +23,6 @@ spring:
       max-file-size: 10MB # 最大附件大小
       max-request-size: 10MB
       location: /data/tmp/application
-  main:
-    allow-bean-definition-overriding: true
   mvc:
     static-path-pattern: /static/**
   cache:
