@@ -15,7 +15,7 @@
  */
 package com.github.bali.auth.configuration;
 
-import com.github.bali.auth.service.OAuth2UserDetailsService;
+import com.github.bali.auth.provider.authentication.BaliAuthenticationProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +26,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.web.cors.CorsUtils;
 
@@ -41,14 +40,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final PersistentTokenRepository tokenRepository;
 
-    private final OAuth2UserDetailsService userDetailsService;
+    private final BaliAuthenticationProvider baliAuthenticationProvider;
 
-    private final PasswordEncoder passwordEncoder;
-
-    public SecurityConfiguration(PersistentTokenRepository tokenRepository, OAuth2UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    public SecurityConfiguration(PersistentTokenRepository tokenRepository, BaliAuthenticationProvider baliAuthenticationProvider) {
         this.tokenRepository = tokenRepository;
-        this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
+        this.baliAuthenticationProvider = baliAuthenticationProvider;
     }
 
     @Override
@@ -83,9 +79,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-        super.configure(auth);
+    protected void configure(AuthenticationManagerBuilder builder) throws Exception {
+        builder.authenticationProvider(baliAuthenticationProvider);
+        super.configure(builder);
     }
 
     @Bean
