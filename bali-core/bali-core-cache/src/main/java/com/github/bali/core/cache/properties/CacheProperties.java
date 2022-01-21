@@ -21,6 +21,9 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "spring.cache")
 public class CacheProperties {
 
+    /**
+     * 缓存全局前缀
+     */
     @Value("${spring.cache.prefix:default}")
     private String prefix;
 
