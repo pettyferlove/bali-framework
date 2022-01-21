@@ -15,7 +15,8 @@
  */
 package com.github.bali.auth.configuration;
 
-import com.github.bali.auth.provider.authentication.BaliAuthenticationProvider;
+import com.github.bali.auth.provider.authentication.DefaultAuthenticationProvider;
+import com.github.bali.auth.provider.authentication.WeChatOpenIdAuthenticationProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,11 +41,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final PersistentTokenRepository tokenRepository;
 
-    private final BaliAuthenticationProvider baliAuthenticationProvider;
+    private final DefaultAuthenticationProvider defaultAuthenticationProvider;
 
-    public SecurityConfiguration(PersistentTokenRepository tokenRepository, BaliAuthenticationProvider baliAuthenticationProvider) {
+    private final WeChatOpenIdAuthenticationProvider weChatOpenIdAuthenticationProvider;
+
+    public SecurityConfiguration(PersistentTokenRepository tokenRepository, DefaultAuthenticationProvider defaultAuthenticationProvider, WeChatOpenIdAuthenticationProvider weChatOpenIdAuthenticationProvider) {
         this.tokenRepository = tokenRepository;
-        this.baliAuthenticationProvider = baliAuthenticationProvider;
+        this.defaultAuthenticationProvider = defaultAuthenticationProvider;
+        this.weChatOpenIdAuthenticationProvider = weChatOpenIdAuthenticationProvider;
     }
 
     @Override
@@ -80,9 +84,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder builder) throws Exception {
-        builder.authenticationProvider(baliAuthenticationProvider);
-        super.configure(builder);
+        builder.authenticationProvider(defaultAuthenticationProvider);
+        builder.authenticationProvider(weChatOpenIdAuthenticationProvider);
     }
+
+
 
     @Bean
     @Override

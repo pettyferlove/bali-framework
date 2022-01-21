@@ -3,12 +3,13 @@ package com.github.bali.auth.configuration;
 import com.github.bali.auth.factory.ITokenGranterFactory;
 import com.github.bali.auth.factory.impl.TokenGranterFactoryImpl;
 import com.github.bali.auth.filter.BaliClientCredentialsTokenEndpointFilter;
-import com.github.bali.security.provider.error.OAuth2AuthExceptionEntryPoint;
 import com.github.bali.auth.provider.error.ResponseExceptionTranslator;
+import com.github.bali.auth.provider.granter.WeChatOpenIdTokenGranter;
 import com.github.bali.auth.provider.token.BaliAccessTokenConverter;
 import com.github.bali.auth.service.OAuth2ClientDetailsService;
 import com.github.bali.auth.service.OAuth2UserDetailsService;
 import com.github.bali.auth.utils.KeyUtil;
+import com.github.bali.security.provider.error.OAuth2AuthExceptionEntryPoint;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.KeyUse;
@@ -31,15 +32,12 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.*;
+import org.springframework.security.oauth2.provider.CompositeTokenGranter;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
+import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
-import org.springframework.security.oauth2.provider.client.ClientCredentialsTokenGranter;
-import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
-import org.springframework.security.oauth2.provider.code.AuthorizationCodeTokenGranter;
-import org.springframework.security.oauth2.provider.implicit.ImplicitTokenGranter;
-import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
-import org.springframework.security.oauth2.provider.refresh.RefreshTokenGranter;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
@@ -112,63 +110,30 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         security.addTokenEndpointAuthenticationFilter(endpoint);
     }
 
-    /**
-     * 将自定义Granter加入至授权池中
-     *
-     * @param authorizationCodeServices 默认初始化的AuthorizationCodeServices，不要自己初始化，会导致会在两个Service，直接导致AuthorizationCode模式失效
-     * @return List
-     */
-    private List<TokenGranter> getDefaultTokenGranters(AuthorizationCodeServices authorizationCodeServices) {
-        ClientDetailsService clientDetails = clientDetailsService;
-        List<TokenGranter> tokenGranters = new ArrayList<>();
-        tokenGranters.add(new AuthorizationCodeTokenGranter(tokenServices(),
-                authorizationCodeServices, clientDetails, requestFactory()));
-        tokenGranters.add(new RefreshTokenGranter(tokenServices(), clientDetails, requestFactory()));
-        ImplicitTokenGranter implicit = new ImplicitTokenGranter(tokenServices(), clientDetails,
-                requestFactory());
-        tokenGranters.add(implicit);
-        tokenGranters.add(
-                new ClientCredentialsTokenGranter(tokenServices(), clientDetails, requestFactory()));
-        if (authenticationManager != null) {
-            tokenGranters.add(new ResourceOwnerPasswordTokenGranter(authenticationManager,
-                    tokenServices(), clientDetails, requestFactory()));
-        }
-        List<TokenGranter> granters = tokenGranterFactory().getGranters();
-        tokenGranters.addAll(granters);
-        return tokenGranters;
-    }
-
-    private TokenGranter tokenGranter(AuthorizationCodeServices authorizationCodeServices) {
-        return new TokenGranter() {
-            private CompositeTokenGranter delegate;
-
-            @Override
-            public OAuth2AccessToken grant(String grantType, TokenRequest tokenRequest) {
-                if (delegate == null) {
-                    delegate = new CompositeTokenGranter(getDefaultTokenGranters(authorizationCodeServices));
-                }
-                return delegate.grant(grantType, tokenRequest);
-            }
-        };
-    }
-
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        //Token存储位置
+        endpoints.tokenServices(tokenServices());
         endpoints.tokenStore(tokenStore);
         endpoints.authenticationManager(authenticationManager);
         endpoints.approvalStore(approvalStore());
         endpoints.userDetailsService(userDetailsService);
         endpoints.exceptionTranslator(new ResponseExceptionTranslator());
-        endpoints.tokenGranter(tokenGranter(endpoints.getAuthorizationCodeServices()));
+        endpoints.tokenGranter(tokenGranter(endpoints));
         endpoints.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
         super.configure(endpoints);
+    }
+
+    private TokenGranter tokenGranter(final AuthorizationServerEndpointsConfigurer endpoints) {
+        AuthorizationServerTokenServices tokenServices = endpoints.getTokenServices();
+        List<TokenGranter> granters = new ArrayList<TokenGranter>(Collections.singletonList(endpoints.getTokenGranter()));
+        granters.add(new WeChatOpenIdTokenGranter(tokenServices, endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory(), authenticationManager));
+        return new CompositeTokenGranter(granters);
     }
 
     @Bean
     public TokenEnhancer customerEnhancer() {
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(accessTokenConverter()));
+        tokenEnhancerChain.setTokenEnhancers(Collections.singletonList(accessTokenConverter()));
         return tokenEnhancerChain;
     }
 

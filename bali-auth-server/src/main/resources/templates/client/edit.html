@@ -28,7 +28,8 @@
             <input type="checkbox" value="client_credentials" name="authorizedGrantTypes" title="客户端凭证模式（Client Credentials Grant）" th:checked="${client.getAuthorizedGrantTypes().contains('client_credentials')}">
             <input type="checkbox" value="refresh_token" name="authorizedGrantTypes" title="凭证刷新模式（Refresh Token Grant）" th:checked="${client.getAuthorizedGrantTypes().contains('refresh_token')}">
             <input type="checkbox" value="password" name="authorizedGrantTypes" title="密码模式（Resource Owner Password Credentials Grant）" th:checked="${client.getAuthorizedGrantTypes().contains('password')}">
-            <input type="checkbox" value="wechat" name="authorizedGrantTypes" title="微信OpenID模式（WeChat Grant）" th:checked="${client.getAuthorizedGrantTypes().contains('wechat')}">
+            <input type="checkbox" value="wechat_open_id" name="authorizedGrantTypes" title="微信OpenID模式（WeChat OpenId Grant）" th:checked="${client.getAuthorizedGrantTypes().contains('wechat_open_id')}">
+            <input type="checkbox" value="wechat_union_id" name="authorizedGrantTypes" title="微信UnionID模式（WeChat UnionId Grant）" th:checked="${client.getAuthorizedGrantTypes().contains('wechat_union_id')}">
             <input type="checkbox" value="mobile" name="authorizedGrantTypes" title="手机登录模式（Mobile Grant）" th:checked="${client.getAuthorizedGrantTypes().contains('mobile')}">
         </div>
     </div>

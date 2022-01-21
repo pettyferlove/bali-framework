@@ -3,6 +3,7 @@ package com.github.bali.auth.configuration;
 import com.github.bali.auth.provider.token.JdkSerializationStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +32,7 @@ public class TokenStoreConfiguration {
     }
 
     @Bean("tokenStore")
-    @ConditionalOnMissingClass("org.springframework.data.redis.connection.RedisConnectionFactory")
+    @ConditionalOnMissingBean(RedisConnectionFactory.class)
     public TokenStore inMemoryTokenStore() {
         return new InMemoryTokenStore();
     }

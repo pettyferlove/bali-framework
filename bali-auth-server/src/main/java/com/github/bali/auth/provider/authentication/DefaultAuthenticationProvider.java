@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 @Component
-public class BaliAuthenticationProvider extends DaoAuthenticationProvider {
+public class DefaultAuthenticationProvider extends DaoAuthenticationProvider {
 
     @PostConstruct
     public void initProvider() {
