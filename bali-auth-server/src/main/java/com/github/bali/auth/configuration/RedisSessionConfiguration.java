@@ -1,6 +1,7 @@
 package com.github.bali.auth.configuration;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
@@ -27,7 +28,7 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 @EnableRedisHttpSession
 @ConditionalOnWebApplication
 @EnableConfigurationProperties(RedisProperties.class)
-@ConditionalOnProperty(value = "spring.redis.host")
+@ConditionalOnBean(RedisConnectionFactory.class)
 public class RedisSessionConfiguration {
 
     @Bean
