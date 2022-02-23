@@ -33,7 +33,7 @@ public class WriteOffAuthenticationProvider implements AuthenticationProvider {
 
     private final RestTemplate restTemplate;
 
-    public static final String REMOTE_URI = "http://127.0.0.1:8080/api/v1/activity-write-off-auth/login/{0}/{1}";
+    public static final String REMOTE_URI = "http://127.0.0.1:8078/api/v1/activity-write-off-auth/login/{0}/{1}";
 
     public WriteOffAuthenticationProvider(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
