@@ -103,10 +103,4 @@ public class UserInfo extends BaseEntity<UserInfo> {
     @ApiModelProperty(value = "所属客户端（仅对公开注册的用户生效）")
     private String clientId;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return null;
-    }
-
 }

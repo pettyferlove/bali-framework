@@ -24,4 +24,9 @@ public class IndexController {
         return "index";
     }
 
+    @RequestMapping("/robots.txt")
+    public String robots() {
+        return "redirect:/";
+    }
+
 }

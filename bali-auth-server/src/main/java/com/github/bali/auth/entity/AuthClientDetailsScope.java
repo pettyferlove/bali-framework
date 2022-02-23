@@ -41,10 +41,4 @@ public class AuthClientDetailsScope extends Model<AuthClientDetailsScope> {
 
     private String scopeId;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
-
 }

@@ -3,6 +3,7 @@ package com.github.bali.core.cache.configuration;
 import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 import com.github.bali.core.cache.properties.CacheProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -22,13 +23,14 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.time.Duration;
 
 /**
+ * Redis自定义装配器
  * @author Pettyfer
  */
 @Slf4j
 @Configuration
 @EnableCaching(proxyTargetClass = true)
 @EnableConfigurationProperties(RedisProperties.class)
-@ConditionalOnProperty(value = "spring.redis.host")
+@ConditionalOnBean(RedisConnectionFactory.class)
 public class RedisAutoConfiguration extends CachingConfigurerSupport {
 
     @Bean

@@ -13,10 +13,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.Authorization;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -51,6 +49,27 @@ public class RoleApi {
                                        @ApiParam("角色名") @RequestParam(required = false) String roleName,
                                        @ApiParam("分页参数") Page<RoleView> page) {
         return new R<>(roleViewService.page(role, roleName, page));
+    }
+
+    @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('resource.operate')")
+    @PostMapping
+    @ApiOperation(value = "添加角色", notes = "需租户管理员权限或管理员权限和resource.operate域", authorizations = @Authorization(value = "oauth2"))
+    public R<String> add(@ApiParam @RequestBody @Validated Role role) {
+        return new R<>(roleService.create(role));
+    }
+
+    @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('resource.operate')")
+    @PutMapping
+    @ApiOperation(value = "修改角色", notes = "需租户管理员权限或管理员权限和resource.operate域", authorizations = @Authorization(value = "oauth2"))
+    public R<Boolean> update(@ApiParam @RequestBody @Validated Role role) {
+        return new R<>(roleService.update(role));
+    }
+
+    @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('resource.operate')")
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除角色", notes = "需租户管理员权限或管理员权限和resource.operate域", authorizations = @Authorization(value = "oauth2"))
+    public R<Boolean> delete(@PathVariable String id) {
+        return new R<>(roleService.delete(id));
     }
 
 

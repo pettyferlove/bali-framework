@@ -12,6 +12,8 @@ import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import javax.validation.constraints.NotEmpty;
+
 /**
  * <p>
  * 用户角色
@@ -33,9 +35,11 @@ public class Role extends BaseEntity<Role> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "角色")
+    @NotEmpty(message = "角色不能为空")
     private String role;
 
     @ApiModelProperty(value = "角色名称")
+    @NotEmpty(message = "角色名称为空")
     private String roleName;
 
     @ApiModelProperty(value = "描述")
@@ -49,11 +53,5 @@ public class Role extends BaseEntity<Role> {
 
     @ApiModelProperty(value = "租户ID")
     private String tenantId;
-
-
-    @Override
-    protected Serializable pkVal() {
-        return null;
-    }
 
 }

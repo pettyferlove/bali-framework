@@ -1,5 +1,7 @@
 package com.github.bali.auth.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -35,6 +37,7 @@ public class RoleView extends Model<RoleView> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "角色")
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String role;
 
     @ApiModelProperty(value = "角色名称")
@@ -57,11 +60,5 @@ public class RoleView extends Model<RoleView> {
 
     @ApiModelProperty(value = "修改时间")
     private LocalDateTime modifyTime;
-
-
-    @Override
-    protected Serializable pkVal() {
-        return null;
-    }
 
 }

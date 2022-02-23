@@ -3,7 +3,7 @@
     {
       "name": "spring.cache.prefix",
       "type": "java.lang.String",
-      "description": "缓存前缀."
+      "description": "缓存全局前缀."
     },
     {
       "name": "spring.cache.expire",

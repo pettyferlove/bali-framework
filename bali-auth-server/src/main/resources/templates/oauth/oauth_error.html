@@ -13,7 +13,9 @@
       <div class="layui-card-body authorize-content">
         <h3>授权失败</h3>
         <hr/>
-        <p>请重试</p>
+        授权异常：<th:block th:text="${message}"></th:block>
+        <br/>
+        授权路径：<th:block th:text="${path}"></th:block>
         <div class="error-again">
           <a th:href="@{/login}" class="layui-btn layui-btn-fluid layui-btn-normal">返回登录界面</a>
         </div>

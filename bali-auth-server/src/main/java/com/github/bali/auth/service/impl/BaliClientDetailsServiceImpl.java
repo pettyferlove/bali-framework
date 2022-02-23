@@ -1,5 +1,6 @@
 package com.github.bali.auth.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -10,8 +11,9 @@ import com.github.bali.auth.service.IAuthClientDetailsScopeService;
 import com.github.bali.auth.service.IAuthClientDetailsService;
 import com.github.bali.auth.service.IAuthClientScopeService;
 import com.github.bali.auth.service.OAuth2ClientDetailsService;
-import com.google.common.base.Preconditions;
+import com.github.bali.core.framework.exception.BaseRuntimeException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
@@ -44,7 +46,9 @@ public class BaliClientDetailsServiceImpl implements OAuth2ClientDetailsService 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
         AuthClientDetails details = authClientDetailsService.getOne(Wrappers.<AuthClientDetails>lambdaQuery().eq(AuthClientDetails::getClientId, clientId));
-        Preconditions.checkNotNull(details, "client is not registered");
+        if (ObjectUtil.isNull(details)) {
+            throw new OAuth2Exception("invalid_client");
+        }
         List<AuthClientDetailsScope> list = authClientDetailsScopeService.list(Wrappers.<AuthClientDetailsScope>lambdaQuery().eq(AuthClientDetailsScope::getDetailsId, details.getId()));
         List<String> scope = new ArrayList<>();
         List<String> autoApproveScope = new ArrayList<>();
@@ -62,7 +66,7 @@ public class BaliClientDetailsServiceImpl implements OAuth2ClientDetailsService 
             });
         }
         if (scope.isEmpty()) {
-            throw new RuntimeException("the client is not scoped,not available");
+            throw new OAuth2Exception("invalid_scope");
         }
         BaseClientDetails baseClientDetails = new BaseClientDetails(details.getClientId(), details.getResourceIds(),
                 StrUtil.join(",", scope), details.getAuthorizedGrantTypes(), details.getAuthorities(), details.getWebServerRedirectUri());

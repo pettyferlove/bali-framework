@@ -53,10 +53,4 @@ public class AttachmentInfo extends BaseEntity<AttachmentInfo> {
 
     private String tenantId;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return null;
-    }
-
 }
