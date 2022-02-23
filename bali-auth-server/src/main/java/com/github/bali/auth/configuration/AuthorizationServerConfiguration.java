@@ -1,10 +1,10 @@
 package com.github.bali.auth.configuration;
 
-import com.github.bali.auth.factory.ITokenGranterFactory;
-import com.github.bali.auth.factory.impl.TokenGranterFactoryImpl;
 import com.github.bali.auth.filter.BaliClientCredentialsTokenEndpointFilter;
 import com.github.bali.auth.provider.error.ResponseExceptionTranslator;
 import com.github.bali.auth.provider.granter.WeChatOpenIdTokenGranter;
+import com.github.bali.auth.provider.granter.WeChatUnionIdTokenGranter;
+import com.github.bali.auth.provider.granter.WriteOffTokenGranter;
 import com.github.bali.auth.provider.token.BaliAccessTokenConverter;
 import com.github.bali.auth.service.OAuth2ClientDetailsService;
 import com.github.bali.auth.service.OAuth2UserDetailsService;
@@ -61,11 +61,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private final AuthenticationManager authenticationManager;
 
     private final PasswordEncoder passwordEncoder;
-
-    @Bean
-    public ITokenGranterFactory tokenGranterFactory() {
-        return new TokenGranterFactoryImpl();
-    }
 
     @Bean
     @ConditionalOnMissingBean(OAuth2RequestFactory.class)
@@ -127,6 +122,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         AuthorizationServerTokenServices tokenServices = endpoints.getTokenServices();
         List<TokenGranter> granters = new ArrayList<TokenGranter>(Collections.singletonList(endpoints.getTokenGranter()));
         granters.add(new WeChatOpenIdTokenGranter(tokenServices, endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory(), authenticationManager));
+        granters.add(new WeChatUnionIdTokenGranter(tokenServices, endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory(), authenticationManager));
+        granters.add(new WriteOffTokenGranter(tokenServices, endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory(), authenticationManager));
         return new CompositeTokenGranter(granters);
     }
 

@@ -14,18 +14,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 
-public class WeChatUnionIdTokenGranter extends AbstractTokenGranter {
+public class WriteOffTokenGranter extends AbstractTokenGranter {
 
-    private static final String GRANT_TYPE = "wechat_union_id";
+    private static final String GRANT_TYPE = "write_off";
 
     private AuthenticationManager authenticationManager;
 
-    public WeChatUnionIdTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory, String grantType) {
+    public WriteOffTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory, String grantType) {
         super(tokenServices, clientDetailsService, requestFactory, grantType);
     }
 
-    public WeChatUnionIdTokenGranter(AuthorizationServerTokenServices tokenServices,
-                                     ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory, AuthenticationManager authenticationManager) {
+    public WriteOffTokenGranter(AuthorizationServerTokenServices tokenServices,
+                                ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory, AuthenticationManager authenticationManager) {
         this(tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
         this.authenticationManager = authenticationManager;
     }
@@ -34,8 +34,9 @@ public class WeChatUnionIdTokenGranter extends AbstractTokenGranter {
     @Override
     public OAuth2Authentication getOAuth2Authentication(ClientDetails client, TokenRequest tokenRequest) {
         Map<String, String> parameters = new LinkedHashMap<String, String>(tokenRequest.getRequestParameters());
-        String unionId = parameters.get("union_id");
-        Authentication userAuth = new WeChatOpenIdAuthenticationToken(unionId, null);
+        String loginName = parameters.get("login_name");
+        String authorizationCode = parameters.get("authorization_code");
+        Authentication userAuth = new WriteOffAuthenticationToken(loginName, authorizationCode);
         ((AbstractAuthenticationToken) userAuth).setDetails(parameters);
         try {
             userAuth = authenticationManager.authenticate(userAuth);
