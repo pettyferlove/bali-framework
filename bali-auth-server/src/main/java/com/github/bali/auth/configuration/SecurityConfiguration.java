@@ -15,10 +15,7 @@
  */
 package com.github.bali.auth.configuration;
 
-import com.github.bali.auth.provider.authentication.DefaultAuthenticationProvider;
-import com.github.bali.auth.provider.authentication.WeChatOpenIdAuthenticationProvider;
-import com.github.bali.auth.provider.authentication.WeChatUnionIdAuthenticationProvider;
-import com.github.bali.auth.provider.authentication.WriteOffAuthenticationProvider;
+import com.github.bali.auth.provider.authentication.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,6 +42,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final DefaultAuthenticationProvider defaultAuthenticationProvider;
 
+    private final WeChatAuthenticationProvider weChatAuthenticationProvider;
+
     private final WeChatOpenIdAuthenticationProvider weChatOpenIdAuthenticationProvider;
 
     private final WeChatUnionIdAuthenticationProvider weChatUnionIdAuthenticationProvider;
@@ -53,10 +52,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     public SecurityConfiguration(PersistentTokenRepository tokenRepository,
                                  DefaultAuthenticationProvider defaultAuthenticationProvider,
-                                 WeChatOpenIdAuthenticationProvider weChatOpenIdAuthenticationProvider,
+                                 WeChatAuthenticationProvider weChatAuthenticationProvider, WeChatOpenIdAuthenticationProvider weChatOpenIdAuthenticationProvider,
                                  WeChatUnionIdAuthenticationProvider weChatUnionIdAuthenticationProvider, WriteOffAuthenticationProvider writeOffAuthenticationProvider) {
         this.tokenRepository = tokenRepository;
         this.defaultAuthenticationProvider = defaultAuthenticationProvider;
+        this.weChatAuthenticationProvider = weChatAuthenticationProvider;
         this.weChatOpenIdAuthenticationProvider = weChatOpenIdAuthenticationProvider;
         this.weChatUnionIdAuthenticationProvider = weChatUnionIdAuthenticationProvider;
         this.writeOffAuthenticationProvider = writeOffAuthenticationProvider;
@@ -96,6 +96,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder builder) throws Exception {
         builder.authenticationProvider(defaultAuthenticationProvider);
+        builder.authenticationProvider(weChatAuthenticationProvider);
         builder.authenticationProvider(weChatOpenIdAuthenticationProvider);
         builder.authenticationProvider(weChatUnionIdAuthenticationProvider);
         builder.authenticationProvider(writeOffAuthenticationProvider);
