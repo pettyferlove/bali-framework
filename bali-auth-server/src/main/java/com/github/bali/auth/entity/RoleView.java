@@ -36,8 +36,11 @@ public class RoleView extends Model<RoleView> {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "角色")
+    @ApiModelProperty(value = "角色ID")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private String id;
+
+    @ApiModelProperty(value = "角色")
     private String role;
 
     @ApiModelProperty(value = "角色名称")
