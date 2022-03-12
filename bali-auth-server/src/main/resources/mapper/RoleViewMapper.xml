@@ -4,6 +4,7 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.github.bali.auth.entity.RoleView">
+        <result column="id" property="id" />
         <result column="role" property="role" />
         <result column="role_name" property="roleName" />
         <result column="description" property="description" />
@@ -16,7 +17,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        role, role_name, description, sort, status, tenant_id, create_time, modify_time
+        id, role, role_name, description, sort, status, tenant_id, create_time, modify_time
     </sql>
 
 </mapper>

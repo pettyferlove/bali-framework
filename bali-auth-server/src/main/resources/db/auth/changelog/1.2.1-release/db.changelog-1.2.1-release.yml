@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/auth/changelog/1.2.1-release/changelog-1.2.1-release-ddl.mysql.sql
+  - include:
+      file: db/auth/changelog/1.2.1-release/changelog-1.2.1-release-dml.mysql.sql
