@@ -133,6 +133,14 @@ public class BaliUserDetails implements UserDetails {
      */
     @Override
     public boolean isEnabled() {
-        return Objects.equals(SecurityConstant.STATUS_NORMAL, status);
+        switch (status) {
+            // 将无效用户、过期用户交给后续的检查器处理
+            case SecurityConstant.STATUS_NORMAL:
+            case SecurityConstant.STATUS_INVALID:
+            case SecurityConstant.STATUS_CREDENTIALS_EXPIRED:
+                return true;
+            default:
+                return false;
+        }
     }
 }

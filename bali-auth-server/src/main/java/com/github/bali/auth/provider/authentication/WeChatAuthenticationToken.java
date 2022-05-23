@@ -1,4 +1,4 @@
-package com.github.bali.auth.provider.granter;
+package com.github.bali.auth.provider.authentication;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,22 +8,22 @@ import java.util.Collection;
 /**
  * @author Pettyfer
  */
-public class WeChatUnionIdAuthenticationToken extends AbstractAuthenticationToken {
+public class WeChatAuthenticationToken extends AbstractAuthenticationToken {
 
     private final Object principal;
     private final Object credentials;
 
     private static final long serialVersionUID = 1L;
 
-    public WeChatUnionIdAuthenticationToken(Object principal, Object credentials) {
+    public WeChatAuthenticationToken(Object principal, Object credentials) {
         super(null);
         this.principal = principal;
         this.credentials = credentials;
         super.setAuthenticated(false);
     }
 
-    public WeChatUnionIdAuthenticationToken(Object principal, Object credentials,
-                                            Collection<? extends GrantedAuthority> authorities) {
+    public WeChatAuthenticationToken(Object principal, Object credentials,
+                                     Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
         this.credentials = credentials;

@@ -1,6 +1,6 @@
 package com.github.bali.auth.provider.granter;
 
-import com.github.bali.auth.provider.authentication.WriteOffAuthenticationToken;
+import com.github.bali.auth.provider.authentication.CaptchaUsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,33 +11,43 @@ import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.token.AbstractTokenGranter;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-
-public class WriteOffTokenGranter extends AbstractTokenGranter {
-
-    private static final String GRANT_TYPE = "write_off";
+/**
+ * @author Pettyfer
+ */
+public class CaptchaUsernamePasswordTokenGranter extends AbstractTokenGranter {
+    private final static String GRANT_TYPE = "captcha_password";
 
     private AuthenticationManager authenticationManager;
 
-    public WriteOffTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory, String grantType) {
-        super(tokenServices, clientDetailsService, requestFactory, grantType);
-    }
-
-    public WriteOffTokenGranter(AuthorizationServerTokenServices tokenServices,
-                                ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory, AuthenticationManager authenticationManager) {
+    public CaptchaUsernamePasswordTokenGranter(AuthorizationServerTokenServices tokenServices,
+                                               ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory, AuthenticationManager authenticationManager) {
         this(tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
         this.authenticationManager = authenticationManager;
     }
 
+    protected CaptchaUsernamePasswordTokenGranter(AuthorizationServerTokenServices tokenServices,
+                                                  ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory, String grantType) {
+        super(tokenServices, clientDetailsService, requestFactory, grantType);
+    }
 
+    @SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
     @Override
-    public OAuth2Authentication getOAuth2Authentication(ClientDetails client, TokenRequest tokenRequest) {
+    protected OAuth2Authentication getOAuth2Authentication(ClientDetails client, TokenRequest tokenRequest) {
         Map<String, String> parameters = new LinkedHashMap<String, String>(tokenRequest.getRequestParameters());
-        String loginName = parameters.get("login_name");
-        String authorizationCode = parameters.get("authorization_code");
-        Authentication userAuth = new WriteOffAuthenticationToken(loginName, authorizationCode);
+        String username = parameters.get("username");
+        String password = parameters.get("password");
+        String captcha = parameters.get("captcha");
+        String machineCode = parameters.get("machine_code");
+        parameters.remove("password");
+        Map<String, String> principal = new HashMap<>();
+        principal.put("username", username);
+        principal.put("captcha", captcha);
+        principal.put("machine_code", machineCode);
+        Authentication userAuth = new CaptchaUsernamePasswordAuthenticationToken(principal, password);
         ((AbstractAuthenticationToken) userAuth).setDetails(parameters);
         try {
             userAuth = authenticationManager.authenticate(userAuth);
@@ -51,8 +61,8 @@ public class WriteOffTokenGranter extends AbstractTokenGranter {
         if (userAuth == null || !userAuth.isAuthenticated()) {
             throw new InvalidGrantException("invalid_grant");
         }
-        OAuth2Request authRequest = getRequestFactory().createOAuth2Request(client, tokenRequest);
-        return new OAuth2Authentication(authRequest, userAuth);
-    }
 
+        OAuth2Request storedOAuth2Request = getRequestFactory().createOAuth2Request(client, tokenRequest);
+        return new OAuth2Authentication(storedOAuth2Request, userAuth);
+    }
 }

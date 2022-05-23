@@ -2,7 +2,6 @@ package com.github.bali.auth.provider.authentication;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.github.bali.auth.provider.granter.WriteOffAuthenticationToken;
 import com.github.bali.security.constants.UserChannelType;
 import com.github.bali.security.userdetails.BaliUserDetails;
 import lombok.SneakyThrows;
