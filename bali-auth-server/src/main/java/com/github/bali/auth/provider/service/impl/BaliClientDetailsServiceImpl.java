@@ -1,4 +1,4 @@
-package com.github.bali.auth.service.impl;
+package com.github.bali.auth.provider.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -10,8 +10,7 @@ import com.github.bali.auth.entity.AuthClientScope;
 import com.github.bali.auth.service.IAuthClientDetailsScopeService;
 import com.github.bali.auth.service.IAuthClientDetailsService;
 import com.github.bali.auth.service.IAuthClientScopeService;
-import com.github.bali.auth.service.OAuth2ClientDetailsService;
-import com.github.bali.core.framework.exception.BaseRuntimeException;
+import com.github.bali.auth.provider.service.OAuth2ClientDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.provider.ClientDetails;
