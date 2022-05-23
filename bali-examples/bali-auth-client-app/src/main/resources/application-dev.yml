@@ -43,6 +43,7 @@ spring:
             scope: user.read
         provider:
           bali:
+            # 和auth服务需要处于不同域名，否则session互相影响会导致授权异常
             jwk-set-uri: http://127.0.0.1:9000/.well-known/jwks.json
             authorization-uri: http://127.0.0.1:9000/oauth/authorize
             token-uri: http://127.0.0.1:9000/oauth/token
