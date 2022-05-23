@@ -1,6 +1,6 @@
 package com.github.bali.auth.configuration;
 
-import com.github.bali.auth.filter.BaliClientCredentialsTokenEndpointFilter;
+import com.github.bali.auth.provider.filter.BaliClientCredentialsTokenEndpointFilter;
 import com.github.bali.auth.provider.error.ResponseExceptionTranslator;
 import com.github.bali.auth.provider.granter.WeChatOpenIdTokenGranter;
 import com.github.bali.auth.provider.granter.WeChatTokenGranter;

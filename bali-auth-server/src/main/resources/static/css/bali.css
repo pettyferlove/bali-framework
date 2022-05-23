@@ -101,6 +101,19 @@ body,html {
     padding-left: 38px
 }
 
+.user-login-body .layui-form-item .layui-captcha {
+    width: calc( 100% - 114px );
+    display: inline-block;
+}
+
+
+.user-login-body .layui-form-item .layui-captcha-img {
+    width: 110px;
+    height: 38px;
+    display: inline-block;
+    vertical-align: top;
+}
+
 .user-login-codeimg {
     max-height: 38px;
     width: 100%;

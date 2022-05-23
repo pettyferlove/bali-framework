@@ -16,6 +16,8 @@
 package com.github.bali.auth.configuration;
 
 import com.github.bali.auth.provider.authentication.*;
+import com.github.bali.auth.provider.filter.ImageCodeValidateFilter;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +28,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.web.cors.CorsUtils;
 
@@ -34,11 +37,14 @@ import org.springframework.web.cors.CorsUtils;
  */
 @Slf4j
 @Configuration
+@AllArgsConstructor
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final PersistentTokenRepository tokenRepository;
+
+    private final ImageCodeValidateFilter imageCodeValidateFilter;
 
     private final DefaultAuthenticationProvider defaultAuthenticationProvider;
 
@@ -50,17 +56,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final WriteOffAuthenticationProvider writeOffAuthenticationProvider;
 
-    public SecurityConfiguration(PersistentTokenRepository tokenRepository,
-                                 DefaultAuthenticationProvider defaultAuthenticationProvider,
-                                 WeChatAuthenticationProvider weChatAuthenticationProvider, WeChatOpenIdAuthenticationProvider weChatOpenIdAuthenticationProvider,
-                                 WeChatUnionIdAuthenticationProvider weChatUnionIdAuthenticationProvider, WriteOffAuthenticationProvider writeOffAuthenticationProvider) {
-        this.tokenRepository = tokenRepository;
-        this.defaultAuthenticationProvider = defaultAuthenticationProvider;
-        this.weChatAuthenticationProvider = weChatAuthenticationProvider;
-        this.weChatOpenIdAuthenticationProvider = weChatOpenIdAuthenticationProvider;
-        this.weChatUnionIdAuthenticationProvider = weChatUnionIdAuthenticationProvider;
-        this.writeOffAuthenticationProvider = writeOffAuthenticationProvider;
-    }
 
     @Override
     public void configure(WebSecurity webSecurity) {
@@ -80,6 +75,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .loginProcessingUrl("/authorize")
                 .and()
+                .addFilterBefore(imageCodeValidateFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/login", "/.well-known/jwks.json").permitAll()
                 .anyRequest().authenticated()

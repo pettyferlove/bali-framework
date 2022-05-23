@@ -21,6 +21,7 @@
                     <blockquote class="user-login-error layui-bg-red" th:text="${session?.SPRING_SECURITY_LAST_EXCEPTION?.message}"><i onclick="closeError()" class="layui-icon layui-icon-close user-login-error-close"></i></blockquote>
                 </div>
                 <form id="sign_in" class="layui-form" method="POST" th:action="${loginProcessUrl}">
+                    <input type="text" name="machine_code" id="machine_code" style="display: none;">
                     <div class="layui-form-item">
                         <label class="user-login-icon layui-icon layui-icon-username" for="username"></label>
                         <input type="text" name="username" id="username" lay-verify="username" placeholder="用户名" class="layui-input" autofocus>
@@ -29,6 +30,13 @@
                         <label class="user-login-icon layui-icon layui-icon-password" for="password"></label>
                         <input type="password" name="password" id="password" lay-verify="password" placeholder="密码" class="layui-input">
                     </div>
+
+                    <div class="layui-form-item">
+                        <label class="user-login-icon layui-icon layui-icon-vercode" for="captcha"></label>
+                        <input type="text" name="captcha" id="captcha" lay-verify="captcha" required placeholder="验证码" class="layui-input layui-captcha">
+                        <img id="captcha_img" class="layui-captcha-img" src="">
+                    </div>
+
                     <div class="layui-form-item" style="margin-bottom: 20px;">
                         <input type="checkbox" name="remember-me" id="remember-me" checked="true" lay-skin="primary" title="记住密码"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>记住密码</span><i class="layui-icon layui-icon-ok"></i></div>
                         <a lay-href="#" class="user-jump-change user-link" style="margin-top: 7px;">忘记密码？</a>
