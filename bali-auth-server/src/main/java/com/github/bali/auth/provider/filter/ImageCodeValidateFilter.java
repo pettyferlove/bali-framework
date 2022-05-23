@@ -1,13 +1,12 @@
 package com.github.bali.auth.provider.filter;
 
 import cn.hutool.core.util.StrUtil;
-import com.github.bali.auth.exception.ValidateCodeException;
 import com.github.bali.auth.provider.service.ICaptchaValidateService;
-import com.github.bali.core.framework.exception.BaseRuntimeException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -27,6 +26,8 @@ public class ImageCodeValidateFilter extends OncePerRequestFilter {
 
     private final ICaptchaValidateService captchaValidateService;
 
+    private final SimpleUrlAuthenticationFailureHandler authenticationFailureHandler = new SimpleUrlAuthenticationFailureHandler("/login?error");
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if ("/authorize"
@@ -43,8 +44,8 @@ public class ImageCodeValidateFilter extends OncePerRequestFilter {
                     throw new BadCredentialsException("验证码错误");
                 }
             } catch (AuthenticationException e) {
-                // 处理异常
-                throw e;
+                authenticationFailureHandler.onAuthenticationFailure(request, response, e);
+                return;
             }
         }
         filterChain.doFilter(request, response);
