@@ -2,4 +2,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.github.bali.core.framework.handler.GlobalRestControllerExceptionHandler,\
   com.github.bali.core.framework.utils.SpringContextHolder,\
   com.github.bali.core.framework.configuration.CorsFilterAutoConfiguration,\
-  com.github.bali.core.framework.configuration.JacksonMapperAutoConfiguration
+  com.github.bali.core.framework.configuration.JacksonAutoConfiguration,\
+  com.github.bali.core.framework.configuration.GsonAutoConfiguration

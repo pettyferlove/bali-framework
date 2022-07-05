@@ -26,18 +26,20 @@
         <oauth.version>2.5.1.RELEASE</oauth.version>
         <oauth.jwt.version>1.1.1.RELEASE</oauth.jwt.version>
         <oauth.jwt.nimbus.version>9.15.2</oauth.jwt.nimbus.version>
-        <oauth.autoconfigure.version>2.5.6</oauth.autoconfigure.version>
+        <oauth.autoconfigure.version>2.6.6</oauth.autoconfigure.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
         <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
+        <mybatis-plus-extension.version>3.4.3.4</mybatis-plus-extension.version>
         <mybatis-plus.generator.version>3.5.1</mybatis-plus.generator.version>
-        <druid.version>1.2.6</druid.version>
-        <fastjson.version>1.2.78</fastjson.version>
-        <redisson.version>3.16.3</redisson.version>
+        <druid.version>1.2.9</druid.version>
+        <gson.version>2.9.0</gson.version>
+        <fastjson.version>1.2.83</fastjson.version>
+        <redisson.version>3.17.0</redisson.version>
         <aliyun.sdk.version>4.5.30</aliyun.sdk.version>
         <aliyun.oss.sdk.version>3.13.2</aliyun.oss.sdk.version>
         <thumbnailator.version>0.4.11</thumbnailator.version>
-        <kaptcha.version>2.3.2</kaptcha.version>
         <swagger2.version>3.0.0</swagger2.version>
-        <hutool.version>5.7.16</hutool.version>
+        <hutool.version>5.8.0</hutool.version>
         <mysql.version>8.0.25</mysql.version>
         <liquibase.version>4.4.3</liquibase.version>
         <jasypt.version>3.0.3</jasypt.version>
@@ -83,9 +85,19 @@
                 <version>${hutool.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-io</groupId>
@@ -162,7 +174,7 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-extension</artifactId>
-                <version>${mybatis-plus.version}</version>
+                <version>${mybatis-plus-extension.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
