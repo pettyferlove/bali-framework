@@ -5,60 +5,57 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.bali.core.framework.constants.ResultCode;
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
- * 响应数据包装
- *
- * @param <T>
- * @author Petty
+ * @author Pettyfer
  */
-
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class R<T> implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class ExceptionResponse implements IVO {
 
-    private Integer code = ResultCode.SUCCESS.getCode();
+    private Integer code;
 
-    private Long timestamp;
-
+    /**
+     * 异常信息
+     */
     private String message;
 
-    private T data;
+    /**
+     * 消息返回时间戳
+     */
+    private Long timestamp;
 
-    public R() {
+    public ExceptionResponse(String message) {
         super();
-        this.timestamp = System.currentTimeMillis();
-    }
-
-    public R(T data) {
-        super();
-        this.data = data;
-        this.timestamp = System.currentTimeMillis();
-    }
-
-    public R(T data, String message) {
-        super();
-        this.data = data;
         this.message = message;
         this.timestamp = System.currentTimeMillis();
     }
 
-    public R(Throwable e, ResultCode code) {
+    public ExceptionResponse(String message, ResultCode code) {
         super();
-        this.code = code.value();
+        this.message = message;
+        this.code = code.getValue();
+        this.timestamp = System.currentTimeMillis();
+    }
+
+    public ExceptionResponse(Throwable e) {
+        super();
         this.message = e.getMessage();
         this.timestamp = System.currentTimeMillis();
     }
 
-    public R(Throwable e, String message, ResultCode code) {
+    public ExceptionResponse(Throwable e, ResultCode code) {
         super();
-        this.code = code.value();
-        this.message = message;
+        this.code = code.getValue();
+        this.message = e.getMessage();
         this.timestamp = System.currentTimeMillis();
     }
 
+    public ExceptionResponse(Throwable e, String message, ResultCode code) {
+        super();
+        this.code = code.getValue();
+        this.message = message;
+        this.timestamp = System.currentTimeMillis();
+    }
 
 }

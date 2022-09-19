@@ -82,7 +82,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                     user.setPassword(passwordEncoder.encode(changePassword.getNewPassword()));
                     user.setModifier(SecurityUtil.getUser().getId());
                     user.setModifyTime(LocalDateTime.now());
-                    return !this.update(user);
+                    return this.update(user);
                 }
             }
 

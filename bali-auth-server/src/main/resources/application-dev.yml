@@ -102,4 +102,4 @@ attachment:
       bucket: user-center-attachment
   local:
     name: user-center-local
-    root: D:\\attachment\\
+    root: file/
