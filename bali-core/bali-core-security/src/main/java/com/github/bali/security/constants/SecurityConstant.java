@@ -10,6 +10,8 @@ public interface SecurityConstant {
      */
     String ROLE_PREFIX = "ROLE_";
 
+    String GRANT_TYPE = "grant_type";
+
     /**
      * 基础用户角色
      */

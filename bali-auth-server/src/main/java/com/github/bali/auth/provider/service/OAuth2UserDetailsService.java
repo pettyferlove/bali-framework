@@ -1,4 +1,4 @@
-package com.github.bali.auth.service;
+package com.github.bali.auth.provider.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 

@@ -24,11 +24,11 @@ layui.use(['layer', 'table'], function () {
             , {field: 'modifyTime', title: '最后修改时间', sort: true,}
             , {fixed: 'right', width: 185, align: 'center', toolbar: '#action'}
         ]], response: {
-            statusCode: 200 //重新规定成功的状态码为 200，table 组件默认为 0
+            statusCode: 0 //重新规定成功的状态码为 200，table 组件默认为 0
         }
         , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
             return {
-                "code": res.status, //解析接口状态
+                "code": res.code, //解析接口状态
                 "count": res.data.total, //解析数据长度
                 "data": res.data.records //解析数据列表
             };
@@ -90,7 +90,7 @@ layui.use(['layer', 'table'], function () {
                 } else if (data.length > 1) {
                     layer.msg('只能同时重置一个用户');
                 }  else {
-                    if (data.userChannel === 'web' || data.userChannel === 'maintainer') {
+                    if (data[0].userChannel === 'web' || data[0].userChannel === 'maintainer') {
                         layer.confirm('是否将所选账号的用户密码重置为123456？', function (index) {
                             $.ajax({
                                 type: "PUT",

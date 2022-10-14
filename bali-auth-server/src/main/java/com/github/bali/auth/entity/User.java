@@ -12,6 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -33,7 +34,7 @@ public class User extends BaseEntity<User> {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "用户登录名")
+    @ApiModelProperty(value = "用户登录ID，实际的登录名")
     private String loginId;
 
     @ApiModelProperty(value = "账号密码")
@@ -53,6 +54,12 @@ public class User extends BaseEntity<User> {
 
     @ApiModelProperty(value = "用户所属渠道")
     private String userChannel;
+
+    @ApiModelProperty(value = "登录失败次数")
+    private Integer loginFailNum;
+
+    @ApiModelProperty(value = "最后一次登录失败时间")
+    private LocalDateTime lastLoginFailTime;
 
     @ApiModelProperty(value = "是否有效 0：无效 1：有效 8：凭证无效 9：锁定")
     private Integer status;

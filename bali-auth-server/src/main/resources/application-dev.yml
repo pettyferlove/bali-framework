@@ -102,4 +102,13 @@ attachment:
       bucket: user-center-attachment
   local:
     name: user-center-local
-    root: D:\\attachment\\
+    root: file/
+authorize:
+  enable-password-encrypt: false
+  encrypt-key: 'qtcc2MNMsavbqQWa'
+  login-attempt:
+    enable: true
+    times-before-lock: 5
+    granters:
+      - password
+      - captcha_password

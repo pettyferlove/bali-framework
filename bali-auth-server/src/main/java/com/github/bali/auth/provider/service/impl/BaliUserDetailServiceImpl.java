@@ -1,4 +1,4 @@
-package com.github.bali.auth.service.impl;
+package com.github.bali.auth.provider.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.bali.auth.entity.*;
 import com.github.bali.auth.provider.error.TenantException;
 import com.github.bali.auth.provider.error.UserTenantException;
+import com.github.bali.auth.provider.service.OAuth2UserDetailsService;
 import com.github.bali.auth.service.*;
 import com.github.bali.security.userdetails.BaliUserDetails;
 import com.github.bali.security.utils.SecurityUtil;
@@ -116,7 +117,7 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
                 throw new UsernameNotFoundException("用户未注册");
             }
         }
-
+        userService.checkLoginAttempts(user);
         return BaliUserDetails.builder()
                 .id(user.getId())
                 .openId(user.getOpenId())

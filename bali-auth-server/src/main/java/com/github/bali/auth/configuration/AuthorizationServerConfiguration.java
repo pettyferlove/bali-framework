@@ -1,14 +1,14 @@
 package com.github.bali.auth.configuration;
 
-import com.github.bali.auth.filter.BaliClientCredentialsTokenEndpointFilter;
+import com.github.bali.auth.provider.filter.BaliClientCredentialsTokenEndpointFilter;
 import com.github.bali.auth.provider.error.ResponseExceptionTranslator;
 import com.github.bali.auth.provider.granter.WeChatOpenIdTokenGranter;
 import com.github.bali.auth.provider.granter.WeChatTokenGranter;
 import com.github.bali.auth.provider.granter.WeChatUnionIdTokenGranter;
 import com.github.bali.auth.provider.granter.WriteOffTokenGranter;
 import com.github.bali.auth.provider.token.BaliAccessTokenConverter;
-import com.github.bali.auth.service.OAuth2ClientDetailsService;
-import com.github.bali.auth.service.OAuth2UserDetailsService;
+import com.github.bali.auth.provider.service.OAuth2ClientDetailsService;
+import com.github.bali.auth.provider.service.OAuth2UserDetailsService;
 import com.github.bali.auth.utils.KeyUtil;
 import com.github.bali.security.provider.error.OAuth2AuthExceptionEntryPoint;
 import com.nimbusds.jose.JWSAlgorithm;

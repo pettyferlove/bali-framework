@@ -1,5 +1,6 @@
 package com.github.bali.auth.provider.granter;
 
+import com.github.bali.auth.provider.authentication.WeChatAuthenticationToken;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.AuthenticationManager;

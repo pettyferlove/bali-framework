@@ -1,15 +1,15 @@
 logging:
   config: classpath:conf/logback-prd.xml
 management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
   endpoints:
     web:
       exposure:
-        include: '*'
-  endpoint:
-    health:
-      show-details: ALWAYS
-    shutdown:
-      enabled: true
+        include: info,health
+    enabled-by-default: true
 server:
   port: 9000
   http2:
@@ -103,3 +103,12 @@ attachment:
   local:
     name: user-center-local
     root: file/
+authorize:
+  enable-password-encrypt: false
+  encrypt-key: 'qtcc2MNMsavbqQWa'
+  login-attempt:
+    enable: true
+    times-before-lock: 5
+    granters:
+      - password
+      - captcha_password

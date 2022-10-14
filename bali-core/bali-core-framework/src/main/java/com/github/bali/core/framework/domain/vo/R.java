@@ -2,15 +2,16 @@ package com.github.bali.core.framework.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.github.bali.core.framework.constants.ResultCode;
 import lombok.Data;
-import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 
 /**
  * 响应数据包装
- * @author Petty
+ *
  * @param <T>
+ * @author Petty
  */
 
 @Data
@@ -19,9 +20,9 @@ import java.io.Serializable;
 public class R<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private int status = HttpStatus.OK.value();
+    private Integer code = ResultCode.SUCCESS.getCode();
 
-    private long timestamp;
+    private Long timestamp;
 
     private String message;
 
@@ -45,16 +46,16 @@ public class R<T> implements Serializable {
         this.timestamp = System.currentTimeMillis();
     }
 
-    public R(Throwable e, HttpStatus status) {
+    public R(Throwable e, ResultCode code) {
         super();
-        this.status = status.value();
+        this.code = code.value();
         this.message = e.getMessage();
         this.timestamp = System.currentTimeMillis();
     }
 
-    public R(Throwable e, String message, HttpStatus status) {
+    public R(Throwable e, String message, ResultCode code) {
         super();
-        this.status = status.value();
+        this.code = code.value();
         this.message = message;
         this.timestamp = System.currentTimeMillis();
     }

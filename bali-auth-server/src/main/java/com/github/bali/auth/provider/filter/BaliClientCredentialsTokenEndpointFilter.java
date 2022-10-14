@@ -1,4 +1,4 @@
-package com.github.bali.auth.filter;
+package com.github.bali.auth.provider.filter;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;

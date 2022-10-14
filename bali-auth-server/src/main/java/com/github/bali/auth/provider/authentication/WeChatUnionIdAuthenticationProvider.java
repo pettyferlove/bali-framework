@@ -1,8 +1,6 @@
 package com.github.bali.auth.provider.authentication;
 
-import com.github.bali.auth.provider.granter.WeChatOpenIdAuthenticationToken;
-import com.github.bali.auth.provider.granter.WeChatUnionIdAuthenticationToken;
-import com.github.bali.auth.service.impl.BaliUserDetailServiceImpl;
+import com.github.bali.auth.provider.service.impl.BaliUserDetailServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;

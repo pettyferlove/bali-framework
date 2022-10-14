@@ -17,6 +17,8 @@
         <result column="open_id" property="openId" />
         <result column="union_id" property="unionId" />
         <result column="user_channel" property="userChannel" />
+        <result column="login_fail_num" property="loginFailNum" />
+        <result column="last_login_fail_time" property="lastLoginFailTime" />
         <result column="status" property="status" />
     </resultMap>
 
@@ -28,7 +30,22 @@
         create_time,
         modifier,
         modify_time,
-        login_id, password, tenant_id, client_id, open_id, union_id, user_channel, status
+        login_id, password, tenant_id, client_id, open_id, union_id, user_channel, login_fail_num, last_login_fail_time, status
     </sql>
+    <select id="getLoginAttempts" resultType="com.github.bali.auth.domain.dto.LoginAttempts">
+        select t.id, t.login_id username, ifnull(t.login_fail_num, 0), t.last_login_fail_time from uc_user t where t.login_id = #{username};
+    </select>
+
+    <update id="loginFailed">
+        update uc_user t set t.last_login_fail_time = current_timestamp(), t.login_fail_num = #{failNum} where login_id = #{username};
+    </update>
+
+    <update id="lockUser">
+        update uc_user t set t.status = 9 where login_id = #{username};
+    </update>
+
+    <update id="loginSucceeded">
+        update uc_user t set t.last_login_fail_time = null, t.login_fail_num = 0, t.status = 1 where login_id = #{username};
+    </update>
 
 </mapper>

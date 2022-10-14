@@ -35,29 +35,29 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      */
     ${entity} get(String id);
 
-     /**
-      * 通过Id删除信息
-      *
-      * @param id 业务主键
-      * @return Boolean
-      */
-     Boolean delete(String id);
+    /**
+     * 通过Id删除信息
+     *
+     * @param id 业务主键
+     * @return Boolean
+     */
+    Boolean delete(String id);
 
-     /**
-      * 创建数据
-      *
-      * @param ${entity?uncap_first} 要创建的对象
-      * @return Boolean
-      */
-     String create(${entity} ${entity?uncap_first});
+    /**
+     * 创建数据
+     *
+     * @param ${entity?uncap_first} 要创建的对象
+     * @return Boolean
+     */
+    String create(${entity} ${entity?uncap_first});
 
-     /**
-      * 更新数据（必须带Id）
-      *
-      * @param ${entity?uncap_first} 对象
-      * @return Boolean
-      */
-     Boolean update(${entity} ${entity?uncap_first});
+    /**
+     * 更新数据（必须带Id）
+     *
+     * @param ${entity?uncap_first} 对象
+     * @return Boolean
+     */
+    Boolean update(${entity} ${entity?uncap_first});
 
 }
 </#if>

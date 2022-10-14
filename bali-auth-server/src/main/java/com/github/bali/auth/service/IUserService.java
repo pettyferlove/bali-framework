@@ -3,6 +3,7 @@ package com.github.bali.auth.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.bali.auth.domain.dto.LoginAttempts;
 import com.github.bali.auth.domain.vo.ChangePassword;
 import com.github.bali.auth.entity.User;
 
@@ -63,4 +64,13 @@ public interface IUserService extends IService<User> {
      * @return 是否成功
      */
     Boolean changePassword(ChangePassword changePassword);
+
+    LoginAttempts getLoginAttempts(String username);
+
+    void loginFailed(String username);
+
+    void checkLoginAttempts(User user);
+
+    void loginSucceeded(String username);
+
 }
