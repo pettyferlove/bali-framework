@@ -117,7 +117,7 @@ public class BaliUserDetailServiceImpl implements OAuth2UserDetailsService {
                 throw new UsernameNotFoundException("用户未注册");
             }
         }
-
+        userService.checkLoginAttempts(user);
         return BaliUserDetails.builder()
                 .id(user.getId())
                 .openId(user.getOpenId())
