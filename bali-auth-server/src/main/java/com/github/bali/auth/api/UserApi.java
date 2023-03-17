@@ -12,10 +12,8 @@ import com.github.bali.auth.service.IUserOperateService;
 import com.github.bali.core.framework.constants.ApiConstant;
 import com.github.bali.core.framework.domain.vo.R;
 import com.github.bali.security.utils.SecurityUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.Authorization;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(ApiConstant.API_V1_PREFIX + "/user")
-@Api(tags = {"用户信息维护接口"})
+@Tag(name = "用户信息管理接口", description = "UserApi")
 public class UserApi {
 
     private final IUserInfoViewService userInfoViewService;
@@ -41,84 +39,84 @@ public class UserApi {
 
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.read')")
     @GetMapping("page")
-    @ApiOperation(value = "分页获取用户列表", notes = "需租户管理员权限或管理员权限和user.read域", authorizations = @Authorization(value = "oauth2"))
-    public R<IPage<UserInfoView>> userPage(@ApiParam("查询参数") UserInfoQueryParams params,
-                                           @ApiParam("分页参数") Page<UserInfoView> page) {
+    @Operation(summary = "查询用户列表")
+    public R<IPage<UserInfoView>> page(UserInfoQueryParams params,
+                                           Page<UserInfoView> page) {
         return new R<>(userInfoViewService.page(params, page));
     }
 
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.read')")
     @GetMapping("page/role/{role}")
-    @ApiOperation(value = "分页获取绑定指定角色的用户列表", notes = "需租户管理员权限或管理员权限和user.read域", authorizations = @Authorization(value = "oauth2"))
-    public R<IPage<UserInfoView>> userPageByRole(@ApiParam("查询参数") UserInfoQueryParams params,
-                                                 @ApiParam("分页参数") Page<UserInfoView> page,
-                                                 @ApiParam("角色名") @PathVariable String role,
-                                                 @ApiParam("需要排除的用户ID集合") String excludeUserIds) {
+    @Operation(summary = "根据角色查询用户列表")
+    public R<IPage<UserInfoView>> userPageByRole(UserInfoQueryParams params,
+                                                 Page<UserInfoView> page,
+                                                 @PathVariable String role,
+                                                 String excludeUserIds) {
         return new R<>(userInfoViewService.pageByRole(params, page, role, excludeUserIds));
     }
 
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.read')")
     @GetMapping("{id}")
-    @ApiOperation(value = "根据ID获取用户信息详情", notes = "需租户管理员权限或管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
-    public R<UserInfoView> get(@ApiParam("用户ID") @PathVariable String id) {
+    @Operation(summary = "获取用户信息")
+    public R<UserInfoView> get(@PathVariable String id) {
         return new R<>(userInfoViewService.getOne(Wrappers.<UserInfoView>lambdaQuery().eq(UserInfoView::getId, id)));
     }
 
 
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.operate')")
     @PostMapping
-    @ApiOperation(value = "创建用户", notes = "需租户管理员权限或管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
-    public R<String> create(@ApiParam("用户信息") @RequestBody @Validated UserOperate user) {
+    @Operation(summary = "创建用户")
+    public R<String> create(@RequestBody @Validated UserOperate user) {
         return new R<>(userOperateService.create(user));
     }
 
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.operate')")
     @PutMapping
-    @ApiOperation(value = "更新用户", notes = "需租户管理员权限或管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
-    public R<Boolean> update(@ApiParam("用户信息") @RequestBody @Validated UserOperate user) {
+    @Operation(summary = "修改用户信息")
+    public R<Boolean> update(@RequestBody @Validated UserOperate user) {
         return new R<>(userOperateService.update(user));
     }
 
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.operate')")
     @DeleteMapping("{id}")
-    @ApiOperation(value = "删除用户", notes = "需租户管理员权限或管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
-    public R<Boolean> delete(@ApiParam("用户ID") @PathVariable String id) {
+    @Operation(summary = "删除用户")
+    public R<Boolean> delete(@PathVariable String id) {
         return new R<>(userOperateService.delete(id));
     }
 
     @Deprecated
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.operate')")
     @DeleteMapping("batch/{ids}")
-    @ApiOperation(value = "批量删除用户", notes = "需租户管理员权限或管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
-    public R<Boolean> batchDelete(@ApiParam("用户ID集合") @PathVariable String ids) {
+    @Operation(summary = "批量删除用户")
+    public R<Boolean> batchDelete(@PathVariable String ids) {
         return new R<>(userOperateService.batchDelete(ids));
     }
 
     @GetMapping(value = "{id}/role")
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.read')")
-    @ApiOperation(value = "加载用户已选角色", notes = "需租户管理员权限或管理员权限和user.read域", authorizations = @Authorization(value = "oauth2"))
+    @Operation(summary = "加载用户角色")
     public R<List<String>> loadUserRole(@PathVariable String id) {
         return new R<>(userOperateService.loadUserRoleIds(id));
     }
 
     @PutMapping(value = "{id}/role")
     @PreAuthorize("hasAnyRole('TENANT_ADMIN','ADMIN')&&#oauth2.hasScope('user.operate')")
-    @ApiOperation(value = "更新用户", notes = "需租户管理员权限或管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
+    @Operation(summary = "更新用户角色")
     public R<Boolean> updateUserRole(@PathVariable String id, @RequestParam(defaultValue = "") String roleIds) {
         return new R<>(userOperateService.updateUserRole(id, roleIds));
     }
 
     @PutMapping("reset/password")
     @PreAuthorize("hasAnyRole('TENANT_ADMIN')&&#oauth2.hasScope('user.operate')")
-    @ApiOperation(value = "重置用户密码", notes = "需租户管理员权限和user.operate域", authorizations = @Authorization(value = "oauth2"))
-    public R<Boolean> resetPassword(@ApiParam("用户ID集合") @RequestParam(defaultValue = "") String ids, @ApiParam("密码") @RequestParam String password) {
+    @Operation(summary = "重置用户密码")
+    public R<Boolean> resetPassword(@RequestParam(defaultValue = "") String ids,@RequestParam String password) {
         return new R<>(userOperateService.resetPassword(ids, password));
     }
 
     @RequestMapping(value = "change/password", method = RequestMethod.POST)
     @ResponseBody
     @PreAuthorize("#oauth2.hasScope('user.operate')")
-    @ApiOperation(value = "修改密码", notes = "需user.operate域", authorizations = @Authorization(value = "oauth2"))
+    @Operation(summary = "修改用户密码")
     public R<Boolean> changePassword(@RequestBody ChangePasswordVO changePassword) {
         return new R<>(userOperateService.changePassword(SecurityUtil.getUser().getId(), changePassword));
     }

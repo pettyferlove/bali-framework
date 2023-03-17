@@ -3,7 +3,7 @@ package com.github.bali.auth.domain.vo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.bali.core.framework.domain.vo.IVO;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,70 +22,70 @@ import java.util.List;
 public class PersonalDetails implements IVO {
 
     private static final long serialVersionUID = -7039822742171722657L;
-    @ApiModelProperty(value = "姓名")
+    @Schema(name = "姓名")
     private String userName;
 
-    @ApiModelProperty(value = "用户昵称")
+    @Schema(name = "用户昵称")
     private String nickName;
 
-    @ApiModelProperty(value = "性别")
+    @Schema(name = "性别")
     private Integer userSex;
 
-    @ApiModelProperty(value = "生日")
+    @Schema(name = "生日")
     private LocalDateTime userBorn;
 
-    @ApiModelProperty(value = "用户头像")
+    @Schema(name = "用户头像")
     private String userAvatar;
 
-    @ApiModelProperty(value = "电子邮件")
+    @Schema(name = "电子邮件")
     private String email;
 
-    @ApiModelProperty(value = "居住地址")
+    @Schema(name = "居住地址")
     private String userAddress;
 
-    @ApiModelProperty(value = "移动电话")
+    @Schema(name = "移动电话")
     private String mobileTel;
 
-    @ApiModelProperty(value = "用户联系电话")
+    @Schema(name = "用户联系电话")
     private String phoneTel;
 
-    @ApiModelProperty(value = "用户证件类型")
+    @Schema(name = "用户证件类型")
     private String userIdenType;
 
-    @ApiModelProperty(value = "证件ID")
+    @Schema(name = "证件ID")
     private String userIden;
 
-    @ApiModelProperty(value = "工作单位")
+    @Schema(name = "工作单位")
     private String organization;
 
-    @ApiModelProperty(value = "学历")
+    @Schema(name = "学历")
     private String education;
 
-    @ApiModelProperty(value = "职称")
+    @Schema(name = "职称")
     private String positionalTitle;
 
-    @ApiModelProperty(value = "政治面貌")
+    @Schema(name = "政治面貌")
     private String politicalStatus;
 
-    @ApiModelProperty(value = "毕业学校")
+    @Schema(name = "毕业学校")
     private String graduatedSchool;
 
-    @ApiModelProperty(value = "毕业年份")
+    @Schema(name = "毕业年份")
     private String graduatedYear;
 
-    @ApiModelProperty(value = "所学专业")
+    @Schema(name = "所学专业")
     private String major;
 
-    @ApiModelProperty(value = "是否实名认证")
+    @Schema(name = "是否实名认证")
     private Integer verified;
 
-    @ApiModelProperty(value = "行政区划CODE")
+    @Schema(name = "行政区划CODE")
     private String regionId;
 
-    @ApiModelProperty(value = "所属租户")
+    @Schema(name = "所属租户")
     private String tenantName;
 
-    @ApiModelProperty(value = "拥有角色")
+    @Schema(name = "拥有角色")
     private List<PersonalRole> roles;
 
 }

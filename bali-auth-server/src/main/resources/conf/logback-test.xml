@@ -176,13 +176,13 @@
                 <pattern>
                     <pattern>
                         {
-                        "application-name": "[${group}]",
-                        "service-name": "[${application_name}]",
-                        "profiles": "[${profiles}]",
-                        "logger": "%logger",
-                        "level": "%level",
-                        "thread": "%thread",
-                        "message": "%message"
+                            "application-name": "[${group}]",
+                            "service-name": "[${application_name}]",
+                            "profiles": "[${profiles}]",
+                            "logger": "%logger",
+                            "level": "%level",
+                            "thread": "%thread",
+                            "message": "%message"
                         }
                     </pattern>
                 </pattern>

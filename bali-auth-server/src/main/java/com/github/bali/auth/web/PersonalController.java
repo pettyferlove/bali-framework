@@ -7,8 +7,6 @@ import com.github.bali.auth.domain.vo.PersonalDetails;
 import com.github.bali.auth.service.IUserInfoService;
 import com.github.bali.core.framework.domain.vo.R;
 import com.github.bali.security.utils.SecurityUtil;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Authorization;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;

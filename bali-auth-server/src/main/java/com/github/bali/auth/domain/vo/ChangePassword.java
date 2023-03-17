@@ -3,7 +3,7 @@ package com.github.bali.auth.domain.vo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.bali.core.framework.domain.vo.IVO;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ApiModel(value="ChangePasswordVO对象", description="变更密码")
+@Schema(name="ChangePasswordVO对象", description="变更密码")
 public class ChangePassword implements IVO {
     private static final long serialVersionUID = 157652993416293114L;
 
