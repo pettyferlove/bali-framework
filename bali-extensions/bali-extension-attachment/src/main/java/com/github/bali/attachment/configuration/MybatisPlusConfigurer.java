@@ -45,4 +45,5 @@ public class MybatisPlusConfigurer {
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor());
         return interceptor;
     }
+
 }
