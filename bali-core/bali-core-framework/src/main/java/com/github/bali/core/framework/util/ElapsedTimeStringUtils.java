@@ -1,4 +1,6 @@
-package com.github.bali.core.framework.utils;
+package com.github.bali.core.framework.util;
+
+import lombok.experimental.UtilityClass;
 
 /**
  * 用于计算经过的时间并显示的工具类
@@ -7,11 +9,12 @@ package com.github.bali.core.framework.utils;
  *
  * @author Pettyfer
  */
-public class ElapsedTimeStringUtil {
+@UtilityClass
+public class ElapsedTimeStringUtils {
 
-    private static final String[] INTERVAL_LABELS = new String[]{"秒", "分钟", "小时", "天", "月", "年"};
+    private final String[] INTERVAL_LABELS = new String[]{"秒", "分钟", "小时", "天", "月", "年"};
 
-    public static String elapsed(long timestampSecond) {
+    public String elapsed(long timestampSecond) {
 
         long elapsedSecond = Math.abs((System.currentTimeMillis() / 1000) - timestampSecond);
 

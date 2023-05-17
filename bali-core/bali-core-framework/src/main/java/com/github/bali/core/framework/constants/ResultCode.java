@@ -10,7 +10,7 @@ public enum ResultCode {
     /**
      * 处理成功
      */
-    SUCCESS(0, "success"),
+    SUCCESS(0, "成功"),
 
     INVALID_ARGUMENT_ERROR(1001, "非法的参数"),
 

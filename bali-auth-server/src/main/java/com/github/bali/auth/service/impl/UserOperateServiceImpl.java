@@ -11,11 +11,9 @@ import com.github.bali.auth.domain.vo.UserRoleVO;
 import com.github.bali.auth.entity.*;
 import com.github.bali.auth.service.*;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
-import com.github.bali.core.framework.utils.ConverterUtil;
-import com.github.bali.security.constants.EncryptionConstant;
+import com.github.bali.core.framework.util.ConverterUtils;
 import com.github.bali.security.constants.SecurityConstant;
 import com.github.bali.security.constants.UserChannelType;
-import com.github.bali.security.userdetails.BaliUserDetails;
 import com.github.bali.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -134,7 +132,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
                 user.setTenantId(null);
             }
             String userId = userService.create(user);
-            UserInfo userInfo = ConverterUtil.convert(userOperate, new UserInfo());
+            UserInfo userInfo = ConverterUtils.convert(userOperate, new UserInfo());
             if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
                 userInfo.setTenantId(userOperate.getTenantId());
             } else {
@@ -183,7 +181,7 @@ public class UserOperateServiceImpl implements IUserOperateService {
             user.setTenantId(null);
         }
         userService.update(user);
-        UserInfo userInfo = ConverterUtil.convert(userOperate, new UserInfo());
+        UserInfo userInfo = ConverterUtils.convert(userOperate, new UserInfo());
         if (SecurityUtil.getRoles().contains(SecurityConstant.SUPER_ADMIN_ROLE)) {
             userInfo.setTenantId(userOperate.getTenantId());
         } else {

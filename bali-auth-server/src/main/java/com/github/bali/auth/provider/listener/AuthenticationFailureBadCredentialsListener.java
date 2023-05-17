@@ -5,7 +5,7 @@ import com.github.bali.auth.domain.dto.LoginAttempts;
 import com.github.bali.auth.exception.AuthenticationFailureException;
 import com.github.bali.auth.properties.AuthorizeProperties;
 import com.github.bali.auth.service.IUserService;
-import com.github.bali.core.framework.utils.ElapsedTimeStringUtil;
+import com.github.bali.core.framework.util.ElapsedTimeStringUtils;
 import com.github.bali.security.constants.SecurityConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
@@ -84,7 +84,7 @@ public class AuthenticationFailureBadCredentialsListener
     private String createPromptMessage(int loginAttemptLeft, long lockingDuration, Integer loginFailNum) {
         String message;
         if (loginAttemptLeft == 0) {
-            String lockTime = ElapsedTimeStringUtil.elapsed(lockingDuration / 1000);
+            String lockTime = ElapsedTimeStringUtils.elapsed(lockingDuration / 1000);
             message = "帐号或密码错误，您的账号登录尝试过多，已被锁定。（约" + lockTime + "）";
         } else if (loginFailNum > 2) {
             message = "帐号或密码错误，再输入错误 " + loginAttemptLeft + " 次，账号将被锁定无法登录。";

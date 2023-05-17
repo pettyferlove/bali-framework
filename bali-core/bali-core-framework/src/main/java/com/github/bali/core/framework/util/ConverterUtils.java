@@ -1,5 +1,6 @@
-package com.github.bali.core.framework.utils;
+package com.github.bali.core.framework.util;
 
+import com.github.bali.core.framework.context.SpringContextHolder;
 import com.github.bali.core.framework.converter.ObjectConverter;
 import net.sf.cglib.beans.BeanCopier;
 import net.sf.cglib.core.Converter;
@@ -20,12 +21,12 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2018/5/10
  */
 @SuppressWarnings("rawtypes")
-public final class ConverterUtil {
+public final class ConverterUtils {
 
     private static final String DTO_SUFFIX = "DTO";
     private static final String CMP_SUFFIX = "CMP";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConverterUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConverterUtils.class);
 
     /**
      * BeanCopier映射集
@@ -37,7 +38,7 @@ public final class ConverterUtil {
      */
     private static final Map<String, ObjectConverter> CACHED_CUSTOM_CONVERTER_MAP = new ConcurrentHashMap<String, ObjectConverter>();
 
-    private ConverterUtil() {
+    private ConverterUtils() {
     }
 
     /**
