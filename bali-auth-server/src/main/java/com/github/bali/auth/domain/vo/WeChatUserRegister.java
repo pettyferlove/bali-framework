@@ -3,7 +3,7 @@ package com.github.bali.auth.domain.vo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.bali.core.framework.domain.vo.IVO;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,31 +19,31 @@ import lombok.NoArgsConstructor;
 public class WeChatUserRegister implements IVO {
     private static final long serialVersionUID = 6921148356787747955L;
 
-    @ApiModelProperty(value = "微信OpenID")
+    @Schema(name = "微信OpenID")
     private String openId;
 
-    @ApiModelProperty(value = "微信企业组织ID")
+    @Schema(name = "微信企业组织ID")
     private String unionId;
 
-    @ApiModelProperty(value = "头像地址")
+    @Schema(name = "头像地址")
     private String avatarUrl;
 
-    @ApiModelProperty(value = "城市")
+    @Schema(name = "城市")
     private String city;
 
-    @ApiModelProperty(value = "国家")
+    @Schema(name = "国家")
     private String country;
 
-    @ApiModelProperty(value = "省份")
+    @Schema(name = "省份")
     private String province;
 
-    @ApiModelProperty(value = "语言")
+    @Schema(name = "语言")
     private String language;
 
-    @ApiModelProperty(value = "微信昵称")
+    @Schema(name = "微信昵称")
     private String nickName;
 
-    @ApiModelProperty(value = "性别")
+    @Schema(name = "性别")
     private Integer gender;
 
 }

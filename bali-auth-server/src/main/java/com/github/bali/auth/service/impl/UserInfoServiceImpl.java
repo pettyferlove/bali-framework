@@ -17,7 +17,7 @@ import com.github.bali.auth.service.ITenantService;
 import com.github.bali.auth.service.IUserInfoService;
 import com.github.bali.auth.service.IUserRoleService;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
-import com.github.bali.core.framework.utils.ConverterUtil;
+import com.github.bali.core.framework.util.ConverterUtils;
 import com.github.bali.security.utils.SecurityUtil;
 import org.springframework.stereotype.Service;
 
@@ -89,10 +89,10 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         UserInfo userInfo = Optional.ofNullable(this.getOne(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, SecurityUtil.getUser().getId()).eq(UserInfo::getDelFlag, 0))).orElseGet(UserInfo::new);
         Tenant tenant = Optional.ofNullable(tenantService.getOne(Wrappers.<Tenant>lambdaQuery().eq(Tenant::getTenantId, SecurityUtil.getUser().getTenant()).eq(Tenant::getDelFlag, 0))).orElseGet(Tenant::new);
         List<String> roleIds = Optional.ofNullable(userRoleService.list(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, SecurityUtil.getUser().getId()))).orElseGet(ArrayList::new).stream().map(UserRole::getRoleId).collect(Collectors.toList());
-        PersonalDetails details = ConverterUtil.convert(userInfo, new PersonalDetails());
+        PersonalDetails details = ConverterUtils.convert(userInfo, new PersonalDetails());
         if (!roleIds.isEmpty()) {
             List<Role> roles = roleService.list(Wrappers.<Role>lambdaQuery().in(Role::getId, roleIds).eq(Role::getDelFlag, 0));
-            List<PersonalRole> personalRoles = ConverterUtil.convertList(Role.class, PersonalRole.class, roles);
+            List<PersonalRole> personalRoles = ConverterUtils.convertList(Role.class, PersonalRole.class, roles);
             details.setRoles(personalRoles);
         }
         details.setTenantName(tenant.getTenantName());
@@ -101,7 +101,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     @Override
     public Boolean updateDetails(PersonalDetails details) {
-        UserInfo userInfo = Optional.ofNullable(ConverterUtil.convert(details, new UserInfo())).orElseGet(UserInfo::new);
+        UserInfo userInfo = Optional.ofNullable(ConverterUtils.convert(details, new UserInfo())).orElseGet(UserInfo::new);
         LambdaUpdateWrapper<UserInfo> updateWrapper = Wrappers.<UserInfo>lambdaUpdate();
         updateWrapper.eq(UserInfo::getUserId, SecurityUtil.getUser().getId());
         return this.update(userInfo, updateWrapper);

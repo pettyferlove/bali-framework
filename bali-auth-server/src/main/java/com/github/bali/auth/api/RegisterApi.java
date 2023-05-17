@@ -12,8 +12,8 @@ import com.github.bali.auth.service.IRegisterService;
 import com.github.bali.core.framework.domain.vo.R;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
 import com.github.bali.security.constants.UserChannelType;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,7 +31,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/register")
-@Api(tags = {"用户注册接口"})
+@Tag(name = "用户注册接口", description = "RegisterApi")
 public class RegisterApi {
 
     private final IAuthClientDetailsService authClientDetailsService;
@@ -47,21 +47,21 @@ public class RegisterApi {
     }
 
     @PostMapping("web")
-    @ApiOperation(value = "Web用户注册", notes = "需客户端Basic认证")
+    @Operation(summary = "Web注册")
     public R<Boolean> web(WebUserRegister register, @RequestHeader HttpHeaders headers) {
         BasicAuth authenticate = authenticate(headers);
         throw new BaseRuntimeException("暂不支持Web端用户注册，请联系管理员添加用户");
     }
 
     @PostMapping("mobile")
-    @ApiOperation(value = "移动用户注册", notes = "需客户端Basic认证")
+    @Operation(summary = "移动端注册")
     public R<Boolean> mobile(@RequestHeader HttpHeaders headers) {
         BasicAuth authenticate = authenticate(headers);
         return null;
     }
 
     @PostMapping("wechat-mini-program")
-    @ApiOperation(value = "小程序用户注册", notes = "需客户端Basic认证")
+    @Operation(summary = "微信小程序注册")
     public R<Boolean> wechatMiniProgram(WeChatUserRegister register, @RequestHeader HttpHeaders headers) {
         BasicAuth authenticate = authenticate(headers);
         return new R<>(registerService.registerWeChat(register, authenticate, UserChannelType.WECHAT_MINI_PROGRAM));

@@ -1,16 +1,14 @@
 package com.github.bali.auth.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.github.bali.persistence.entity.BaseEntity;
-import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.github.bali.persistence.entity.BaseEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -27,33 +25,33 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @TableName("uc_tenant")
-@ApiModel(value="Tenant对象", description="租户信息")
+@Schema(name="Tenant对象", description="租户信息")
 public class Tenant extends BaseEntity<Tenant> {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "租户ID")
+    @Schema(name = "租户ID")
     private String tenantId;
 
-    @ApiModelProperty(value = "租户名")
+    @Schema(name = "租户名")
     private String tenantName;
 
-    @ApiModelProperty(value = "联系人")
+    @Schema(name = "联系人")
     private String linkMan;
 
-    @ApiModelProperty(value = "联系电话")
+    @Schema(name = "联系电话")
     private String contactNumber;
 
-    @ApiModelProperty(value = "地址")
+    @Schema(name = "地址")
     private String address;
 
-    @ApiModelProperty(value = "备注")
+    @Schema(name = "备注")
     private String remark;
 
-    @ApiModelProperty(value = "电子邮件")
+    @Schema(name = "电子邮件")
     private String email;
 
-    @ApiModelProperty(value = "是否有效 0 无效 1 有效")
+    @Schema(name = "是否有效 0 无效 1 有效")
     private Integer status;
 
 }

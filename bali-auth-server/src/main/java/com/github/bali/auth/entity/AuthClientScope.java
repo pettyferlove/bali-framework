@@ -4,14 +4,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.bali.persistence.entity.BaseEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -28,21 +25,21 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @TableName("uc_auth_client_scope")
-@ApiModel(value="AuthClientScope对象", description="客户端域")
+@Schema(name="AuthClientScope对象", description="客户端域")
 public class AuthClientScope extends BaseEntity<AuthClientScope> {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "域名，用于客户端进行权限判断")
+    @Schema(name = "域名，用于客户端进行权限判断")
     private String scope;
 
-    @ApiModelProperty(value = "是否自动授权")
+    @Schema(name = "是否自动授权")
     private Boolean auto;
 
-    @ApiModelProperty(value = "描述信息")
+    @Schema(name = "描述信息")
     private String description;
 
-    @ApiModelProperty(value = "租户ID")
+    @Schema(name = "租户ID")
     private String tenantId;
 
 }

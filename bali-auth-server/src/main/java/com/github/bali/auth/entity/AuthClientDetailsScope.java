@@ -6,17 +6,15 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Petty
@@ -29,7 +27,7 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @TableName("uc_auth_client_details_scope")
-@ApiModel(value="AuthClientDetailsScope对象", description="")
+@Schema(name = "AuthClientDetailsScope对象", description = "")
 public class AuthClientDetailsScope extends Model<AuthClientDetailsScope> {
 
     private static final long serialVersionUID = 1L;

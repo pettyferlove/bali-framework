@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @TableName("${table.name}")
 </#if>
 <#if swagger2>
-@ApiModel(value="${entity}对象", description="${table.comment!}")
+@Schema(name="${entity}对象", description="${table.comment!}")
 </#if>
 <#if superEntityClass??>
 public class ${entity} extends ${superEntityClass}<#if activeRecord><${entity}></#if> {
@@ -56,7 +56,7 @@ public class ${entity} implements Serializable {
 
     <#if field.comment!?length gt 0>
     <#if swagger2>
-    @ApiModelProperty(value = "${field.comment}")
+    @Schema(name = "${field.comment}")
     <#else>
     /**
      * ${field.comment}

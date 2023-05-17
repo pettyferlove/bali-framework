@@ -6,14 +6,12 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -31,37 +29,37 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @TableName("v_role_view")
-@ApiModel(value="RoleView对象", description="VIEW")
+@Schema(name="RoleView对象", description="VIEW")
 public class RoleView extends Model<RoleView> {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "角色ID")
+    @Schema(name = "角色ID")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
-    @ApiModelProperty(value = "角色")
+    @Schema(name = "角色")
     private String role;
 
-    @ApiModelProperty(value = "角色名称")
+    @Schema(name = "角色名称")
     private String roleName;
 
-    @ApiModelProperty(value = "描述")
+    @Schema(name = "描述")
     private String description;
 
-    @ApiModelProperty(value = "排序号")
+    @Schema(name = "排序号")
     private Integer sort;
 
-    @ApiModelProperty(value = "状态 1有效 0无效 默认为1")
+    @Schema(name = "状态 1有效 0无效 默认为1")
     private Integer status;
 
-    @ApiModelProperty(value = "租户ID")
+    @Schema(name = "租户ID")
     private String tenantId;
 
-    @ApiModelProperty(value = "创建时间")
+    @Schema(name = "创建时间")
     private LocalDateTime createTime;
 
-    @ApiModelProperty(value = "修改时间")
+    @Schema(name = "修改时间")
     private LocalDateTime modifyTime;
 
 }

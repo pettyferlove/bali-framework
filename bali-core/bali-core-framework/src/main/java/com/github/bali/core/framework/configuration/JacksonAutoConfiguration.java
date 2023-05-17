@@ -3,8 +3,7 @@ package com.github.bali.core.framework.configuration;
 import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.github.bali.core.framework.jackson.BaliJavaTimeModule;
+import com.github.bali.core.framework.jackson.databind.module.JavaTimeModule;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
@@ -31,7 +30,7 @@ public class JacksonAutoConfiguration {
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        objectMapper.registerModule(new BaliJavaTimeModule());
+        objectMapper.registerModule(new JavaTimeModule());
         return objectMapper;
     }
 
@@ -41,7 +40,7 @@ public class JacksonAutoConfiguration {
             builder.locale(Locale.CHINA);
             builder.timeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
             builder.simpleDateFormat(DatePattern.NORM_DATETIME_PATTERN);
-            builder.modules(new BaliJavaTimeModule());
+            builder.modules(new JavaTimeModule());
         };
     }
 

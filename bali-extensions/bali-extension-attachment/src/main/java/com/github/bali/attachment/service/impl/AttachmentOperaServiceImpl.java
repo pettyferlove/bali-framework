@@ -15,7 +15,7 @@ import com.github.bali.attachment.service.IAttachmentOperaService;
 import com.github.bali.attachment.service.IAttachmentPretreatmentService;
 import com.github.bali.attachment.service.IAttachmentService;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
-import com.github.bali.core.framework.utils.ConverterUtil;
+import com.github.bali.core.framework.util.ConverterUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpStatus;
@@ -80,7 +80,7 @@ public class AttachmentOperaServiceImpl implements IAttachmentOperaService {
             }
         }
         attachmentInfoService.save(userId, uploadResult.getFileId(), fileName, uploadResult.getMd5(), uploadResult.getPath(), upload, fileType.getContentType(), length);
-        UploadResult result = Optional.ofNullable(ConverterUtil.convert(uploadResult, new UploadResult())).orElseGet(UploadResult::new);
+        UploadResult result = Optional.ofNullable(ConverterUtils.convert(uploadResult, new UploadResult())).orElseGet(UploadResult::new);
         result.setAdditionalData(new JSONObject().toJSONString());
         result.setFileName(fileName);
         return result;

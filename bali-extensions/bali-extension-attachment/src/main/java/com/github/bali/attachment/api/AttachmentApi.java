@@ -6,10 +6,9 @@ import com.github.bali.attachment.service.IAttachmentOperaService;
 import com.github.bali.core.framework.constants.ApiConstant;
 import com.github.bali.core.framework.domain.vo.R;
 import com.github.bali.security.utils.SecurityUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.Authorization;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -24,7 +23,7 @@ import java.util.Objects;
 /**
  * @author Petty
  */
-@Api(value = "附件操作", tags = {"附件操作接口"})
+@Tag(name = "附件操作", description = "附件操作接口")
 @Slf4j
 @RestController
 @RequestMapping(ApiConstant.API_V1_PREFIX + "/attachment")
@@ -38,34 +37,34 @@ public class AttachmentApi {
         this.attachmentOperaService = attachmentOperaService;
     }
 
-    @ApiOperation(value = "上传附件", authorizations = @Authorization(value = "oauth2"))
+    @Operation(summary = "上传附件")
     @PostMapping("upload")
-    public R<UploadResult> upload(@ApiParam("附件信息") @Validated Upload upload, @ApiParam("文件") MultipartFile file) {
+    public R<UploadResult> upload(@Parameter(description = "附件信息") @Validated Upload upload, @Parameter(description = "文件") MultipartFile file) {
         return new R<>(attachmentOperaService.upload(Objects.requireNonNull(SecurityUtil.getUser()).getId(), upload, file));
     }
 
-    @ApiOperation(value = "下载附件", authorizations = @Authorization(value = "oauth2"))
+    @Operation(summary = "下载附件")
     @GetMapping("download/{id}")
-    public void download(@ApiParam("附件ID") @PathVariable String id, HttpServletResponse response) throws Exception {
+    public void download(@Parameter(description = "附件ID") @PathVariable String id, HttpServletResponse response) throws Exception {
         attachmentOperaService.download(id, response);
     }
 
-    @ApiOperation(value = "查看附件（针对图片、PDF等文件）", authorizations = @Authorization(value = "oauth2"))
+    @Operation(summary = "查看附件（针对图片、PDF等文件）")
     @GetMapping("view/{id}")
-    public void view(@ApiParam("附件ID") @PathVariable String id, HttpServletResponse response) throws Exception {
+    public void view(@Parameter(description = "附件ID") @PathVariable String id, HttpServletResponse response) throws Exception {
         attachmentOperaService.view(id, response);
     }
 
-    @ApiOperation(value = "删除附件", authorizations = @Authorization(value = "oauth2"))
+    @Operation(summary = "删除附件")
     @DeleteMapping("/{id}")
-    public R<Boolean> delete(@ApiParam("附件ID") @PathVariable String id) {
+    public R<Boolean> delete(@Parameter(description = "附件ID") @PathVariable String id) {
         return new R<>(attachmentOperaService.delete(id));
     }
 
-    @ApiOperation(value = "批量删除附件", authorizations = @Authorization(value = "oauth2"))
+    @Operation(summary = "批量删除附件")
     @Deprecated
     @PostMapping("/batch/delete")
-    public R<Boolean> deleteBatch(@ApiParam("附件ID集合") String[] ids) {
+    public R<Boolean> deleteBatch(@Parameter(description = "附件ID集合") String[] ids) {
         return new R<>(attachmentOperaService.deleteBatch(ids));
     }
 

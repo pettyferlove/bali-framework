@@ -10,7 +10,7 @@ import com.github.bali.auth.entity.AuthClientDetailsScope;
 import com.github.bali.auth.service.IAuthClientDetailsScopeService;
 import com.github.bali.auth.service.IAuthClientDetailsService;
 import com.github.bali.auth.service.IClientOperateService;
-import com.github.bali.core.framework.utils.ConverterUtil;
+import com.github.bali.core.framework.util.ConverterUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -48,7 +48,7 @@ public class ClientOperateServiceImpl implements IClientOperateService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public ClientCreateResponseVO create(ClientDetailsVO details) {
-        AuthClientDetails clientDetails = ConverterUtil.convert(details, new AuthClientDetails());
+        AuthClientDetails clientDetails = ConverterUtils.convert(details, new AuthClientDetails());
         String clientId = IdUtil.simpleUUID();
         String clientSecret = IdUtil.simpleUUID();
         clientDetails.setClientId(clientId);
@@ -72,7 +72,7 @@ public class ClientOperateServiceImpl implements IClientOperateService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public Boolean update(ClientDetailsVO details) {
-        AuthClientDetails clientDetails = ConverterUtil.convert(details, new AuthClientDetails());
+        AuthClientDetails clientDetails = ConverterUtils.convert(details, new AuthClientDetails());
         authClientDetailsScopeService.remove(Wrappers.<AuthClientDetailsScope>lambdaQuery().eq(AuthClientDetailsScope::getDetailsId, details.getId()));
         if (StrUtil.isNotEmpty(details.getScope())) {
             String[] scopes = details.getScope().split(",");

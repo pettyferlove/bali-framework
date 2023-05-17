@@ -12,7 +12,7 @@ import com.github.bali.auth.entity.Tenant;
 import com.github.bali.auth.mapper.TenantMapper;
 import com.github.bali.auth.service.ITenantService;
 import com.github.bali.core.framework.exception.BaseRuntimeException;
-import com.github.bali.core.framework.utils.ConverterUtil;
+import com.github.bali.core.framework.util.ConverterUtils;
 import com.github.bali.security.utils.SecurityUtil;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -82,7 +82,7 @@ public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> impleme
     @Override
     public List<TenantDictVO> dict() {
         List<Tenant> tenants = Optional.ofNullable(this.list()).orElseGet(ArrayList::new);
-        return Optional.ofNullable(ConverterUtil.convertList(Tenant.class, TenantDictVO.class, tenants)).orElseGet(ArrayList::new);
+        return Optional.ofNullable(ConverterUtils.convertList(Tenant.class, TenantDictVO.class, tenants)).orElseGet(ArrayList::new);
     }
 
 }

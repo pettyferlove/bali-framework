@@ -33,7 +33,6 @@ public class WeChatUnionIdAuthenticationToken extends AbstractAuthenticationToke
 
     @Override
     public Object getPrincipal() {
-        // TODO Auto-generated method stub
         return principal;
     }
 
