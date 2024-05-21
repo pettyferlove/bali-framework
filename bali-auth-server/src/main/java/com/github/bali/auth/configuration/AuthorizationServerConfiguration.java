@@ -115,7 +115,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         endpoints.userDetailsService(userDetailsService);
         endpoints.exceptionTranslator(new ResponseExceptionTranslator());
         endpoints.tokenGranter(tokenGranter(endpoints));
-        endpoints.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
+        endpoints.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST, HttpMethod.DELETE);
         super.configure(endpoints);
     }
 
